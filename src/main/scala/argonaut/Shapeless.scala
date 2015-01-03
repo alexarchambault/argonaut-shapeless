@@ -1,0 +1,3 @@
+package argonaut
+
+object Shapeless extends AutoDecodeJsons with AutoEncodeJsons
