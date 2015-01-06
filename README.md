@@ -7,7 +7,7 @@ Automatic argonaut codec derivation with shapeless
 As argonaut 6.1-SNAPSHOT is not published as is on sonatype, you should
 clone their repo and publish it locally first (`git clone https://github.com/argonaut-io/argonaut.git && cd argonaut && sbt publish-local` - use `sbt +publish-local` for scala 2.10).
 
-Add to your `build.sbt`
+Then add to your `build.sbt`
 ```scala
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
@@ -17,7 +17,7 @@ resolvers ++= Seq(
 libraryDependencies += "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1-SNAPSHOT"
 ```
 
-Then import the content of `argonaut.Shapeless` along with the one of `argonaut.Argonaut` close to where you want codecs to be automatically available for case classes / sealed hierarchies:
+Import the content of `argonaut.Shapeless` along with the one of `argonaut.Argonaut` close to where you want codecs to be automatically available for case classes / sealed hierarchies:
 ```scala
 import argonaut._, Argonaut._, Shapeless._
 
