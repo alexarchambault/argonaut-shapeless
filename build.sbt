@@ -4,7 +4,9 @@ name := "argonaut-shapeless"
 
 version := "6.1-SNAPSHOT"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.4"
+
+crossScalaVersions := Seq("2.10.4", "2.11.4")
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
@@ -13,13 +15,23 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1-SNAPSHOT" changing(),
-  "com.chuusai" %% "shapeless" % "2.1.0-SNAPSHOT" cross CrossVersion.full,
-  // For shapeless LabelledGeneric to work
-  // You may need to add it to your own project too...
-  compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full),
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
   "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
 )
+
+libraryDependencies ++= {
+  if (scalaVersion.value startsWith "2.10.")
+    Seq(
+      "com.chuusai" %% "shapeless" % "2.1.0-SNAPSHOT" cross CrossVersion.full,
+      // For shapeless LabelledGeneric to work, you may need to add it
+      // to your own project too...
+      compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
+    )
+  else
+    Seq(
+      "com.chuusai" %% "shapeless" % "2.1.0-SNAPSHOT"
+    )
+}
 
 
 xerial.sbt.Sonatype.sonatypeSettings
