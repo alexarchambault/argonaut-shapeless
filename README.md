@@ -4,8 +4,16 @@ Automatic argonaut codec derivation with shapeless
 
 ## Usage
 
+As argonaut 6.1-SNAPSHOT is not published as is on sonatype, you should
+clone their repo and publish it locally first (`git clone https://github.com/argonaut-io/argonaut.git && cd argonaut && sbt publish-local` - use `sbt +publish-local` for scala 2.10).
+
 Add to your `build.sbt`
 ```scala
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
+
 libraryDependencies += "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1-SNAPSHOT"
 ```
 
