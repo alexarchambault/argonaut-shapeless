@@ -39,7 +39,7 @@ implicitly[DecodeJson[Base]]
 
 Available for scala 2.10 and 2.11. Uses argonaut 6.1-M5 and shapeless 2.1-SNAPSHOT.
 
-Available under the Apache 2.0 license.
+Released under the BSD license. See LICENSE file for more details.
 
 Based on an early (non `Lazy`-based) automatic codec derivation in argonaut
 by [Maxwell Swadling](https://github.com/maxpow4h),

@@ -51,8 +51,8 @@ pomExtra := {
   <url>https://github.com/alexarchambault/argonaut-shapeless</url>
     <licenses>
       <license>
-        <name>Apache 2.0</name>
-        <url>http://opensource.org/licenses/Apache-2.0</url>
+        <name>BSD-3-Clause</name>
+        <url>http://www.opensource.org/licenses/BSD-3-Clause</url>
       </license>
     </licenses>
     <scm>
