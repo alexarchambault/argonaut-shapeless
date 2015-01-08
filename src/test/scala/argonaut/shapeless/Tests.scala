@@ -22,6 +22,9 @@ case class Composed(foo: Simple, other: String)
 case class TwiceComposed(foo: Simple, bar: Composed, v: Int)
 case class ComposedOptList(fooOpt: Option[Simple], other: String, l: List[TwiceComposed])
 
+
+case class SimpleWithJs(i: Int, s: String, v: Json)
+
 case class NowThree(s: String, i: Int, n: Double)
 
 sealed trait Base
@@ -91,4 +94,9 @@ class Tests extends PropSpec with Matchers with PropertyChecks {
   illTyped(" implicitly[DecodeJson[ShouldHaveNoArbEither]] ")
   illTyped(" implicitly[EncodeJson[BaseNoArb]] ")
   illTyped(" implicitly[DecodeJson[BaseNoArb]] ")
+
+  // This one raises StackOverflowError
+  // property("SimpleWithJs must not change after serialization/deserialization") {
+  //   sameAfterBeforeSerialization[SimpleWithJs]
+  // }
 }
