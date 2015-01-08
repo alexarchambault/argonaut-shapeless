@@ -1,15 +1,12 @@
 # argonaut-shapeless
 
-Automatic argonaut codec derivation with shapeless
+Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation with [shapeless](https://github.com/milessabin/shapeless)
 
 ## Usage
 
 Add to your `build.sbt`
 ```scala
-resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots")
-)
+resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies +=
   "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1-SNAPSHOT"
@@ -41,3 +38,10 @@ implicitly[DecodeJson[Base]]
 ```
 
 Available for scala 2.10 and 2.11. Uses argonaut 6.1-M5 and shapeless 2.1-SNAPSHOT.
+
+Available under the Apache 2.0 license.
+
+Based on an early (non `Lazy`-based) automatic codec derivation in argonaut
+by [Maxwell Swadling](https://github.com/maxpow4h),
+[Travis Brown](https://github.com/travisbrown), and
+[Mark Hibberd](https://github.com/markhibberd).
