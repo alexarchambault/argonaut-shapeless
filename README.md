@@ -6,7 +6,10 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 Add to your `build.sbt`
 ```scala
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
 
 libraryDependencies +=
   "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1-SNAPSHOT"
@@ -37,7 +40,7 @@ implicitly[DecodeJson[Base]]
 
 ```
 
-Available for scala 2.10 and 2.11. Uses argonaut 6.1-M5 and shapeless 2.1-SNAPSHOT.
+Available for scala 2.10 and 2.11. Uses argonaut 6.1-M5 and shapeless 2.1.0-RC1.
 
 Released under the BSD license. See LICENSE file for more details.
 
