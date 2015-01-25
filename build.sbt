@@ -2,22 +2,22 @@ organization := "com.github.alexarchambault"
 
 name := "argonaut-shapeless"
 
-version := "6.1-SNAPSHOT"
+version := "6.1"
 
 scalaVersion := "2.11.5"
 
 crossScalaVersions := Seq("2.10.4", "2.11.5")
 
 resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots")
+  Resolver.sonatypeRepo("releases")
+  //Resolver.sonatypeRepo("snapshots")
 )
 
 libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1-M5",
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test",
-  "com.github.alexarchambault" %% "scalacheck-shapeless" % "1.12.1-SNAPSHOT" % "test"
+  "com.github.alexarchambault" %% "scalacheck-shapeless" % "1.12.1" % "test"
 )
 
 libraryDependencies ++= {
