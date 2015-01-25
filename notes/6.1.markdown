@@ -1,0 +1,3 @@
+Initial release:
+
+* Allows to automatically derive `EncodeJson` and `DecodeJson` instances for case classes and sealed hierarchies
