@@ -1,7 +1,5 @@
 # argonaut-shapeless
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation with [shapeless](https://github.com/milessabin/shapeless)
 
 ## Usage
@@ -45,3 +43,6 @@ Based on an early (non `Lazy`-based) automatic codec derivation in argonaut
 by [Maxwell Swadling](https://github.com/maxpow4h),
 [Travis Brown](https://github.com/travisbrown), and
 [Mark Hibberd](https://github.com/markhibberd).
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
