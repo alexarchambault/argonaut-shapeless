@@ -6,9 +6,15 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 Add to your `build.sbt`
 ```scala
-libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1"
+libraryDependencies += "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1"
 ```
+
+If you are using scala 2.10.x, also add the macro paradise plugin to your build,
+```scala
+libraryDependencies +=
+  compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
+```
+
 
 Then import the content of `argonaut.Shapeless` along with the one of `argonaut.Argonaut` close to where you want codecs to be automatically available for case classes / sealed hierarchies:
 ```scala
