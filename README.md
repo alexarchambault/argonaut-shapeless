@@ -41,6 +41,16 @@ implicitly[DecodeJson[Base]]
 
 ```
 
+For the development version (new versioning), add instead to your `build.sbt`,
+```scala
+resolvers += Resolver.sonatypeRepo("snapshots")
+
+libraryDependencies +=
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.0-SHAPSHOT"
+```
+
+(Macro paradise plugin also necessary with scala 2.10, see above.)
+
 Available for scala 2.10 and 2.11. Uses argonaut 6.1-M5 and shapeless 2.1.0-RC1.
 
 Released under the BSD license. See LICENSE file for more details.
