@@ -1,23 +1,25 @@
 organization := "com.github.alexarchambault"
 
-name := "argonaut-shapeless"
+val _name = "argonaut-shapeless_6.1"
 
-version := "6.1.1-SNAPSHOT" // Versioning should evolve soon
+// See https://groups.google.com/forum/#!msg/simple-build-tool/-AempE1a358/z-sUFFV-cdgJ
+moduleName := _name
+
+name := _name
+
+version := "0.1.0-SNAPSHOT"
 
 scalaVersion := "2.11.5"
 
 crossScalaVersions := Seq("2.10.4", "2.11.5")
 
-resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots")
-)
+resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1-M5",
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test",
-  "com.github.alexarchambault" %% "scalacheck-shapeless" % "1.12.1.1-SNAPSHOT" % "test"
+  "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.1.0-SNAPSHOT" % "test"
 )
 
 libraryDependencies ++= {
