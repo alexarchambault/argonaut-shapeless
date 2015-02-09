@@ -1,6 +1,6 @@
 package argonaut
 
-import scalaz.Scalaz._
+import scalaz.Scalaz.{^ => apply2, _}
 import shapeless._, labelled.{ FieldType, field }
 
 trait AutoDecodeJsons {
@@ -19,7 +19,9 @@ trait AutoDecodeJsons {
   ): DecodeJson[FieldType[K, H] :: T] =
     DecodeJson { c =>
       val headJson = c --\ key.value.name
-      (headJson.as(headDecode.value).map(field[K](_)) |@| headJson.delete.as(tailDecode.value))(_ :: _)
+      val head = headJson.as(headDecode.value).map(field[K](_))
+      lazy val tail = headJson.delete.as(tailDecode.value)
+      apply2(head, tail)(_ :: _)
     }
 
   implicit val cnilDecodeJson: DecodeJson[CNil] = 
