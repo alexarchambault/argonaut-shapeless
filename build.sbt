@@ -39,6 +39,8 @@ xerial.sbt.Sonatype.sonatypeSettings
 
 publishMavenStyle := true
 
+licenses := Seq("BSD-3-Clause" -> url("http://www.opensource.org/licenses/BSD-3-Clause"))
+
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
@@ -49,23 +51,17 @@ publishTo := {
 
 pomExtra := {
   <url>https://github.com/alexarchambault/argonaut-shapeless</url>
-    <licenses>
-      <license>
-        <name>BSD-3-Clause</name>
-        <url>http://www.opensource.org/licenses/BSD-3-Clause</url>
-      </license>
-    </licenses>
-    <scm>
-      <connection>scm:git:github.com/alexarchambault/argonaut-shapeless.git</connection>
-      <developerConnection>scm:git:git@github.com:alexarchambault/argonaut-shapeless.git</developerConnection>
-      <url>github.com/alexarchambault/argonaut-shapeless.git</url>
-    </scm>
-    <developers>
-      <developer>
-        <id>alexarchambault</id>
-        <name>Alexandre Archambault</name>
-        <url>https://github.com/alexarchambault</url>
-      </developer>
-    </developers>
+  <scm>
+    <connection>scm:git:github.com/alexarchambault/argonaut-shapeless.git</connection>
+    <developerConnection>scm:git:git@github.com:alexarchambault/argonaut-shapeless.git</developerConnection>
+    <url>github.com/alexarchambault/argonaut-shapeless.git</url>
+  </scm>
+  <developers>
+    <developer>
+      <id>alexarchambault</id>
+      <name>Alexandre Archambault</name>
+      <url>https://github.com/alexarchambault</url>
+    </developer>
+  </developers>
 }
 
