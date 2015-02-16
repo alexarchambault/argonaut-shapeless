@@ -1,0 +1,15 @@
+language: scala
+scala:
+- 2.11.2
+- 2.10.4
+jdk:
+- oraclejdk7
+- oraclejdk8
+script: sbt ++${TRAVIS_SCALA_VERSION} test $(if [[ "${TRAVIS_PULL_REQUEST}" == "false"
+  && ${JAVA_HOME} == $(jdk_switcher home oraclejdk7) && "${TRAVIS_BRANCH}" == "master"
+  ]]; then echo "publish"; fi)
+sudo: false
+env:
+  global:
+  - secure: ed/+BkPkzy4fmB9jgurJ7uM6FsXPdiKGgEtQvS6mCNXyOaeMTUjnX9Mqk+sAo9akk5wp8bcnFPD5kYgjyw93MCQe6/LTqrJnMeOEFvaaJXc/AGDr/ZRZ1BMY13o5FLCtlSADa4WeHVl/9AzIcGiY2ZfVqcCiGbxQ5ZftOi0+ImY=
+  - secure: BrVLw4tvbLLCIp2xv7IYxlkOYdICju3+e46NhrA88Kqo8aXWecwD1Y4XnbTt3Vnv4qcHyi2YcCjRVo1/4PRWx/YFtrCBJMA4X3ds78/ov2rkcG+SVNy0gcu2XRuG5zovQVK8qRMcBmSSmweZx750KxmPeRA2BYzm5vL2DCngrj4=
