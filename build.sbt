@@ -7,19 +7,19 @@ moduleName := _name
 
 name := _name
 
-version := "0.1.0-SNAPSHOT"
+version := "0.1.0"
 
 scalaVersion := "2.11.5"
 
 crossScalaVersions := Seq("2.10.4", "2.11.5")
 
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1-M5",
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test",
-  "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.1.0-SNAPSHOT" % "test"
+  "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.1.0" % "test"
 )
 
 libraryDependencies ++= {

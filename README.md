@@ -8,7 +8,10 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 Add to your `build.sbt`
 ```scala
-libraryDependencies += "com.github.alexarchambault" %% "argonaut-shapeless" % "6.1"
+resolvers += Resolver.sonatypeRepo("releases")
+
+libraryDependencies +=
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.0"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -43,12 +46,12 @@ implicitly[DecodeJson[Base]]
 
 ```
 
-For the development version (new versioning), add instead to your `build.sbt`,
+For the development version, add instead to your `build.sbt`,
 ```scala
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.0-SHAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.1-SHAPSHOT"
 ```
 
 (Macro paradise plugin also necessary with scala 2.10, see above.)
