@@ -80,3 +80,5 @@ releaseSettings
 ReleaseKeys.versionBump := sbtrelease.Version.Bump.Bugfix
 
 sbtrelease.ReleasePlugin.ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
+
+scalacOptions += "-target:jvm-1.7"
