@@ -3,6 +3,7 @@
 Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation with [shapeless](https://github.com/milessabin/shapeless)
 
 [![Build Status](https://travis-ci.org/alexarchambault/argonaut-shapeless.svg)](https://travis-ci.org/alexarchambault/argonaut-shapeless)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Usage
 
@@ -11,7 +12,7 @@ Add to your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.0"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.1"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -51,7 +52,7 @@ For the development version, add instead to your `build.sbt`,
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.1-SHAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.2-SHAPSHOT"
 ```
 
 (Macro paradise plugin also necessary with scala 2.10, see above.)
@@ -64,6 +65,4 @@ Based on an early (non `Lazy`-based) automatic codec derivation in argonaut
 by [Maxwell Swadling](https://github.com/maxpow4h),
 [Travis Brown](https://github.com/travisbrown), and
 [Mark Hibberd](https://github.com/markhibberd).
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
