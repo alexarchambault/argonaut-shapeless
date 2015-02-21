@@ -49,7 +49,10 @@ implicitly[DecodeJson[Base]]
 
 For the development version, add instead to your `build.sbt`,
 ```scala
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
 
 libraryDependencies +=
   "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.2-SHAPSHOT"
