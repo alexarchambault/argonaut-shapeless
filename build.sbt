@@ -7,9 +7,9 @@ moduleName := _name
 
 name := _name
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
-crossScalaVersions := Seq("2.10.4", "2.11.5")
+crossScalaVersions := Seq("2.10.5", "2.11.6")
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
@@ -20,18 +20,18 @@ libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1-M5",
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test",
-  "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.1.0" % "test"
+  "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0-SNAPSHOT" % "test"
 )
 
 libraryDependencies ++= {
   if (scalaVersion.value startsWith "2.10.")
     Seq(
-      "com.chuusai" %% "shapeless" % "2.1.0" cross CrossVersion.full,
+      "com.chuusai" %% "shapeless" % "2.2.0-RC1" cross CrossVersion.full,
       compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
     )
   else
     Seq(
-      "com.chuusai" %% "shapeless" % "2.1.0"
+      "com.chuusai" %% "shapeless" % "2.2.0-RC1"
     )
 }
 
