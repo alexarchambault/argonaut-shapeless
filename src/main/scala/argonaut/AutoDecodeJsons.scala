@@ -3,7 +3,23 @@ package argonaut
 import scalaz.Scalaz.{^ => apply2, _}
 import shapeless._, labelled.{ FieldType, field }
 
-trait AutoDecodeJsons {
+trait AutoDecodeJsons1 {
+  def cconsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
+                                                      key: Witness.Aux[K],
+                                                      headDecode: Lazy[DecodeJson[H]],
+                                                      tailDecode: Lazy[DecodeJson[T]],
+                                                      coproductContainer: CoproductContainer
+                                                       ): DecodeJson[FieldType[K, H] :+: T]
+
+  implicit def defaultCConsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
+    key: Witness.Aux[K],
+    headDecode: Lazy[DecodeJson[H]],
+    tailDecode: Lazy[DecodeJson[T]]
+  ): DecodeJson[FieldType[K, H] :+: T] =
+    cconsDecodeJson(key, headDecode, tailDecode, CoproductContainer.default)
+}
+
+trait AutoDecodeJsons extends AutoDecodeJsons1 {
   implicit val hnilDecodeJson: DecodeJson[HNil] =
     DecodeJson { c =>
       // if (c.focus.obj.exists(_.isEmpty))
@@ -27,19 +43,16 @@ trait AutoDecodeJsons {
   implicit val cnilDecodeJson: DecodeJson[CNil] = 
     DecodeJson(c => DecodeResult.fail("CNil", c.history))
 
+
   implicit def cconsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
     key: Witness.Aux[K],
     headDecode: Lazy[DecodeJson[H]],
-    tailDecode: Lazy[DecodeJson[T]]
+    tailDecode: Lazy[DecodeJson[T]],
+    coproductContainer: CoproductContainer
   ): DecodeJson[FieldType[K, H] :+: T] =
-    DecodeJson { c =>
-      if (c.focus.string.exists(_ == key.value.name))
-        Json.obj().as(headDecode.value).map(h => Inl(field(h)))
-      else
-        (c --\ key.value.name).focus match {
-          case Some(headJson) => headJson.as(headDecode.value).map(h => Inl(field(h)))
-          case None           => tailDecode.value.decode(c).map(Inr(_))
-        }
+    DecodeJson {
+      case coproductContainer(key.value.name, head) => head.as(headDecode.value).map(h => Inl(field(h)))
+      case other => other.as(tailDecode.value).map(Inr(_))
     }
 
   implicit def projectDecodeJson[F, G](implicit
