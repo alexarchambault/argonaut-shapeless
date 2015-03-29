@@ -45,8 +45,7 @@ case class BaseNoArbIS(i: Int, s: String) extends BaseNoArb
 case class BaseNoArbDB(d: Double, b: Boolean) extends BaseNoArb
 case class BaseNoArbN(n: NoArbitraryType) extends BaseNoArb
 
-
-class Tests extends PropSpec with Matchers with PropertyChecks {
+trait TestCases extends PropSpec with Matchers with PropertyChecks {
   private def toFromJson[T: EncodeJson : DecodeJson](t: T): DecodeResult[T] = t.asJson.as[T]
 
   private def sameAfterBeforeSerialization[T: Arbitrary : EncodeJson : DecodeJson]: Unit =
@@ -99,4 +98,31 @@ class Tests extends PropSpec with Matchers with PropertyChecks {
   // property("SimpleWithJs must not change after serialization/deserialization") {
   //   sameAfterBeforeSerialization[SimpleWithJs]
   // }
+}
+
+class DefaultCoproductContainerTests extends TestCases
+
+class CustomCoproductContainerTests extends TestCases {
+  implicit val cpc: CoproductContainer = new CoproductContainer {
+    override def apply(typeName: String, content: Json): Json = {
+      Json.jObject {
+        content.obj.map { obj =>
+          obj.+:("type" -> Json.jString(typeName))
+        }.getOrElse(JsonObject.empty)
+      }
+    }
+
+    override def unapply(c: HCursor): Option[(String, Json)] = {
+      c.focus.field("type").flatMap(_.string).map { typeName =>
+        (typeName, c.focus)
+      }
+    }
+  }
+
+  property("Provided implicit CoproductContainer should be used for Encode/Decode derivation") {
+    val base: Base = BaseIS(1, "string")
+    val json = base.asJson
+    json.field("type") shouldBe Some(Json.jString("BaseIS"))
+    json.as[Base].result shouldBe base.right
+  }
 }
