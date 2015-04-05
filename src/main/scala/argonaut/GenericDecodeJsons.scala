@@ -15,10 +15,10 @@ object GenericDecodeJsons {
     tailDecode: Lazy[DecodeJson[T]]
   ): DecodeJson[FieldType[K, H] :: T] =
     DecodeJson { c =>
-      val headJson = c --\ key.value.name
-      val head = headJson.as(headDecode.value).map(field[K](_))
-      lazy val tail = headJson.delete.as(tailDecode.value)
-      apply2(head, tail)(_ :: _)
+      for {
+        head <- c.get(key.value.name)(headDecode.value)
+        tail <- c.as(tailDecode.value)
+      } yield field[K](head) :: tail
     }
 
   implicit def cnilDecodeJsonFails: DecodeJson[CNil] =

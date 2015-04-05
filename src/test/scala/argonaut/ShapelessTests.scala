@@ -48,6 +48,15 @@ class ShapelessTests extends PropSpec with Matchers with PropertyChecks {
     sameAfterBeforeSerialization[NowThree]
   }
 
+  property("OI must not change after serialization/deserialization") {
+    sameAfterBeforeSerialization[OI]
+  }
+
+  property("OI must succeed on more loose input") {
+    val json = Parse.parseOption("{}").get
+    json.as[OI].result shouldBe OI(None).right
+  }
+
   property("Base must not change after serialization/deserialization") {
     sameAfterBeforeSerialization[Base]
   }

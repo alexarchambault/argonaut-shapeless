@@ -47,6 +47,9 @@ object JsonCodecs {
   implicit val nowThreeEncodeJson = EncodeJson.of[NowThree]
   implicit val nowThreeDecodeJson = DecodeJson.of[NowThree]
 
+  implicit val oiEncodeJson = EncodeJson.of[OI]
+  implicit val oiDecodeJson = DecodeJson.of[OI]
+
   implicit val baseEncodeJson = EncodeJson.of[Base]
   implicit val baseDecodeJson = DecodeJson.of[Base]
 }
