@@ -1,6 +1,6 @@
 package argonaut
 
-import scalaz.Scalaz.{ ^ => apply2, _ }
+import scalaz.Scalaz.ApplicativeIdV
 import shapeless._, labelled.{ FieldType, field }
 
 object GenericDecodeJsons {
