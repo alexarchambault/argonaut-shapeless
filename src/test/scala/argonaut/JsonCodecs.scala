@@ -9,7 +9,22 @@ case class BaseLast(c: Simple) extends Base
 
 // Proxied implicits
 object JsonCodecs {
-  import Argonaut._, Shapeless._
+  import Argonaut._
+
+  // Equivalent to
+  //   import Shapeless._
+
+  import GenericEncodeJsons.{
+    hnilJsObjectEncodeJson, hconsJsObjectEncodeJson,
+    cnilEncodeJsonFails,    cconsJsObjectEncodeJson,
+    defaultInstanceEncodeJson
+  }
+
+  import GenericDecodeJsons.{
+    hnilLooseJsObjectDecodeJson, stopAtFirstErrorHConsJsObjectDecodeJson,
+    cnilDecodeJsonFails,         cconsAsJsObjectDecodeJson,
+    defaultInstanceDecodeJson
+  }
 
   implicit val emptyEncodeJson = EncodeJson.of[Empty.type]
   implicit val emptyDecodeJson = DecodeJson.of[Empty.type]

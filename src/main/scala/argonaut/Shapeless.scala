@@ -1,3 +1,3 @@
 package argonaut
 
-object Shapeless extends AutoDecodeJsons with AutoEncodeJsons
+object Shapeless extends DefaultGenericDecodeJsons with DefaultGenericEncodeJsons
