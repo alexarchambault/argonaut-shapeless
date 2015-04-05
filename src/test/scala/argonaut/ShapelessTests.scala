@@ -1,6 +1,4 @@
 package argonaut
-package shapeless
-
 
 import Argonaut._, Shapeless._
 import scalaz._, Scalaz._
@@ -46,7 +44,7 @@ case class BaseNoArbDB(d: Double, b: Boolean) extends BaseNoArb
 case class BaseNoArbN(n: NoArbitraryType) extends BaseNoArb
 
 
-class Tests extends PropSpec with Matchers with PropertyChecks {
+class ShapelessTests extends PropSpec with Matchers with PropertyChecks {
   private def toFromJson[T: EncodeJson : DecodeJson](t: T): DecodeResult[T] = t.asJson.as[T]
 
   private def sameAfterBeforeSerialization[T: Arbitrary : EncodeJson : DecodeJson]: Unit =
