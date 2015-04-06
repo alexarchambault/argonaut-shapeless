@@ -21,8 +21,8 @@ object JsonCodecs {
   }
 
   import GenericDecodeJsons.{
-    hnilLooseJsObjectDecodeJson, stopAtFirstErrorHConsJsObjectDecodeJson,
-    cnilDecodeJsonFails,         cconsAsJsObjectDecodeJson,
+    hnilDecodeJsonSucceeds, stopAtFirstErrorHConsJsObjectDecodeJson,
+    cnilDecodeJsonFails,    cconsAsJsObjectDecodeJson,
     defaultInstanceDecodeJson
   }
 

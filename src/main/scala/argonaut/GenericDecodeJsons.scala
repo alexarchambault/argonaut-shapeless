@@ -4,7 +4,7 @@ import scalaz.Scalaz.ApplicativeIdV
 import shapeless._, labelled.{ FieldType, field }
 
 object GenericDecodeJsons {
-  implicit def hnilLooseJsObjectDecodeJson: DecodeJson[HNil] =
+  implicit def hnilDecodeJsonSucceeds: DecodeJson[HNil] =
     DecodeJson { c =>
       (HNil: HNil).point[DecodeResult]
     }
@@ -45,7 +45,7 @@ object GenericDecodeJsons {
 
 trait DefaultGenericDecodeJsons {
   implicit val hnilDecodeJson: DecodeJson[HNil] =
-    GenericDecodeJsons.hnilLooseJsObjectDecodeJson
+    GenericDecodeJsons.hnilDecodeJsonSucceeds
 
   implicit def hconsDecodeJson[K <: Symbol, H, T <: HList](implicit
     key: Witness.Aux[K],
