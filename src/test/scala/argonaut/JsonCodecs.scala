@@ -39,3 +39,35 @@ object JsonCodecs {
   implicit val baseEncodeJson = EncodeJson.of[Base]
   implicit val baseDecodeJson = DecodeJson.of[Base]
 }
+
+object JsonCodecsDefaultCustom {
+  import Argonaut._
+  import Shapeless.Custom._
+
+  implicit val emptyEncodeJson = EncodeJson.of[Empty.type]
+  implicit val emptyDecodeJson = DecodeJson.of[Empty.type]
+
+  implicit val emptyCCEncodeJson = EncodeJson.of[EmptyCC]
+  implicit val emptyCCDecodeJson = DecodeJson.of[EmptyCC]
+
+  implicit val simpleEncodeJson = EncodeJson.of[Simple]
+  implicit val simpleDecodeJson = DecodeJson.of[Simple]
+
+  implicit val composedEncodeJson = EncodeJson.of[Composed]
+  implicit val composedDecodeJson = DecodeJson.of[Composed]
+
+  implicit val twiceComposedEncodeJson = EncodeJson.of[TwiceComposed]
+  implicit val twiceComposedDecodeJson = DecodeJson.of[TwiceComposed]
+
+  implicit val composedOptListEncodeJson = EncodeJson.of[ComposedOptList]
+  implicit val composedOptListDecodeJson = DecodeJson.of[ComposedOptList]
+
+  implicit val nowThreeEncodeJson = EncodeJson.of[NowThree]
+  implicit val nowThreeDecodeJson = DecodeJson.of[NowThree]
+
+  implicit val oiEncodeJson = EncodeJson.of[OI]
+  implicit val oiDecodeJson = DecodeJson.of[OI]
+
+  implicit val baseEncodeJson = EncodeJson.of[Base]
+  implicit val baseDecodeJson = DecodeJson.of[Base]
+}
