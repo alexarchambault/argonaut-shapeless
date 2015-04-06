@@ -12,7 +12,7 @@ object GenericEncodeJsons {
     headEncode: Lazy[EncodeJson[H]],
     tailEncode: Lazy[EncodeJson[T]]
   ): EncodeJson[FieldType[K, H] :: T] =
-    EncodeJson { case (h :: t) =>
+    EncodeJson { case h :: t =>
       (key.value.name -> headEncode.value.encode(h)) ->: tailEncode.value.encode(t)
     }
 
