@@ -65,7 +65,7 @@ class ShapelessTests extends PropSpec with Matchers with PropertyChecks {
     illTyped(" implicitly[DecodeJson[BaseNoArb]] ")
   }
 
-  // This one raises StackOverflowError
+  // This one raises StackOverflowError, possibly because of automatic Arbitrary[Json] derivation
   // property("SimpleWithJs must not change after serialization/deserialization") {
   //   sameAfterBeforeSerialization[SimpleWithJs]
   // }
