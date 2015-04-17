@@ -6,10 +6,7 @@ import shapeless._, labelled.{ FieldType, field }
 trait AutoDecodeJsons {
   implicit val hnilDecodeJson: DecodeJson[HNil] =
     DecodeJson { c =>
-      // if (c.focus.obj.exists(_.isEmpty))
       (HNil: HNil).point[DecodeResult]
-      // else
-      //   DecodeResult.fail("HNil", c.history)
     }
 
   implicit def hconsDecodeJson[K <: Symbol, H, T <: HList](implicit
@@ -27,19 +24,18 @@ trait AutoDecodeJsons {
   implicit val cnilDecodeJson: DecodeJson[CNil] = 
     DecodeJson(c => DecodeResult.fail("CNil", c.history))
 
+
   implicit def cconsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
     key: Witness.Aux[K],
     headDecode: Lazy[DecodeJson[H]],
-    tailDecode: Lazy[DecodeJson[T]]
+    tailDecode: Lazy[DecodeJson[T]],
+    coproductCodec: JsonCoproductCodec
   ): DecodeJson[FieldType[K, H] :+: T] =
-    DecodeJson { c =>
-      if (c.focus.string.exists(_ == key.value.name))
-        Json.obj().as(headDecode.value).map(h => Inl(field(h)))
-      else
-        (c --\ key.value.name).focus match {
-          case Some(headJson) => headJson.as(headDecode.value).map(h => Inl(field(h)))
-          case None           => tailDecode.value.decode(c).map(Inr(_))
-        }
+    DecodeJson[FieldType[K, H] :+: T] { c =>
+      val inl: Option[DecodeResult[FieldType[K, H] :+: T]] =
+        coproductCodec.attemptDecode(key.value.name, headDecode.value, c.focus)
+          .map(_.map(field[K](_)).map(Inl(_)))
+      inl.getOrElse(c.as(tailDecode.value).map(Inr(_)))
     }
 
   implicit def projectDecodeJson[F, G](implicit
