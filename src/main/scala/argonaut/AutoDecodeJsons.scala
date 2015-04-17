@@ -3,29 +3,10 @@ package argonaut
 import scalaz.Scalaz.{^ => apply2, _}
 import shapeless._, labelled.{ FieldType, field }
 
-trait AutoDecodeJsons1 {
-  def cconsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
-                                                      key: Witness.Aux[K],
-                                                      headDecode: Lazy[DecodeJson[H]],
-                                                      tailDecode: Lazy[DecodeJson[T]],
-                                                      coproductContainer: CoproductContainer
-                                                       ): DecodeJson[FieldType[K, H] :+: T]
-
-  implicit def defaultCConsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
-    key: Witness.Aux[K],
-    headDecode: Lazy[DecodeJson[H]],
-    tailDecode: Lazy[DecodeJson[T]]
-  ): DecodeJson[FieldType[K, H] :+: T] =
-    cconsDecodeJson(key, headDecode, tailDecode, CoproductContainer.default)
-}
-
-trait AutoDecodeJsons extends AutoDecodeJsons1 {
+trait AutoDecodeJsons {
   implicit val hnilDecodeJson: DecodeJson[HNil] =
     DecodeJson { c =>
-      // if (c.focus.obj.exists(_.isEmpty))
       (HNil: HNil).point[DecodeResult]
-      // else
-      //   DecodeResult.fail("HNil", c.history)
     }
 
   implicit def hconsDecodeJson[K <: Symbol, H, T <: HList](implicit
@@ -48,11 +29,13 @@ trait AutoDecodeJsons extends AutoDecodeJsons1 {
     key: Witness.Aux[K],
     headDecode: Lazy[DecodeJson[H]],
     tailDecode: Lazy[DecodeJson[T]],
-    coproductContainer: CoproductContainer
+    coproductCodec: JsonCoproductCodec
   ): DecodeJson[FieldType[K, H] :+: T] =
-    DecodeJson {
-      case coproductContainer(key.value.name, head) => head.as(headDecode.value).map(h => Inl(field(h)))
-      case other => other.as(tailDecode.value).map(Inr(_))
+    DecodeJson[FieldType[K, H] :+: T] { c =>
+      val inl: Option[DecodeResult[FieldType[K, H] :+: T]] =
+        coproductCodec.attemptDecode(key.value.name, headDecode.value, c.focus)
+          .map(_.map(field[K](_)).map(Inl(_)))
+      inl.getOrElse(c.as(tailDecode.value).map(Inr(_)))
     }
 
   implicit def projectDecodeJson[F, G](implicit
