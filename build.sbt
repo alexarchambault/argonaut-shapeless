@@ -17,22 +17,20 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "io.argonaut" %% "argonaut" % "6.1-M5",
+  "io.argonaut" %% "argonaut" % "6.1-M6",
+  "com.chuusai" %% "shapeless" % "2.2.0-RC4",
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.12.1" % "test",
+  "org.scalacheck" %% "scalacheck" % "1.12.2" % "test",
   "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0-SNAPSHOT" % "test"
 )
 
 libraryDependencies ++= {
   if (scalaVersion.value startsWith "2.10.")
     Seq(
-      "com.chuusai" %% "shapeless" % "2.2.0-RC1" cross CrossVersion.full,
       compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
     )
   else
-    Seq(
-      "com.chuusai" %% "shapeless" % "2.2.0-RC1"
-    )
+    Seq()
 }
 
 
