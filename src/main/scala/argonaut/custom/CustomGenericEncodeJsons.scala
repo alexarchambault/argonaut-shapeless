@@ -13,6 +13,17 @@ object CustomGenericEncodeJsons {
     EncodeJson { case h :: t =>
       pc.encodeField(key.value.name, headEncode.value.encode(h), tailEncode.value.encode(t))
     }
+
+  implicit def customCConsAsJsObjectEncodeJson[K <: Symbol, H, T <: Coproduct](implicit
+    key: Witness.Aux[K],
+    headEncode: Lazy[EncodeJson[H]],
+    tailEncode: Lazy[EncodeJson[T]],
+    cc: JsonCoproductCodec
+  ): EncodeJson[FieldType[K, H] :+: T] =
+    EncodeJson {
+      case Inl(h) => cc.encode(key.value.name, headEncode.value.encode(h))
+      case Inr(t) => tailEncode.value.encode(t)
+    }
 }
 
 trait CustomGenericEncodeJsons {
@@ -33,9 +44,10 @@ trait CustomGenericEncodeJsons {
   implicit def cconsEncodeJson[K <: Symbol, H, T <: Coproduct](implicit
     key: Witness.Aux[K],
     headEncode: Lazy[EncodeJson[H]],
-    tailEncode: Lazy[EncodeJson[T]]
+    tailEncode: Lazy[EncodeJson[T]],
+    cc: JsonCoproductCodec
   ): EncodeJson[FieldType[K, H] :+: T] =
-    GenericEncodeJsons.cconsJsObjectEncodeJson(key, headEncode, tailEncode)
+    CustomGenericEncodeJsons.customCConsAsJsObjectEncodeJson(key, headEncode, tailEncode, cc)
 
   implicit def instanceEncodeJson[F, G](implicit
     gen: LabelledGeneric.Aux[F, G],
