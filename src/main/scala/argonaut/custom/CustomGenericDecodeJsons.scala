@@ -18,6 +18,19 @@ object CustomGenericDecodeJsons {
         tail <- c.as(tailDecode.value)
       } yield field[K](head) :: tail
     }
+
+  implicit def customCConsAsJsObjectDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
+    key: Witness.Aux[K],
+    headDecode: Lazy[DecodeJson[H]],
+    tailDecode: Lazy[DecodeJson[T]],
+    cc: JsonCoproductCodec
+  ): DecodeJson[FieldType[K, H] :+: T] =
+    DecodeJson { c =>
+      val inl: Option[DecodeResult[FieldType[K, H] :+: T]] =
+        cc.attemptDecode(key.value.name, headDecode.value, c.focus)
+          .map(_.map(field[K](_)).map(Inl(_)))
+      inl.getOrElse(c.as(tailDecode.value).map(Inr(_)))
+    }
 }
 
 trait CustomGenericDecodeJsons {
@@ -38,9 +51,10 @@ trait CustomGenericDecodeJsons {
   implicit def cconsDecodeJson[K <: Symbol, H, T <: Coproduct](implicit
     key: Witness.Aux[K],
     headDecode: Lazy[DecodeJson[H]],
-    tailDecode: Lazy[DecodeJson[T]]
+    tailDecode: Lazy[DecodeJson[T]],
+    cc: JsonCoproductCodec
   ): DecodeJson[FieldType[K, H] :+: T] =
-    GenericDecodeJsons.cconsAsJsObjectDecodeJson(key, headDecode, tailDecode)
+    CustomGenericDecodeJsons.customCConsAsJsObjectDecodeJson(key, headDecode, tailDecode, cc)
 
   implicit def instanceDecodeJson[F, G](implicit
     gen: LabelledGeneric.Aux[F, G],
