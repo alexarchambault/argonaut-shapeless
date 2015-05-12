@@ -4,6 +4,9 @@ import scalaz.Scalaz.{^ => apply2, _}
 import shapeless._, labelled.{ FieldType, field }
 
 trait AutoDecodeJsons {
+
+  object DecodeJsonDeriver {
+
   implicit val hnilDecodeJson: DecodeJson[HNil] =
     DecodeJson { c =>
       // if (c.focus.obj.exists(_.isEmpty))
@@ -47,4 +50,11 @@ trait AutoDecodeJsons {
     decode: Lazy[DecodeJson[G]]
   ): DecodeJson[F] =
     decode.value.map(gen.from)
+
+  } // DecodeJsonDeriver
+
+
+  implicit def decodeJsonDeriver[T](implicit orphan: Orphan[DecodeJson, DecodeJsonDeriver.type, T]): DecodeJson[T] =
+    orphan.instance
+
 }

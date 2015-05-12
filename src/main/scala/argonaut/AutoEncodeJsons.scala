@@ -3,7 +3,10 @@ package argonaut
 import Json._
 import shapeless._, labelled.FieldType
 
-trait AutoEncodeJsons {  
+trait AutoEncodeJsons {
+
+  object EncodeJsonDeriver {
+
   implicit def hnilEncodeJson[L <: HNil]: EncodeJson[L] =
     EncodeJson(_ => jEmptyObject)
 
@@ -13,9 +16,9 @@ trait AutoEncodeJsons {
     tailEncode: Lazy[EncodeJson[T]]
   ): EncodeJson[FieldType[K, H] :: T] =
     EncodeJson { case (h :: t) =>
-      (key.value.name -> headEncode.value.encode(h)) ->: tailEncode.value.encode(t) 
+      (key.value.name -> headEncode.value.encode(h)) ->: tailEncode.value.encode(t)
     }
-  
+
   implicit val cnilEncodeJson: EncodeJson[CNil] =
     EncodeJson(_ => jEmptyObject)
 
@@ -34,4 +37,11 @@ trait AutoEncodeJsons {
     encode: Lazy[EncodeJson[G]]
   ): EncodeJson[F] =
     encode.value.contramap(gen.to)
+
+  } // EncodeJsonDeriver
+
+
+  implicit def encodeJsonDeriver[T](implicit orphan: Orphan[EncodeJson, EncodeJsonDeriver.type, T]): EncodeJson[T] =
+    orphan.instance
+
 }
