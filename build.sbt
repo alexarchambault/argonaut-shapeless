@@ -17,8 +17,8 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "io.argonaut" %% "argonaut" % "6.1-M6",
-  "com.chuusai" %% "shapeless" % "2.2.0-RC3",
+  "io.argonaut" %% "argonaut" % "6.1",
+  "com.chuusai" %% "shapeless" % "2.2.0-RC6",
   "org.scalatest" %% "scalatest" % "2.2.2" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.2" % "test",
   "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0-SNAPSHOT" % "test"
