@@ -18,9 +18,11 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1",
-  "com.chuusai" %% "shapeless" % "2.2.0-RC6",
-  "org.scalatest" %% "scalatest" % "2.2.2" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.12.2" % "test",
+  "com.chuusai" %% "shapeless" % "2.2.0",
+  "org.scalatest" %% "scalatest" % "2.2.5" % "test",
+  /* using scalacheck 1.12.4-SNAPSHOT because of
+   * https://github.com/rickynils/scalacheck/issues/165 */
+  "org.scalacheck" %% "scalacheck" % "1.12.4-SNAPSHOT" % "test",
   "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0-SNAPSHOT" % "test"
 )
 
