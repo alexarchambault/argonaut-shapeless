@@ -55,7 +55,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.2-SHAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.2-SNAPSHOT"
 ```
 
 If you are using shapeless 2.2, change the version above to `0.2.0-SNAPSHOT`.
