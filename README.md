@@ -55,7 +55,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.2.1-SNAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.3.0-SNAPSHOT"
 ```
 
 (Macro paradise plugin also necessary with scala 2.10, see above.)
