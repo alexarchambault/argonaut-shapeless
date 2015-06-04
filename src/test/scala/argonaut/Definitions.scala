@@ -12,6 +12,7 @@ case class Composed(foo: Simple, other: String)
 case class TwiceComposed(foo: Simple, bar: Composed, v: Int)
 case class ComposedOptList(fooOpt: Option[Simple], other: String, l: List[TwiceComposed])
 
+case class OI(oi: Option[Int])
 
 case class SimpleWithJs(i: Int, s: String, v: Json)
 
