@@ -12,7 +12,7 @@ Add to your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.1"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.2.0"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -55,14 +55,12 @@ resolvers ++= Seq(
 )
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.1.2-SNAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.2.1-SNAPSHOT"
 ```
-
-If you are using shapeless 2.2, change the version above to `0.2.0-SNAPSHOT`.
 
 (Macro paradise plugin also necessary with scala 2.10, see above.)
 
-Available for scala 2.10 and 2.11. Uses argonaut 6.1-M5 and shapeless >= 2.1.
+Available for scala 2.10 and 2.11. Uses argonaut 6.1 and shapeless 2.2.
 
 Released under the BSD license. See LICENSE file for more details.
 
