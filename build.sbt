@@ -11,6 +11,8 @@ scalaVersion := "2.11.6"
 
 crossScalaVersions := Seq("2.10.5", "2.11.6")
 
+// Keeping some snapshot artifacts around for tests
+// (scalacheck 1.12.4-SNAPSHOT in particular)
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots")
