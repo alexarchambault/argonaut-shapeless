@@ -12,7 +12,7 @@ scalaVersion := "2.11.6"
 crossScalaVersions := Seq("2.10.5", "2.11.6")
 
 // Keeping some snapshot artifacts around for tests
-// (scalacheck 1.12.4-SNAPSHOT in particular)
+// (for scalacheck 1.12.4-SNAPSHOT in particular)
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots")
@@ -20,7 +20,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.1",
-  "com.chuusai" %% "shapeless" % "2.2.1",
+  "com.chuusai" %% "shapeless" % "2.2.2",
   "org.scalatest" %% "scalatest" % "2.2.5" % "test",
   /* using scalacheck 1.12.4-SNAPSHOT because of
    * https://github.com/rickynils/scalacheck/issues/165 */
