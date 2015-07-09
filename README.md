@@ -12,7 +12,7 @@ Add to your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.2.0"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.3.1"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -55,7 +55,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.3.0-SNAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.3.2-SNAPSHOT"
 ```
 
 (Macro paradise plugin also necessary with scala 2.10, see above.)
