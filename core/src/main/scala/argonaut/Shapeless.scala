@@ -1,7 +1,34 @@
 package argonaut
 
-import shapeless.{ Strict, LowPriority }
+import shapeless.{ Strict, LowPriority, Witness }
 import argonaut.derive._
+
+trait SingletonInstances {
+
+  implicit def singletonTypeEncodeJson[S, W]
+   (implicit
+     w: Witness.Aux[S],
+     widen: Widen.Aux[S, W],
+     underlying: EncodeJson[W]
+   ): EncodeJson[S] =
+    underlying.contramap[S](widen.to)
+
+  implicit def singletonTypeDecodeJson[S, W]
+   (implicit
+     w: Witness.Aux[S],
+     widen: Widen.Aux[S, W],
+     underlying: DecodeJson[W]
+   ): DecodeJson[S] =
+    DecodeJson { c =>
+      underlying.decode(c).flatMap { w0 =>
+        widen.from(w0) match {
+          case Some(s) => DecodeResult.ok(s)
+          case None => DecodeResult.fail(s"Expected ${w.value}, got $w0", c.history)
+        }
+      }
+    }
+
+}
 
 trait DerivedInstances {
 
@@ -28,4 +55,6 @@ trait DerivedInstances {
 
 }
 
-object Shapeless extends DerivedInstances
+object Shapeless
+  extends SingletonInstances
+  with DerivedInstances
