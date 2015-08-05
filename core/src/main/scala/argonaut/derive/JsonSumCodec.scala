@@ -15,6 +15,13 @@ trait JsonSumCodecFor[S] {
   def codec: JsonSumCodec
 }
 
+object JsonSumCodecFor {
+  def apply[S](codec0: JsonSumCodec): JsonSumCodecFor[S] =
+    new JsonSumCodecFor[S] {
+      def codec = codec0
+    }
+}
+
 object JsonSumCodec {
   val obj = JsonSumObjCodec()
 }

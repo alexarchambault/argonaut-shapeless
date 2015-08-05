@@ -13,6 +13,13 @@ trait JsonProductCodecFor[P] {
   def codec: JsonProductCodec
 }
 
+object JsonProductCodecFor {
+  def apply[S](codec0: JsonProductCodec): JsonProductCodecFor[S] =
+    new JsonProductCodecFor[S] {
+      def codec = codec0
+    }
+}
+
 object JsonProductCodec {
   val obj = JsonProductObjCodec()
 }
