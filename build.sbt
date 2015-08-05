@@ -8,6 +8,7 @@ lazy val root = project.in(file("."))
 lazy val core = project.in(file("core"))
   .settings(coreSettings)
   .settings(compileSettings)
+  .settings(testSettings)
   .settings(publishSettings)
   .settings(releaseSettings)
   .settings(extraReleaseSettings)
@@ -30,10 +31,7 @@ lazy val compileSettings = Seq(
   ),
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.2.2",
-    "org.scalatest" %% "scalatest" % "2.2.5" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.12.4" % "test",
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0" % "test"
+    "com.chuusai" %% "shapeless" % "2.2.2"
   ),
   libraryDependencies ++= {
     if (scalaVersion.value startsWith "2.10.")
@@ -43,6 +41,14 @@ lazy val compileSettings = Seq(
     else
       Seq()
   }
+)
+
+lazy val testSettings = Seq(
+  libraryDependencies ++= Seq(
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0" % "test",
+    "com.lihaoyi" %% "utest" % "0.3.0" % "test"
+  ),
+  testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
 lazy val publishSettings = Seq(
