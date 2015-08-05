@@ -1,25 +1,41 @@
 import com.typesafe.sbt.pgp.PgpKeys
 
 lazy val root = project.in(file("."))
-  .aggregate(core)
+  .aggregate(core, refined)
   .settings(compileSettings)
   .settings(noPublishSettings)
 
 lazy val core = project.in(file("core"))
   .settings(coreSettings)
-  .settings(compileSettings)
-  .settings(testSettings)
-  .settings(publishSettings)
-  .settings(releaseSettings)
-  .settings(extraReleaseSettings)
+  .settings(projectSettings)
+
+lazy val refined = project.in(file("refined"))
+  .dependsOn(core % "test")
+  .settings(refinedSettings)
+  .settings(projectSettings)
 
 lazy val coreName = "argonaut-shapeless_6.1"
 
-lazy val coreSettings = Seq(
+lazy val coreSettings = coreCompileSettings ++ Seq(
   organization := "com.github.alexarchambault",
   name := coreName,
   moduleName := coreName
 )
+
+lazy val refinedName = "argonaut-refined_6.1"
+
+lazy val refinedSettings = refinedCompileSettings ++ Seq(
+  organization := "com.github.alexarchambault",
+  name := refinedName,
+  moduleName := refinedName
+)
+
+lazy val projectSettings =
+  compileSettings ++
+  testSettings ++
+  publishSettings ++
+  releaseSettings ++
+  extraReleaseSettings
 
 lazy val compileSettings = Seq(
   scalaVersion := "2.11.7",
@@ -28,7 +44,11 @@ lazy val compileSettings = Seq(
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
     Resolver.sonatypeRepo("snapshots")
-  ),
+  )
+)
+
+
+lazy val coreCompileSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.github.alexarchambault" %% "shapeless" % "2.2.6-SNAPSHOT"
@@ -41,6 +61,12 @@ lazy val compileSettings = Seq(
     else
       Seq()
   }
+)
+
+lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
+  libraryDependencies ++= Seq(
+    "eu.timepit" %% "refined" % "0.2.0" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
+  )
 )
 
 lazy val testSettings = Seq(
