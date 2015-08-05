@@ -64,7 +64,9 @@ object SumEncodeTests extends TestSuite {
       defaultJsonProductCodecFor
     ).encodeJson
 
-  lazy val expectedBaseEncodeJson =
+  lazy val expectedBaseEncodeJson = expectedBaseEncodeJsonFor(defaultJsonSumCodecFor)
+  lazy val expectedBaseEncodeJsonTypeField = expectedBaseEncodeJsonFor(JsonSumCodecFor(JsonSumCodec.typeField))
+  def expectedBaseEncodeJsonFor(codecFor: JsonSumCodecFor[Base]) =
     MkEncodeJson.sumEncodeJson(
       SumEncodeJson.genericEncodeJson(
         LabelledGeneric[Base],
@@ -84,14 +86,23 @@ object SumEncodeTests extends TestSuite {
           )
         )
       ),
-      defaultJsonSumCodecFor
+      codecFor
     ).encodeJson
+
+  val derivedBaseEncodeJsonTypeField = {
+    implicit val codecFor = JsonSumCodecFor[Base](JsonSumCodec.typeField)
+    EncodeJson.of[Base]
+  }
 
   val tests = TestSuite {
 
     'codec {
       'base - {
         compareEncodeJsons(EncodeJson.of[Base], expectedBaseEncodeJson)
+      }
+
+      'baseTypeField - {
+        compareEncodeJsons(derivedBaseEncodeJsonTypeField, expectedBaseEncodeJsonTypeField)
       }
     }
 
