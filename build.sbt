@@ -91,6 +91,4 @@ lazy val extraReleaseSettings = Seq(
   sbtrelease.ReleasePlugin.ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 )
 
-xerial.sbt.Sonatype.sonatypeSettings
-
 // build.sbt shamelessly inspired by https://github.com/fthomas/refined/blob/master/build.sbt
