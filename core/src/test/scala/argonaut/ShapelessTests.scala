@@ -19,7 +19,7 @@ object ShapelessTests extends TestSuite {
     }.validate
 
   import org.scalacheck.Shapeless._
-  import JsonCodecs._
+  import Shapeless._
 
   val tests = TestSuite {
     'serializeDeserialize {
@@ -57,30 +57,33 @@ object ShapelessTests extends TestSuite {
 
       'oiLoose - {
         val json = Parse.parseOption("{}").get
-        assert(json.as[OI].result == OI(None).right)
+        // assert macro crashes if result is substituted by its value below
+        val result = json.as[OI].result
+        assert(result == OI(None).right)
       }
 
-      'base {
+      'base - {
         sameAfterBeforeSerialization[Base]
+      }
+
+      'simpleWithJsDummy - {
+        EncodeJson.of[Json]
+        DecodeJson.of[Json]
+        EncodeJson.of[SimpleWithJs]
+        DecodeJson.of[SimpleWithJs]
+        // Arbitrary[SimpleWithJs] doesn't seem fine
+        // sameAfterBeforeSerialization[SimpleWithJs]
       }
     }
   }
 
-  {
-    import Shapeless._
+  illTyped(" EncodeJson.of[NoArbitraryType] ")
+  illTyped(" DecodeJson.of[NoArbitraryType] ")
+  illTyped(" EncodeJson.of[ShouldHaveNoArb] ")
+  illTyped(" DecodeJson.of[ShouldHaveNoArb] ")
+  illTyped(" EncodeJson.of[ShouldHaveNoArbEither] ")
+  illTyped(" DecodeJson.of[ShouldHaveNoArbEither] ")
+  illTyped(" EncodeJson.of[BaseNoArb] ")
+  illTyped(" DecodeJson.of[BaseNoArb] ")
 
-    illTyped(" implicitly[EncodeJson[NoArbitraryType]] ")
-    illTyped(" implicitly[DecodeJson[NoArbitraryType]] ")
-    illTyped(" implicitly[EncodeJson[ShouldHaveNoArb]] ")
-    illTyped(" implicitly[DecodeJson[ShouldHaveNoArb]] ")
-    illTyped(" implicitly[EncodeJson[ShouldHaveNoArbEither]] ")
-    illTyped(" implicitly[DecodeJson[ShouldHaveNoArbEither]] ")
-    illTyped(" implicitly[EncodeJson[BaseNoArb]] ")
-    illTyped(" implicitly[DecodeJson[BaseNoArb]] ")
-  }
-
-  // This one raises StackOverflowError, possibly because of automatic Arbitrary[Json] derivation
-  // property("SimpleWithJs must not change after serialization/deserialization") {
-  //   sameAfterBeforeSerialization[SimpleWithJs]
-  // }
 }

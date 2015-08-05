@@ -18,7 +18,10 @@ case class SimpleWithJs(i: Int, s: String, v: Json)
 
 case class NowThree(s: String, i: Int, n: Double)
 
-// See also Base in DefaultFormats.scala
+sealed trait Base
+case class BaseIS(i: Int, s: String) extends Base
+case class BaseDB(d: Double, b: Boolean) extends Base
+case class BaseLast(c: Simple) extends Base
 
 /*
  * We should *not* have codecs for these
