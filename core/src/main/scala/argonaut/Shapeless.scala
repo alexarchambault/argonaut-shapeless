@@ -30,31 +30,70 @@ trait SingletonInstances {
 
 }
 
-trait DerivedInstances {
-
+trait DefaultProductCodec {
   implicit def defaultJsonProductCodecFor[T]: JsonProductCodecFor[T] =
     new JsonProductCodecFor[T] {
       def codec = JsonProductCodec.obj
     }
+}
+
+trait DefaultSumCodec {
   implicit def defaultJsonSumCodecFor[T]: JsonSumCodecFor[T] =
     new JsonSumCodecFor[T] {
       def codec = JsonSumCodec.obj
     }
+}
+
+trait DerivedInstances extends DefaultProductCodec with DefaultSumCodec {
+
+  implicit def mkEncodeJson[T]
+   (implicit
+     priority: Strict[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
+   ): EncodeJson[T] =
+    priority
+      .value
+      .value
+      .encodeJson
+
+  implicit def mkDecodeJson[T]
+   (implicit
+     priority: Strict[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
+   ): DecodeJson[T] =
+    priority
+      .value
+      .value
+      .decodeJson
+
+}
+
+trait CachedDerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
   implicit def mkEncodeJson[T]
    (implicit
      priority: Strict.Cached[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
    ): EncodeJson[T] =
-    priority.value.value.encodeJson
+    priority
+      .value
+      .value
+      .encodeJson
 
   implicit def mkDecodeJson[T]
    (implicit
      priority: Strict.Cached[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
    ): DecodeJson[T] =
-    priority.value.value.decodeJson
+    priority
+      .value
+      .value
+      .decodeJson
 
 }
 
 object Shapeless
   extends SingletonInstances
-  with DerivedInstances
+  with DerivedInstances {
+
+  object Cached
+    extends SingletonInstances
+    with DerivedInstances
+
+}
