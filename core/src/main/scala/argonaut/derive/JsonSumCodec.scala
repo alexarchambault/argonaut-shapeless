@@ -43,7 +43,7 @@ case class JsonSumObjCodec(
     }
 
   def decodeEmpty(cursor: HCursor): DecodeResult[Nothing] =
-    DecodeResult.fail("sum", cursor.history)
+    DecodeResult.fail(s"unrecognized type(s): ${cursor.fields.getOrElse(Nil).mkString(", ")}", cursor.history)
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[Either[ACursor, A]] =
     cursor.--\(toJsonName0(name)).either match {
       case -\/(_) =>
