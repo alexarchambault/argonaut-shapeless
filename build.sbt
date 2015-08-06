@@ -65,7 +65,7 @@ lazy val coreCompileSettings = Seq(
 
 lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
   libraryDependencies ++= Seq(
-    "eu.timepit" %% "refined" % "0.2.0" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
+    "eu.timepit" %% "refined" % "0.2.1" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
   )
 )
 
