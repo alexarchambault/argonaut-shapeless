@@ -55,8 +55,12 @@ resolvers ++= Seq(
 )
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "0.3.2-SNAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.0.0-SNAPSHOT"
 ```
+
+Note that the development version currently depends on a modified version of shapeless
+(`"com.github.alexarchambault" %% "shapeless" % "2.2.6-SNAPSHOT"`). To use it,
+exclude the default shapeless version from your build, and add this one as a dependency.
 
 (Macro paradise plugin also necessary with scala 2.10, see above.)
 

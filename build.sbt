@@ -1,82 +1,100 @@
-organization := "com.github.alexarchambault"
+import com.typesafe.sbt.pgp.PgpKeys
 
-val _name = "argonaut-shapeless_6.1"
+lazy val root = project.in(file("."))
+  .aggregate(core)
+  .settings(compileSettings)
+  .settings(noPublishSettings)
 
-// See https://groups.google.com/forum/#!msg/simple-build-tool/-AempE1a358/z-sUFFV-cdgJ
-moduleName := _name
+lazy val core = project.in(file("core"))
+  .settings(coreSettings)
+  .settings(compileSettings)
+  .settings(testSettings)
+  .settings(publishSettings)
+  .settings(releaseSettings)
+  .settings(extraReleaseSettings)
 
-name := _name
+lazy val coreName = "argonaut-shapeless_6.1"
 
-scalaVersion := "2.11.6"
-
-crossScalaVersions := Seq("2.10.5", "2.11.6")
-
-resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots")
+lazy val coreSettings = Seq(
+  organization := "com.github.alexarchambault",
+  name := coreName,
+  moduleName := coreName
 )
 
-libraryDependencies ++= Seq(
-  "io.argonaut" %% "argonaut" % "6.1",
-  "com.chuusai" %% "shapeless" % "2.2.2",
-  "org.scalatest" %% "scalatest" % "2.2.5" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.12.4" % "test",
-  "com.github.alexarchambault" %% "scalacheck-shapeless_1.12" % "0.2.0" % "test"
-)
-
-libraryDependencies ++= {
-  if (scalaVersion.value startsWith "2.10.")
-    Seq(
-      compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
-    )
-  else
-    Seq()
-}
-
-
-xerial.sbt.Sonatype.sonatypeSettings
-
-publishMavenStyle := true
-
-licenses := Seq("BSD-3-Clause" -> url("http://www.opensource.org/licenses/BSD-3-Clause"))
-
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
-
-pomExtra := {
-  <url>https://github.com/alexarchambault/argonaut-shapeless</url>
-  <scm>
-    <connection>scm:git:github.com/alexarchambault/argonaut-shapeless.git</connection>
-    <developerConnection>scm:git:git@github.com:alexarchambault/argonaut-shapeless.git</developerConnection>
-    <url>github.com/alexarchambault/argonaut-shapeless.git</url>
-  </scm>
-  <developers>
-    <developer>
-      <id>alexarchambault</id>
-      <name>Alexandre Archambault</name>
-      <url>https://github.com/alexarchambault</url>
-    </developer>
-  </developers>
-}
-
-credentials += {
-  Seq("SONATYPE_USER", "SONATYPE_PASS").map(sys.env.get) match {
-    case Seq(Some(user), Some(pass)) =>
-      Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass)
-    case _ =>
-      Credentials(Path.userHome / ".ivy2" / ".credentials")
+lazy val compileSettings = Seq(
+  scalaVersion := "2.11.7",
+  crossScalaVersions := Seq("2.10.5", "2.11.7"),
+  scalacOptions += "-target:jvm-1.7",
+  resolvers ++= Seq(
+    Resolver.sonatypeRepo("releases"),
+    Resolver.sonatypeRepo("snapshots")
+  ),
+  libraryDependencies ++= Seq(
+    "io.argonaut" %% "argonaut" % "6.1",
+    "com.github.alexarchambault" %% "shapeless" % "2.2.6-SNAPSHOT"
+  ),
+  libraryDependencies ++= {
+    if (scalaVersion.value startsWith "2.10.")
+      Seq(
+        compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
+      )
+    else
+      Seq()
   }
-}
+)
 
-releaseSettings
+lazy val testSettings = Seq(
+  libraryDependencies ++= Seq(
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-SNAPSHOT" % "test",
+    "com.lihaoyi" %% "utest" % "0.3.0" % "test"
+  ),
+  testFrameworks += new TestFramework("utest.runner.Framework")
+)
 
-ReleaseKeys.versionBump := sbtrelease.Version.Bump.Bugfix
+lazy val publishSettings = Seq(
+  homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
+  licenses := Seq(
+    "BSD-3-Clause" -> url("http://www.opensource.org/licenses/BSD-3-Clause")
+  ),
+  scmInfo := Some(ScmInfo(
+    url("https://github.com/alexarchambault/argonaut-shapeless.git"),
+    "scm:git:github.com/alexarchambault/argonaut-shapeless.git",
+    Some("scm:git:git@github.com:alexarchambault/argonaut-shapeless.git")
+  )),
+  developers := List(Developer(
+    "alexarchambault",
+    "Alexandre Archambault",
+    "",
+    url("https://github.com/alexarchambault")
+  )),
+  publishMavenStyle := true,
+  pomIncludeRepository := { _ => false },
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  },
+  credentials += {
+    Seq("SONATYPE_USER", "SONATYPE_PASS").map(sys.env.get) match {
+      case Seq(Some(user), Some(pass)) =>
+        Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass)
+      case _ =>
+        Credentials(Path.userHome / ".ivy2" / ".credentials")
+    }
+  }
+)
 
-sbtrelease.ReleasePlugin.ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
+lazy val noPublishSettings = Seq(
+  publish := (),
+  publishLocal := (),
+  publishArtifact := false
+)
 
-scalacOptions += "-target:jvm-1.7"
+lazy val extraReleaseSettings = Seq(
+  ReleaseKeys.versionBump := sbtrelease.Version.Bump.Bugfix,
+  sbtrelease.ReleasePlugin.ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
+)
+
+// build.sbt shamelessly inspired by https://github.com/fthomas/refined/blob/master/build.sbt
