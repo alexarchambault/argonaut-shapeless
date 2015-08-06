@@ -8,11 +8,14 @@ lazy val root = project.in(file("."))
 lazy val core = project.in(file("core"))
   .settings(coreSettings)
   .settings(projectSettings)
+  .settings(publishSettings)
 
 lazy val refined = project.in(file("refined"))
   .dependsOn(core % "test")
   .settings(refinedSettings)
   .settings(projectSettings)
+  .settings(publishSettings)
+  .settings(only211Settings)
 
 lazy val coreName = "argonaut-shapeless_6.1"
 
@@ -33,7 +36,6 @@ lazy val refinedSettings = refinedCompileSettings ++ Seq(
 lazy val projectSettings =
   compileSettings ++
   testSettings ++
-  publishSettings ++
   releaseSettings ++
   extraReleaseSettings
 
@@ -64,9 +66,14 @@ lazy val coreCompileSettings = Seq(
 )
 
 lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
-  libraryDependencies ++= Seq(
-    "eu.timepit" %% "refined" % "0.2.1" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
-  )
+  libraryDependencies ++= {
+    if (scalaVersion.value.startsWith("2.11."))
+      Seq(
+        "eu.timepit" %% "refined" % "0.2.1" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
+      )
+    else
+      Seq.empty
+  }
 )
 
 lazy val testSettings = Seq(
@@ -116,6 +123,32 @@ lazy val noPublishSettings = Seq(
   publish := (),
   publishLocal := (),
   publishArtifact := false
+)
+
+def onlyIn211[T](key: TaskKey[T], default: => T): Setting[Task[T]] = {
+  key := {
+    if (scalaVersion.value.startsWith("2.11."))
+      key.value
+    else
+      default
+  }
+}
+
+def onlyIn211[T](key: SettingKey[T], default: => T): Def.Setting[T] = {
+  key := {
+    if (scalaVersion.value.startsWith("2.11."))
+      key.value
+    else
+      default
+  }
+}
+
+lazy val only211Settings = Seq(
+  onlyIn211(unmanagedSources in Compile, Seq.empty),
+  onlyIn211(unmanagedSources in Test, Seq.empty),
+  onlyIn211(publish, ()),
+  onlyIn211(publishLocal, ()),
+  onlyIn211(publishArtifact, false)
 )
 
 lazy val extraReleaseSettings = Seq(
