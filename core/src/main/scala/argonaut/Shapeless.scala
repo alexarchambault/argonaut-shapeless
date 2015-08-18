@@ -70,7 +70,7 @@ trait CachedDerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
   implicit def mkEncodeJson[T]
    (implicit
-     priority: Strict.Cached[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
+     priority: Strict.Global[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
    ): EncodeJson[T] =
     priority
       .value
@@ -79,7 +79,7 @@ trait CachedDerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
   implicit def mkDecodeJson[T]
    (implicit
-     priority: Strict.Cached[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
+     priority: Strict.Global[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
    ): DecodeJson[T] =
     priority
       .value
@@ -94,6 +94,6 @@ object Shapeless
 
   object Cached
     extends SingletonInstances
-    with DerivedInstances
+    with CachedDerivedInstances
 
 }
