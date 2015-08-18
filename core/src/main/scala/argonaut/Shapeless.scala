@@ -94,6 +94,6 @@ object Shapeless
 
   object Cached
     extends SingletonInstances
-    with DerivedInstances
+    with CachedDerivedInstances
 
 }
