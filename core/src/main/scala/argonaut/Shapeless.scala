@@ -1,7 +1,8 @@
 package argonaut
 
-import shapeless.{ Strict, LowPriority, Witness }
+import shapeless.{ Strict, Witness }
 import argonaut.derive._
+import argonaut.util.LowPriority
 
 trait SingletonInstances {
 
