@@ -1,6 +1,6 @@
 package argonaut
 
-import eu.timepit.refined._, numeric._, collection._, boolean._
+import eu.timepit.refined._, api._, numeric._, collection._, boolean._
 import shapeless.tag.@@
 import shapeless.nat._3
 import Argonaut._, Shapeless._, Refined._

@@ -66,14 +66,9 @@ lazy val coreCompileSettings = Seq(
 )
 
 lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
-  libraryDependencies ++= {
-    if (scalaVersion.value.startsWith("2.11."))
-      Seq(
-        "eu.timepit" %% "refined" % "0.2.2" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
-      )
-    else
-      Seq.empty
-  }
+  libraryDependencies ++= Seq(
+    "eu.timepit" %% "refined" % "0.3.0" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
+  )
 )
 
 lazy val testSettings = Seq(
