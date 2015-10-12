@@ -1,7 +1,7 @@
 package argonaut
 
-import eu.timepit.refined.Predicate
-import eu.timepit.refined.RefType
+import eu.timepit.refined.api.RefType
+import eu.timepit.refined.api.Validate
 import language.higherKinds
 
 trait RefinedInstances {
@@ -9,7 +9,7 @@ trait RefinedInstances {
   implicit def refinedDecodeJson[T, P, F[_, _]]
    (implicit
      underlying: DecodeJson[T],
-     predicate: Predicate[P, T],
+     validate: Validate[T, P],
      refType: RefType[F]
    ): DecodeJson[F[T, P]] =
     DecodeJson { c =>
