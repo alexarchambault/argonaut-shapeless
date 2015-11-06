@@ -53,7 +53,8 @@ lazy val compileSettings = Seq(
 lazy val coreCompileSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT"
+    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT",
+    "com.github.alexarchambault" %% "derive" % "0.1.0-SNAPSHOT"
   ),
   libraryDependencies ++= {
     if (scalaVersion.value startsWith "2.10.")

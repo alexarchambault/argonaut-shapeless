@@ -1,20 +1,20 @@
 package argonaut
 
-import shapeless.{ Strict, Witness }
+import shapeless.{ Cached, Strict, Widen, Witness }
+import _root_.derive.LowPriority
 import argonaut.derive._
-import argonaut.util.LowPriority
 
 trait SingletonInstances {
 
-  implicit def singletonTypeEncodeJson[S, W]
+  implicit def singletonTypeEncodeJson[S, W >: S]
    (implicit
      w: Witness.Aux[S],
      widen: Widen.Aux[S, W],
      underlying: EncodeJson[W]
    ): EncodeJson[S] =
-    underlying.contramap[S](widen.to)
+    underlying.contramap[S](widen.apply)
 
-  implicit def singletonTypeDecodeJson[S, W]
+  implicit def singletonTypeDecodeJson[S, W >: S]
    (implicit
      w: Witness.Aux[S],
      widen: Widen.Aux[S, W],
@@ -22,10 +22,10 @@ trait SingletonInstances {
    ): DecodeJson[S] =
     DecodeJson { c =>
       underlying.decode(c).flatMap { w0 =>
-        widen.from(w0) match {
-          case Some(s) => DecodeResult.ok(s)
-          case None => DecodeResult.fail(s"Expected ${w.value}, got $w0", c.history)
-        }
+        if (w0 == w.value)
+          DecodeResult.ok(w.value)
+        else
+          DecodeResult.fail(s"Expected ${w.value}, got $w0", c.history)
       }
     }
 
@@ -51,19 +51,13 @@ trait DerivedInstances extends DefaultProductCodec with DefaultSumCodec {
    (implicit
      priority: Strict[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
    ): EncodeJson[T] =
-    priority
-      .value
-      .value
-      .encodeJson
+    priority.value.value.encodeJson
 
   implicit def mkDecodeJson[T]
    (implicit
      priority: Strict[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
    ): DecodeJson[T] =
-    priority
-      .value
-      .value
-      .decodeJson
+    priority.value.value.decodeJson
 
 }
 
@@ -71,21 +65,15 @@ trait CachedDerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
   implicit def mkEncodeJson[T]
    (implicit
-     priority: Strict.Global[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
+     priority: Cached[Strict[LowPriority[EncodeJson[T], MkEncodeJson[T]]]]
    ): EncodeJson[T] =
-    priority
-      .value
-      .value
-      .encodeJson
+    priority.value.value.value.encodeJson
 
   implicit def mkDecodeJson[T]
    (implicit
-     priority: Strict.Global[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
+     priority: Cached[Strict[LowPriority[DecodeJson[T], MkDecodeJson[T]]]]
    ): DecodeJson[T] =
-    priority
-      .value
-      .value
-      .decodeJson
+    priority.value.value.value.decodeJson
 
 }
 
