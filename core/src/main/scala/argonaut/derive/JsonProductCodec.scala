@@ -32,7 +32,7 @@ case class JsonProductObjCodec(
   val encodeEmpty: Json = Json.obj()
   def encodeField(field: (String, Json), obj: Json, default: => Option[Json]): Json = {
     val (name, content) = field
-    if (default.contains(content))
+    if (default.toSeq.contains(content))
       obj
     else
       (toJsonName0(name) -> content) ->: obj
