@@ -70,7 +70,7 @@ lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
   libraryDependencies ++= {
     if (scalaVersion.value.startsWith("2.11."))
       Seq(
-        "eu.timepit" %% "refined" % "0.2.2" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
+        "eu.timepit" %% "refined" % "0.2.2"
       )
     else
       Seq.empty
