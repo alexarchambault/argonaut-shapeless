@@ -16,6 +16,7 @@ object SumEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[BaseIS],
+        Default.AsOptions[BaseIS],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('i),
@@ -35,6 +36,7 @@ object SumEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[BaseDB],
+        Default.AsOptions[BaseDB],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('d),
@@ -54,6 +56,7 @@ object SumEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[BaseLast],
+        Default.AsOptions[BaseLast],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('c),

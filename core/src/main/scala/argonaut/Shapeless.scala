@@ -33,16 +33,12 @@ trait SingletonInstances {
 
 trait DefaultProductCodec {
   implicit def defaultJsonProductCodecFor[T]: JsonProductCodecFor[T] =
-    new JsonProductCodecFor[T] {
-      def codec = JsonProductCodec.obj
-    }
+    JsonProductCodecFor(JsonProductCodec.obj)
 }
 
 trait DefaultSumCodec {
   implicit def defaultJsonSumCodecFor[T]: JsonSumCodecFor[T] =
-    new JsonSumCodecFor[T] {
-      def codec = JsonSumCodec.obj
-    }
+    JsonSumCodecFor(JsonSumCodec.obj)
 }
 
 trait DerivedInstances extends DefaultProductCodec with DefaultSumCodec {
