@@ -3,10 +3,10 @@ package derive
 
 trait JsonProductCodec {
   def encodeEmpty: Json
-  def encodeField(field: (String, Json), obj: Json): Json
+  def encodeField(field: (String, Json), obj: Json, default: => Option[Json]): Json
   
   def decodeEmpty(cursor: HCursor): DecodeResult[Unit]
-  def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[(A, ACursor)]
+  def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A], default: Option[A]): DecodeResult[(A, ACursor)]
 }
 
 trait JsonProductCodecFor[P] {
@@ -30,15 +30,26 @@ case class JsonProductObjCodec(
   def toJsonName0(name: String) = toJsonName.fold(name)(_(name))
 
   val encodeEmpty: Json = Json.obj()
-  def encodeField(field: (String, Json), obj: Json): Json = {
+  def encodeField(field: (String, Json), obj: Json, default: => Option[Json]): Json = {
     val (name, content) = field
-    (toJsonName0(name) -> content) ->: obj
+    if (default.contains(content))
+      obj
+    else
+      (toJsonName0(name) -> content) ->: obj
   }
 
   def decodeEmpty(cursor: HCursor): DecodeResult[Unit] = DecodeResult.ok(())
-  def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[(A, ACursor)] =
-    cursor
-      .--\(toJsonName0(name))
-      .as(decode)
-      .map((_, ACursor.ok(cursor)))
+  def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A], default: Option[A]): DecodeResult[(A, ACursor)] = {
+    val c = cursor.--\(toJsonName0(name))
+    def result = c.as(decode).map((_, ACursor.ok(cursor)))
+
+    default match {
+      case None => result
+      case Some(d) =>
+        if (c.succeeded)
+          result
+        else
+          DecodeResult.ok((d, ACursor.ok(cursor)))
+    }
+  }
 }

@@ -12,37 +12,39 @@ trait ProductEncodeJson[T] {
   def apply(productCodec: JsonProductCodec): EncodeJson[T]
 }
 
-trait HListProductEncodeJson[L <: HList] {
-  def apply(productCodec: JsonProductCodec): EncodeJson[L]
+trait HListProductEncodeJson[L <: HList, D <: HList] {
+  def apply(productCodec: JsonProductCodec, defaults: D): EncodeJson[L]
 }
 
 object HListProductEncodeJson {
-  def apply[L <: HList](implicit encodeJson: HListProductEncodeJson[L]): HListProductEncodeJson[L] =
+  def apply[L <: HList, D <: HList](implicit encodeJson: HListProductEncodeJson[L, D]): HListProductEncodeJson[L, D] =
     encodeJson
 
-  implicit def hnilEncodeJson: HListProductEncodeJson[HNil] =
-    new HListProductEncodeJson[HNil] {
-      def apply(productCodec: JsonProductCodec) =
+  implicit def hnilEncodeJson: HListProductEncodeJson[HNil, HNil] =
+    new HListProductEncodeJson[HNil, HNil] {
+      def apply(productCodec: JsonProductCodec, defaults: HNil) =
         new EncodeJson[HNil] {
           def encode(l: HNil) = productCodec.encodeEmpty
         }
     }
 
-  implicit def hconsEncodeJson[K <: Symbol, H, T <: HList]
+  implicit def hconsEncodeJson[K <: Symbol, H, T <: HList, TD <: HList]
    (implicit
      key: Witness.Aux[K],
      headEncode: Strict[EncodeJson[H]],
-     tailEncode: HListProductEncodeJson[T]
-   ): HListProductEncodeJson[FieldType[K, H] :: T] =
-    new HListProductEncodeJson[FieldType[K, H] :: T] {
-      def apply(productCodec: JsonProductCodec) =
+     tailEncode: HListProductEncodeJson[T, TD]
+   ): HListProductEncodeJson[FieldType[K, H] :: T, Option[H] :: TD] =
+    new HListProductEncodeJson[FieldType[K, H] :: T, Option[H] :: TD] {
+      def apply(productCodec: JsonProductCodec, defaults: Option[H] :: TD) =
         new EncodeJson[FieldType[K, H] :: T] {
-          lazy val tailEncode0 = tailEncode(productCodec)
+          lazy val defaultOpt = defaults.head.map(headEncode.value.encode)
+          lazy val tailEncode0 = tailEncode(productCodec, defaults.tail)
 
           def encode(l: FieldType[K, H] :: T) =
             productCodec.encodeField(
               key.value.name -> headEncode.value.encode(l.head),
-              tailEncode0.encode(l.tail)
+              tailEncode0.encode(l.tail),
+              defaultOpt
             )
         }
     }
@@ -51,23 +53,25 @@ object HListProductEncodeJson {
 object ProductEncodeJson {
   def apply[P](implicit encodeJson: ProductEncodeJson[P]): ProductEncodeJson[P] = encodeJson
 
-  implicit def recordEncodeJson[R <: HList]
-   (implicit
-     underlying: HListProductEncodeJson[R]
-   ): ProductEncodeJson[R] =
-    new ProductEncodeJson[R] {
-      def apply(productCodec: JsonProductCodec) =
-        underlying(productCodec)
-    }
+  // TODO Generate an HList made of Option[...] as to use as default
+  // implicit def recordEncodeJson[R <: HList]
+  //  (implicit
+  //    underlying: HListProductEncodeJson[R]
+  //  ): ProductEncodeJson[R] =
+  //   new ProductEncodeJson[R] {
+  //     def apply(productCodec: JsonProductCodec) =
+  //       underlying(productCodec)
+  //   }
 
-  implicit def genericEncodeJson[P, L <: HList]
+  implicit def genericEncodeJson[P, L <: HList, D <: HList]
    (implicit
      gen: LabelledGeneric.Aux[P, L],
-     underlying: Lazy[HListProductEncodeJson[L]]
+     defaults: Default.AsOptions.Aux[P, D],
+     underlying: Lazy[HListProductEncodeJson[L, D]]
    ): ProductEncodeJson[P] =
     new ProductEncodeJson[P] {
       def apply(productCodec: JsonProductCodec) =
-        underlying.value(productCodec)
+        underlying.value(productCodec, defaults())
           .contramap(gen.to)
     }
 }

@@ -12,17 +12,17 @@ trait ProductDecodeJson[T] {
   def apply(productCodec: JsonProductCodec): DecodeJson[T]
 }
 
-trait HListProductDecodeJson[L <: HList] {
-  def apply(productCodec: JsonProductCodec): DecodeJson[L]
+trait HListProductDecodeJson[L <: HList, D <: HList] {
+  def apply(productCodec: JsonProductCodec, defaults: D): DecodeJson[L]
 }
 
 object HListProductDecodeJson {
-  def apply[L <: HList](implicit decodeJson: HListProductDecodeJson[L]): HListProductDecodeJson[L] =
+  def apply[L <: HList, D <: HList](implicit decodeJson: HListProductDecodeJson[L, D]): HListProductDecodeJson[L, D] =
     decodeJson
 
-  implicit def hnilDecodeJson: HListProductDecodeJson[HNil] =
-    new HListProductDecodeJson[HNil] {
-      def apply(productCodec: JsonProductCodec) =
+  implicit def hnilDecodeJson: HListProductDecodeJson[HNil, HNil] =
+    new HListProductDecodeJson[HNil, HNil] {
+      def apply(productCodec: JsonProductCodec, defaults: HNil) =
         new DecodeJson[HNil] {
           def decode(c: HCursor) =
             productCodec
@@ -31,20 +31,20 @@ object HListProductDecodeJson {
         }
     }
 
-  implicit def hconsDecodeJson[K <: Symbol, H, T <: HList]
+  implicit def hconsDecodeJson[K <: Symbol, H, T <: HList, TD <: HList]
    (implicit
      key: Witness.Aux[K],
      headDecode: Strict[DecodeJson[H]],
-     tailDecode: HListProductDecodeJson[T]
-   ): HListProductDecodeJson[FieldType[K, H] :: T] =
-    new HListProductDecodeJson[FieldType[K, H] :: T] {
-      def apply(productCodec: JsonProductCodec) =
+     tailDecode: HListProductDecodeJson[T, TD]
+   ): HListProductDecodeJson[FieldType[K, H] :: T, Option[H] :: TD] =
+    new HListProductDecodeJson[FieldType[K, H] :: T, Option[H] :: TD] {
+      def apply(productCodec: JsonProductCodec, defaults: Option[H] :: TD) =
         new DecodeJson[FieldType[K, H] :: T] {
-          lazy val tailDecode0 = tailDecode(productCodec)
+          lazy val tailDecode0 = tailDecode(productCodec, defaults.tail)
 
           def decode(c: HCursor) = {
             for {
-              x <- productCodec.decodeField(key.value.name, c, headDecode.value)
+              x <- productCodec.decodeField(key.value.name, c, headDecode.value, defaults.head)
               (h, remaining) = x
               t <- remaining.as(tailDecode0)
             } yield field[K](h) :: t
@@ -56,23 +56,25 @@ object HListProductDecodeJson {
 object ProductDecodeJson {
   def apply[P](implicit decodeJson: ProductDecodeJson[P]): ProductDecodeJson[P] = decodeJson
 
-  implicit def recordDecodeJson[R <: HList]
-   (implicit
-     underlying: HListProductDecodeJson[R]
-   ): ProductDecodeJson[R] =
-    new ProductDecodeJson[R] {
-      def apply(productCodec: JsonProductCodec) =
-        underlying(productCodec)
-    }
+  // Re-enable by making a dummy HList of defaults made of Option[_]
+  // implicit def recordDecodeJson[R <: HList]
+  //  (implicit
+  //    underlying: HListProductDecodeJson[R]
+  //  ): ProductDecodeJson[R] =
+  //   new ProductDecodeJson[R] {
+  //     def apply(productCodec: JsonProductCodec) =
+  //       underlying(productCodec)
+  //   }
 
-  implicit def genericDecodeJson[P, L <: HList]
+  implicit def genericDecodeJson[P, L <: HList, D <: HList]
    (implicit
      gen: LabelledGeneric.Aux[P, L],
-     underlying: Lazy[HListProductDecodeJson[L]]
+     defaults: Default.AsOptions.Aux[P, D],
+     underlying: Lazy[HListProductDecodeJson[L, D]]
    ): ProductDecodeJson[P] =
     new ProductDecodeJson[P] {
       def apply(productCodec: JsonProductCodec) =
-        underlying.value(productCodec)
+        underlying.value(productCodec, defaults())
           .map(gen.from)
     }
 }

@@ -20,6 +20,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[Empty.type],
+        Default.AsOptions[Empty.type],
         Lazy(
           HListProductEncodeJson.hnilEncodeJson
         )
@@ -31,6 +32,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[EmptyCC],
+        Default.AsOptions[EmptyCC],
         Lazy(
           HListProductEncodeJson.hnilEncodeJson
         )
@@ -42,6 +44,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[Simple],
+        Default.AsOptions[Simple],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('i),
@@ -65,6 +68,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[Composed],
+        Default.AsOptions[Composed],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('foo),
@@ -84,6 +88,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[SimpleWithJs],
+        Default.AsOptions[SimpleWithJs],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('i),
@@ -107,6 +112,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[WrappedMap],
+        Default.AsOptions[WrappedMap],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('m),
@@ -122,6 +128,7 @@ object ProductEncodeTests extends TestSuite {
     MkEncodeJson.productEncodeJson(
       ProductEncodeJson.genericEncodeJson(
         LabelledGeneric[OI],
+        Default.AsOptions[OI],
         Lazy(
           HListProductEncodeJson.hconsEncodeJson(
             Witness('oi),
