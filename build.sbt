@@ -41,7 +41,7 @@ lazy val projectSettings =
 
 lazy val compileSettings = Seq(
   scalaVersion := "2.11.7",
-  crossScalaVersions := Seq("2.10.5", "2.11.7"),
+  crossScalaVersions := Seq("2.10.6", "2.11.7"),
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
@@ -53,7 +53,8 @@ lazy val compileSettings = Seq(
 lazy val coreCompileSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT"
+    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT",
+    "com.github.alexarchambault" %% "derive" % "0.1.0-SNAPSHOT"
   ),
   libraryDependencies ++= {
     if (scalaVersion.value startsWith "2.10.")
@@ -66,14 +67,7 @@ lazy val coreCompileSettings = Seq(
 )
 
 lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
-  libraryDependencies ++= {
-    if (scalaVersion.value.startsWith("2.11."))
-      Seq(
-        "eu.timepit" %% "refined" % "0.2.2" exclude("com.chuusai", "shapeless_" + scalaBinaryVersion.value)
-      )
-    else
-      Seq.empty
-  }
+  libraryDependencies += "eu.timepit" %% "refined" % "0.3.0"
 )
 
 lazy val testSettings = Seq(

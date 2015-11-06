@@ -1,11 +1,12 @@
 package argonaut
 
-import Argonaut._, Shapeless._
-import derive._
-import org.scalacheck.Shapeless._
-import shapeless._
-
 import utest._
+
+import Argonaut._, Shapeless._
+import org.scalacheck.Shapeless._
+
+import shapeless._
+import derive._
 
 
 object SumEncodeTests extends TestSuite {

@@ -1,13 +1,14 @@
 package argonaut
 
-import Argonaut._, Shapeless._
-import derive._
-import org.scalacheck.{ Arbitrary, Prop }
-import org.scalacheck.Shapeless._
-import shapeless._
-
 import utest._
 import Util._
+
+import org.scalacheck.{ Arbitrary, Prop }
+
+import shapeless._
+import derive._
+import org.scalacheck.Shapeless._
+import Argonaut._, Shapeless._
 
 
 case class WrappedMap(m: Map[String, Json])
@@ -117,6 +118,21 @@ object ProductEncodeTests extends TestSuite {
       defaultJsonProductCodecFor
     ).encodeJson
 
+  lazy val expectedOIEncodeJson =
+    MkEncodeJson.productEncodeJson(
+      ProductEncodeJson.genericEncodeJson(
+        LabelledGeneric[OI],
+        Lazy(
+          HListProductEncodeJson.hconsEncodeJson(
+            Witness('oi),
+            Strict(OptionEncodeJson[Int](IntEncodeJson)),
+            HListProductEncodeJson.hnilEncodeJson
+          )
+        )
+      ),
+      defaultJsonProductCodecFor
+    ).encodeJson
+
 
   def compareEncodeJsons[T: Arbitrary](first: EncodeJson[T], second: EncodeJson[T]): Unit =
     Prop.forAll{
@@ -149,17 +165,19 @@ object ProductEncodeTests extends TestSuite {
       }
 
       // Disabled, Arbitrary Json generation seems to take forever
-      'simpleWithJs - {
-        //compareEncodeJsons
-        (EncodeJson.of[SimpleWithJs], expectedSimpleWithJsEncodeJson)
-      }
+      // 'simpleWithJs - {
+      //   compareEncodeJsons(EncodeJson.of[SimpleWithJs], expectedSimpleWithJsEncodeJson)
+      // }
 
-      /* Looks like not enough WrappedMap can be generated
-      'wrappedMap - {
-        val arb = Gen.resize(1000, Arbitrary.arbitrary[WrappedMap])
-        compareEncodeJsons(EncodeJson.of[WrappedMap], expectedWrappedMapEncodeJson)(Arbitrary(arb))
+      // Looks like not enough WrappedMap can be generated
+      // 'wrappedMap - {
+      //   val arb = Gen.resize(1000, Arbitrary.arbitrary[WrappedMap])
+      //   compareEncodeJsons(EncodeJson.of[WrappedMap], expectedWrappedMapEncodeJson)(Arbitrary(arb))
+      // }
+
+      'withOption - {
+        compareEncodeJsons(EncodeJson.of[OI], expectedOIEncodeJson)
       }
-      */
     }
 
     'output {
