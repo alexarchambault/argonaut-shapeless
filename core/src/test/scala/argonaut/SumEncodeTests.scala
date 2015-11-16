@@ -74,18 +74,16 @@ object SumEncodeTests extends TestSuite {
     MkEncodeJson.sumEncodeJson(
       SumEncodeJson.genericEncodeJson(
         LabelledGeneric[Base],
-        Lazy(
+        CoproductSumEncodeJson.cconsEncodeJson(
+          Witness('BaseDB),
+          expectedBaseDBEncodeJson,
           CoproductSumEncodeJson.cconsEncodeJson(
-            Witness('BaseDB),
-            Strict(expectedBaseDBEncodeJson),
+            Witness('BaseIS),
+            expectedBaseISEncodeJson,
             CoproductSumEncodeJson.cconsEncodeJson(
-              Witness('BaseIS),
-              Strict(expectedBaseISEncodeJson),
-              CoproductSumEncodeJson.cconsEncodeJson(
-                Witness('BaseLast),
-                Strict(expectedBaseLastEncodeJson),
-                CoproductSumEncodeJson.cnilEncodeJson
-              )
+              Witness('BaseLast),
+              expectedBaseLastEncodeJson,
+              CoproductSumEncodeJson.cnilEncodeJson
             )
           )
         )
