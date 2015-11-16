@@ -101,7 +101,7 @@ object CoproductSumEncodeJson {
   implicit def cconsEncodeJson[K <: Symbol, H, T <: Coproduct]
    (implicit
      key: Witness.Aux[K],
-     headEncode: Strict[EncodeJson[H]],
+     headEncode: Lazy[EncodeJson[H]],
      tailEncode: CoproductSumEncodeJson[T]
    ): CoproductSumEncodeJson[FieldType[K, H] :+: T] =
     new CoproductSumEncodeJson[FieldType[K, H] :+: T] {
@@ -137,7 +137,7 @@ object SumEncodeJson {
   implicit def genericEncodeJson[S, C <: Coproduct]
    (implicit
      gen: LabelledGeneric.Aux[S, C],
-     underlying: Lazy[CoproductSumEncodeJson[C]]
+     underlying: Strict[CoproductSumEncodeJson[C]]
    ): SumEncodeJson[S] =
     new SumEncodeJson[S] {
       def apply(sumCodec: JsonSumCodec) =
