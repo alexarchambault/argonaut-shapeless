@@ -67,7 +67,7 @@ lazy val coreCompileSettings = Seq(
 )
 
 lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
-  libraryDependencies += "eu.timepit" %% "refined" % "0.3.0"
+  libraryDependencies += "eu.timepit" %% "refined" % "0.3.2"
 )
 
 lazy val testSettings = Seq(
