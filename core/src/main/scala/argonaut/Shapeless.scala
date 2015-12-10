@@ -1,7 +1,7 @@
 package argonaut
 
 import shapeless.{ Cached, Strict, Widen, Witness }
-import _root_.derive.LowPriority
+import _root_.derive.NotFound
 import argonaut.derive._
 
 trait SingletonInstances {
@@ -45,15 +45,17 @@ trait DerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
   implicit def mkEncodeJson[T]
    (implicit
-     priority: Strict[LowPriority[EncodeJson[T], MkEncodeJson[T]]]
+     notFound: Strict[NotFound[EncodeJson[T]]],
+     mkEncode: Strict[MkEncodeJson[T]]
    ): EncodeJson[T] =
-    priority.value.value.encodeJson
+    mkEncode.value.encodeJson
 
   implicit def mkDecodeJson[T]
    (implicit
-     priority: Strict[LowPriority[DecodeJson[T], MkDecodeJson[T]]]
+     notFound: Strict[NotFound[DecodeJson[T]]],
+     priority: Strict[MkDecodeJson[T]]
    ): DecodeJson[T] =
-    priority.value.value.decodeJson
+    priority.value.decodeJson
 
 }
 
@@ -61,15 +63,17 @@ trait CachedDerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
   implicit def mkEncodeJson[T]
    (implicit
-     priority: Cached[Strict[LowPriority[EncodeJson[T], MkEncodeJson[T]]]]
+     notFound: Cached[Strict[NotFound[EncodeJson[T]]]],
+     priority: Cached[Strict[MkEncodeJson[T]]]
    ): EncodeJson[T] =
-    priority.value.value.value.encodeJson
+    priority.value.value.encodeJson
 
   implicit def mkDecodeJson[T]
    (implicit
-     priority: Cached[Strict[LowPriority[DecodeJson[T], MkDecodeJson[T]]]]
+     notFound: Cached[NotFound[DecodeJson[T]]],
+     priority: Cached[Strict[MkDecodeJson[T]]]
    ): DecodeJson[T] =
-    priority.value.value.value.decodeJson
+    priority.value.value.decodeJson
 
 }
 
