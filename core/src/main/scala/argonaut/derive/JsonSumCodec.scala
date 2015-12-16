@@ -55,7 +55,7 @@ case class JsonSumObjCodec(
 }
 
 case class JsonSumTypeFieldCodec(
-  typeField: String = "$type",
+  typeField: String = "type",
   toTypeValue: Option[String => String] = None
 ) extends JsonSumCodec {
   private def toTypeValue0(name: String) =
