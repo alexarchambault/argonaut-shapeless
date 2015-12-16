@@ -28,9 +28,8 @@ object JsonProductCodec {
 }
 
 case class JsonProductObjCodec(
-  toJsonName: Option[String => String] = None
+  toJsonName: String => String = identity
 ) extends JsonProductCodec {
-  def toJsonName0(name: String) = toJsonName.fold(name)(_(name))
 
   val encodeEmpty: Json = Json.obj()
   def encodeField(field: (String, Json), obj: Json, default: => Option[Json]): Json = {
@@ -38,12 +37,12 @@ case class JsonProductObjCodec(
     if (default.toSeq.contains(content))
       obj
     else
-      (toJsonName0(name) -> content) ->: obj
+      (toJsonName(name) -> content) ->: obj
   }
 
   def decodeEmpty(cursor: HCursor): DecodeResult[Unit] = DecodeResult.ok(())
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A], default: Option[A]): DecodeResult[(A, ACursor)] = {
-    val c = cursor.--\(toJsonName0(name))
+    val c = cursor.--\(toJsonName(name))
     def result = c.as(decode).map((_, ACursor.ok(cursor)))
 
     default match {
