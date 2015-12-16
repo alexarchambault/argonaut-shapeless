@@ -1,21 +1,20 @@
 import com.typesafe.sbt.pgp.PgpKeys
 
-lazy val root = project.in(file("."))
+lazy val `argonaut-shapeless` = project.in(file("."))
   .aggregate(core, refined, doc)
   .settings(compileSettings)
   .settings(noPublishSettings)
 
-lazy val core = project.in(file("core"))
+lazy val core = project
   .settings(coreSettings)
   .settings(projectSettings)
   .settings(publishSettings)
 
-lazy val refined = project.in(file("refined"))
+lazy val refined = project
   .dependsOn(core % "test")
   .settings(refinedSettings)
   .settings(projectSettings)
   .settings(publishSettings)
-  .settings(only211Settings)
 
 lazy val doc = project
   .dependsOn(core, refined)
@@ -28,18 +27,27 @@ lazy val doc = project
 
 lazy val coreName = "argonaut-shapeless_6.1"
 
-lazy val coreSettings = coreCompileSettings ++ Seq(
+lazy val coreSettings = Seq(
   organization := "com.github.alexarchambault",
   name := coreName,
-  moduleName := coreName
+  moduleName := coreName,
+  libraryDependencies ++= Seq(
+    "io.argonaut" %% "argonaut" % "6.1",
+    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT"
+  )
 )
 
 lazy val refinedName = "argonaut-refined_6.1"
 
-lazy val refinedSettings = refinedCompileSettings ++ Seq(
+lazy val refinedSettings = Seq(
   organization := "com.github.alexarchambault",
   name := refinedName,
-  moduleName := refinedName
+  moduleName := refinedName,
+  libraryDependencies ++= Seq(
+    "io.argonaut" %% "argonaut" % "6.1",
+    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT",
+    "eu.timepit" %% "refined" % "0.3.2"
+  )
 )
 
 lazy val projectSettings =
@@ -55,28 +63,15 @@ lazy val compileSettings = Seq(
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
     Resolver.sonatypeRepo("snapshots")
-  )
-)
-
-
-lazy val coreCompileSettings = Seq(
-  libraryDependencies ++= Seq(
-    "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT"
   ),
   libraryDependencies ++= {
     if (scalaVersion.value startsWith "2.10.")
-      Seq(
-        compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
-      )
+      Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full))
     else
       Seq()
   }
 )
 
-lazy val refinedCompileSettings = coreCompileSettings ++ Seq(
-  libraryDependencies += "eu.timepit" %% "refined" % "0.3.2"
-)
 
 lazy val testSettings = Seq(
   libraryDependencies ++= Seq(
@@ -125,32 +120,6 @@ lazy val noPublishSettings = Seq(
   publish := (),
   publishLocal := (),
   publishArtifact := false
-)
-
-def onlyIn211[T](key: TaskKey[T], default: => T): Setting[Task[T]] = {
-  key := {
-    if (scalaVersion.value.startsWith("2.11."))
-      key.value
-    else
-      default
-  }
-}
-
-def onlyIn211[T](key: SettingKey[T], default: => T): Def.Setting[T] = {
-  key := {
-    if (scalaVersion.value.startsWith("2.11."))
-      key.value
-    else
-      default
-  }
-}
-
-lazy val only211Settings = Seq(
-  onlyIn211(unmanagedSources in Compile, Seq.empty),
-  onlyIn211(unmanagedSources in Test, Seq.empty),
-  onlyIn211(publish, ()),
-  onlyIn211(publishLocal, ()),
-  onlyIn211(publishArtifact, false)
 )
 
 lazy val extraReleaseSettings = Seq(
