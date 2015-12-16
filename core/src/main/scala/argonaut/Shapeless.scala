@@ -30,17 +30,7 @@ trait SingletonInstances {
 
 }
 
-trait DefaultProductCodec {
-  implicit def defaultJsonProductCodecFor[T]: JsonProductCodecFor[T] =
-    JsonProductCodecFor(JsonProductCodec.obj)
-}
-
-trait DefaultSumCodec {
-  implicit def defaultJsonSumCodecFor[T]: JsonSumCodecFor[T] =
-    JsonSumCodecFor(JsonSumCodec.obj)
-}
-
-trait DerivedInstances extends DefaultProductCodec with DefaultSumCodec {
+trait DerivedInstances {
 
   implicit def mkEncodeJson[T]
    (implicit
@@ -58,7 +48,7 @@ trait DerivedInstances extends DefaultProductCodec with DefaultSumCodec {
 
 }
 
-trait CachedDerivedInstances extends DefaultProductCodec with DefaultSumCodec {
+trait CachedDerivedInstances {
 
   implicit def mkEncodeJson[T]
    (implicit

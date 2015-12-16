@@ -18,6 +18,9 @@ object JsonProductCodecFor {
     new JsonProductCodecFor[S] {
       def codec = codec0
     }
+
+  implicit def default[T]: JsonProductCodecFor[T] =
+    JsonProductCodecFor(JsonProductCodec.obj)
 }
 
 object JsonProductCodec {

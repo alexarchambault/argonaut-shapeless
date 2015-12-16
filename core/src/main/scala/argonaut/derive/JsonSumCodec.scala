@@ -20,6 +20,9 @@ object JsonSumCodecFor {
     new JsonSumCodecFor[S] {
       def codec = codec0
     }
+
+  implicit def default[T]: JsonSumCodecFor[T] =
+    JsonSumCodecFor(JsonSumCodec.obj)
 }
 
 object JsonSumCodec {
