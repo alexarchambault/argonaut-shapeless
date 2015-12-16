@@ -1,7 +1,7 @@
 import com.typesafe.sbt.pgp.PgpKeys
 
 lazy val root = project.in(file("."))
-  .aggregate(core, refined)
+  .aggregate(core, refined, doc)
   .settings(compileSettings)
   .settings(noPublishSettings)
 
@@ -16,6 +16,15 @@ lazy val refined = project.in(file("refined"))
   .settings(projectSettings)
   .settings(publishSettings)
   .settings(only211Settings)
+
+lazy val doc = project
+  .dependsOn(core, refined)
+  .settings(compileSettings)
+  .settings(tutSettings)
+  .settings(
+    tutSourceDirectory := baseDirectory.value,
+    tutTargetDirectory := baseDirectory.value / ".."
+  )
 
 lazy val coreName = "argonaut-shapeless_6.1"
 
@@ -150,3 +159,7 @@ lazy val extraReleaseSettings = Seq(
 )
 
 // build.sbt shamelessly inspired by https://github.com/fthomas/refined/blob/master/build.sbt
+addCommandAlias("validate", Seq(
+  "test",
+  "tut"
+).mkString(";", ";", ""))
