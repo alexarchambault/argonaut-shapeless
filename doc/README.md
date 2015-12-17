@@ -4,6 +4,7 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 [![Build Status](https://travis-ci.org/alexarchambault/argonaut-shapeless.svg)](https://travis-ci.org/alexarchambault/argonaut-shapeless)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.1_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.1_2.11)
 
 This README documents the current *development* version of argonaut-shapeless,
 which should be released after shapeless 2.3.0. For the stable version, see
@@ -13,7 +14,7 @@ the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.
 [Typelevel](http://typelevel.org/), and as such endorses its
 [Code of Conduct](http://typelevel.org/conduct.html).
 
-It is one of the very first projects to have used of `Lazy` from shapeless 2.1,
+It is one of the very first projects to have used `Lazy` from shapeless 2.1,
 which made type class derivation with implicits much more robust.
 
 ## Usage
@@ -311,6 +312,11 @@ CC(
 assert("""{"i": 7, "s": "Bcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refineMV("Bcd"))))
 assert("""{"i": 4, "s": "Bcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``)
 ```
+
+## See also
+
+- [spray-json-shapeless](https://github.com/fommil/spray-json-shapeless/) features automatic codec derivation with shapeless for spray-json
+- [circe](https://github.com/travisbrown/circe) features its own automatic codec derivation with shapeless
 
 ## License
 
