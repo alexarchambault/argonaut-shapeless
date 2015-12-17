@@ -7,15 +7,14 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 This README documents the current *development* version of argonaut-shapeless,
 which should be released after shapeless 2.3.0. For the stable version, see
-the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.3.x).
-
-*argonaut-shapeless* is available for scala 2.10 and 2.11, and depends on argonaut 6.1 and shapeless 2.3.0-SNAPSHOT.
+the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.3.x). It is available for scala 2.10 and 2.11, and depends on argonaut 6.1 and shapeless 2.3.0-SNAPSHOT.
 
 *argonaut-shapeless* is part of the shapeless ecosystem of
-[Typelevel](http://typelevel.org/).
+[Typelevel](http://typelevel.org/), and as such endorses its
+[Code of Conduct](http://typelevel.org/conduct.html).
 
-Hitorically, it is one of the very first projects to use of `Lazy` from shapeless 2.1,
-that has made type class derivation with implicits much more robust.
+It is one of the very first projects to have used of `Lazy` from shapeless 2.1,
+which made type class derivation with implicits much more robust.
 
 ## Usage
 
@@ -32,6 +31,8 @@ If you are using scala 2.10.x, also add the macro paradise plugin to your build,
 libraryDependencies +=
   compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
 ```
+
+## Features
 
 The examples below assume you imported the content of
 `argonaut`, `argonaut.Argonaut`, and `argonaut.Shapeless`, like
@@ -61,7 +62,7 @@ result == DecodeResult.ok(CC(2, "a"))
 assert(result == DecodeResult.ok(CC(2, "a")))
 ```
 
-The way argonaut-shapeless encodes case classes can be customized, see below.
+The way case classes are encoded can be customized, see below.
 
 ### Automatic codecs for sealed traits
 
@@ -89,7 +90,8 @@ assert(result == DecodeResult.ok(First(2)))
 
 ### Default values
 
-Like [upickle](https://github.com/lihaoyi/upickle-pprint/), *argonaut-shapeless*doesn't put fields equal to their default value in its output,
+Like [upickle](https://github.com/lihaoyi/upickle-pprint/),
+fields equal to their default value are not put in the result JSON object.
 
 ```tut:silent
 case class CC(i: Int = 4, s: String = "foo")
@@ -201,7 +203,7 @@ The default `JsonSumCodecFor[S]` for all types `S` provides
 `JsonSumCodec.obj` as `JsonSumCodec`, which encodes sealed traits
 as illustrated above.
 
-*argonaut-shapeless* provides `JsonSumCodec.typeField` as an alternative,
+`JsonSumCodec.typeField` is provided as an alternative,
 which discriminates the various cases of a sealed trait by looking
 at a field, `type`, like
 
@@ -277,7 +279,8 @@ assert(""""b"""".decodeOption[Custom] == Some(Custom("b")))
 ### refined module
 
 *argonaut-shapeless* also has a module to encode/decode types from
-[refined](https://github.com/fthomas/refined).
+[refined](https://github.com/fthomas/refined), allowing for some
+kind of validation at the type level.
 
 Add it to your dependencies with
 ```scala
