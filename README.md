@@ -251,6 +251,15 @@ CC(
 - [spray-json-shapeless](https://github.com/fommil/spray-json-shapeless/) features automatic codec derivation with shapeless for spray-json
 - [circe](https://github.com/travisbrown/circe) features its own automatic codec derivation with shapeless
 
+## Contributors
+
++ Alexandre Archambault ([@alexarchambault](https://github.com/alexarchambault/))
++ Ben James ([@bmjames](https://github.com/bmjames))
++ Denis Mikhaylov ([@notxcain](https://github.com/notxcain))
++ Frank S. Thomas ([@fthomas](https://github.com/fthomas))
++ Ismael Juma ([@ijuma](https://github.com/ijuma))
++ Your name here :-)
+
 ## License
 
 Released under the BSD license. See LICENSE file for more details.
