@@ -4,6 +4,7 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 [![Build Status](https://travis-ci.org/alexarchambault/argonaut-shapeless.svg)](https://travis-ci.org/alexarchambault/argonaut-shapeless)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.1_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.1_2.11)
 
 This README documents the current *development* version of argonaut-shapeless,
 which should be released after shapeless 2.3.0. For the stable version, see
