@@ -13,7 +13,7 @@ the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.
 [Typelevel](http://typelevel.org/), and as such endorses its
 [Code of Conduct](http://typelevel.org/conduct.html).
 
-It is one of the very first projects to have used of `Lazy` from shapeless 2.1,
+It is one of the very first projects to have used `Lazy` from shapeless 2.1,
 which made type class derivation with implicits much more robust.
 
 ## Usage
