@@ -25,7 +25,7 @@ object ProductEncodeTests extends TestSuite {
           HListProductEncodeJson.hnilEncodeJson
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedEmptyCCEncodeJson =
@@ -37,7 +37,7 @@ object ProductEncodeTests extends TestSuite {
           HListProductEncodeJson.hnilEncodeJson
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedSimpleEncodeJson =
@@ -61,7 +61,7 @@ object ProductEncodeTests extends TestSuite {
           )
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedComposedEncodeJson =
@@ -81,7 +81,7 @@ object ProductEncodeTests extends TestSuite {
           )
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedSimpleWithJsEncodeJson =
@@ -105,7 +105,7 @@ object ProductEncodeTests extends TestSuite {
           )
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedWrappedMapEncodeJson =
@@ -121,7 +121,7 @@ object ProductEncodeTests extends TestSuite {
           )
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedOIEncodeJson =
@@ -137,7 +137,7 @@ object ProductEncodeTests extends TestSuite {
           )
         )
       ),
-      defaultJsonProductCodecFor
+      JsonProductCodecFor.default
     ).encodeJson
 
 

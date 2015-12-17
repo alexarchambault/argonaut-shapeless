@@ -20,6 +20,9 @@ object JsonSumCodecFor {
     new JsonSumCodecFor[S] {
       def codec = codec0
     }
+
+  implicit def default[T]: JsonSumCodecFor[T] =
+    JsonSumCodecFor(JsonSumCodec.obj)
 }
 
 object JsonSumCodec {
@@ -28,11 +31,8 @@ object JsonSumCodec {
 }
 
 case class JsonSumObjCodec(
-  toJsonName: Option[String => String] = None
+  toJsonName: String => String = identity
 ) extends JsonSumCodec {
-  private def toJsonName0(name: String) =
-    toJsonName.fold(name)(_(name))
-
 
   def encodeEmpty: Nothing =
     throw new IllegalArgumentException("empty")
@@ -40,13 +40,13 @@ case class JsonSumObjCodec(
     fieldOrObj match {
       case Left(other) => other
       case Right((name, content)) =>
-        Json.obj(toJsonName0(name) -> content)
+        Json.obj(toJsonName(name) -> content)
     }
 
   def decodeEmpty(cursor: HCursor): DecodeResult[Nothing] =
     DecodeResult.fail(s"unrecognized type(s): ${cursor.fields.getOrElse(Nil).mkString(", ")}", cursor.history)
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[Either[ACursor, A]] =
-    cursor.--\(toJsonName0(name)).either match {
+    cursor.--\(toJsonName(name)).either match {
       case -\/(_) =>
         DecodeResult.ok(Left(ACursor.ok(cursor)))
       case \/-(content) =>
@@ -55,7 +55,7 @@ case class JsonSumObjCodec(
 }
 
 case class JsonSumTypeFieldCodec(
-  typeField: String = "$type",
+  typeField: String = "type",
   toTypeValue: Option[String => String] = None
 ) extends JsonSumCodec {
   private def toTypeValue0(name: String) =
