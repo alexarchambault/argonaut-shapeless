@@ -245,6 +245,11 @@ CC(
 
 
 
+## See also
+
+- [spray-json-shapeless](https://github.com/fommil/spray-json-shapeless/) features automatic codec derivation with shapeless for spray-json
+- [circe](https://github.com/travisbrown/circe) features its own automatic codec derivation with shapeless
+
 ## License
 
 Released under the BSD license. See LICENSE file for more details.

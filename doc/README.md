@@ -312,6 +312,11 @@ assert("""{"i": 7, "s": "Bcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refin
 assert("""{"i": 4, "s": "Bcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``)
 ```
 
+## See also
+
+- [spray-json-shapeless](https://github.com/fommil/spray-json-shapeless/) features automatic codec derivation with shapeless for spray-json
+- [circe](https://github.com/travisbrown/circe) features its own automatic codec derivation with shapeless
+
 ## License
 
 Released under the BSD license. See LICENSE file for more details.
