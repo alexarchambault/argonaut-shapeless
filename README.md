@@ -10,7 +10,7 @@ This README documents the current *development* version of argonaut-shapeless,
 which should be released after shapeless 2.3.0. For the stable version, see
 the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.3.x). It is available for scala 2.10 and 2.11, and depends on argonaut 6.1 and shapeless 2.3.0-SNAPSHOT.
 
-*argonaut-shapeless* is part of the shapeless ecosystem of
+argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses its
 [Code of Conduct](http://typelevel.org/conduct.html).
 
@@ -214,7 +214,7 @@ Custom("a").asJson.nospaces == """"a""""
 
 ### refined module
 
-*argonaut-shapeless* also has a module to encode/decode types from
+argonaut-shapeless also has a module to encode/decode types from
 [refined](https://github.com/fthomas/refined), allowing for some
 kind of validation at the type level.
 
@@ -231,7 +231,7 @@ import eu.timepit.refined.api.Refined
 
 case class CC(
   i: Int Refined numeric.Greater[W.`5`.T],
-  s: String Refined string.StartsWith[W.`""`.T]
+  s: String Refined string.StartsWith[W.`"A"`.T]
 )
 
 CC(
@@ -239,8 +239,8 @@ CC(
   refineMV("Abc")
 ).asJson.nospaces == """{"i":6,"s":"Abc"}""" // fields are encoded as their underlying type
 
-"""{"i": 7, "s": "Bcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refineMV("Bcd")))
-"""{"i": 4, "s": "Bcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``
+"""{"i": 7, "s": "Abcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refineMV("Abcd")))
+"""{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``
 ```
 
 
@@ -249,7 +249,7 @@ CC(
 ## See also
 
 - [spray-json-shapeless](https://github.com/fommil/spray-json-shapeless/) features automatic codec derivation with shapeless for spray-json
-- [circe](https://github.com/travisbrown/circe) features its own automatic codec derivation with shapeless
+- [circe](https://github.com/travisbrown/circe) features its own automatic codec derivation with shapeless, via its *generic* module
 
 ## Contributors
 
@@ -260,12 +260,12 @@ CC(
 + Ismael Juma ([@ijuma](https://github.com/ijuma))
 + Your name here :-)
 
-## License
-
-Released under the BSD license. See LICENSE file for more details.
-
-Based on an early (non `Lazy`-based) automatic codec derivation in argonaut
+Initially based on an early (non `Lazy`-based) automatic codec derivation in argonaut
 by [Maxwell Swadling](https://github.com/maxpow4h),
 [Travis Brown](https://github.com/travisbrown), and
 [Mark Hibberd](https://github.com/markhibberd).
+
+## License
+
+Released under the BSD license. See LICENSE file for more details.
 
