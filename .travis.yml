@@ -5,7 +5,11 @@ scala:
 jdk:
 - oraclejdk7
 - oraclejdk8
-script: sbt ++${TRAVIS_SCALA_VERSION} $(if [[ "${TRAVIS_SCALA_VERSION}" == "2.10.6" ]]; then echo test; else echo validate; fi) $(if [[ "$TRAVIS_PULL_REQUEST" == "false"
+before_install:
+- pip install --user codecov
+after_success:
+- codecov
+script: sbt ++${TRAVIS_SCALA_VERSION} coverage $(if [[ "${TRAVIS_SCALA_VERSION}" == "2.10.6" ]]; then echo test; else echo validate; fi) coverageReport $(if [[ "$TRAVIS_PULL_REQUEST" == "false"
   && ${JAVA_HOME} == $(jdk_switcher home oraclejdk7) && "${TRAVIS_BRANCH}" == "master"
   ]]; then echo "publish"; fi)
 sudo: false
