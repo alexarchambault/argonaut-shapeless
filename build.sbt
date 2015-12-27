@@ -19,6 +19,7 @@ lazy val refined = project
 lazy val doc = project
   .dependsOn(core, refined)
   .settings(compileSettings)
+  .settings(noPublishSettings)
   .settings(tutSettings)
   .settings(
     tutSourceDirectory := baseDirectory.value,
