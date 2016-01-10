@@ -34,7 +34,8 @@ lazy val coreSettings = Seq(
   moduleName := coreName,
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT"
+    "com.chuusai" %% "shapeless" % "2.2.5",
+    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1"
   )
 )
 
@@ -46,7 +47,8 @@ lazy val refinedSettings = Seq(
   moduleName := refinedName,
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.3.0-SNAPSHOT",
+    "com.chuusai" %% "shapeless" % "2.2.5",
+    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1",
     "eu.timepit" %% "refined" % "0.3.3"
   )
 )

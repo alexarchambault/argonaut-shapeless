@@ -5,7 +5,9 @@ import utest._
 import Argonaut._, Shapeless._
 import org.scalacheck.Shapeless._
 
-import shapeless._
+import shapeless.{ Lazy => _, _ }
+import shapeless.compat._
+
 import derive._
 
 

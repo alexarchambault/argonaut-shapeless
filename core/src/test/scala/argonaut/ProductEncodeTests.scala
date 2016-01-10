@@ -5,9 +5,13 @@ import Util._
 
 import org.scalacheck.{ Arbitrary, Prop }
 
-import shapeless._
+import shapeless.{ Lazy => _, _ }
+import shapeless.compat._
+
 import derive._
+
 import org.scalacheck.Shapeless._
+
 import Argonaut._, Shapeless._
 
 
