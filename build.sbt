@@ -2,22 +2,24 @@ import com.typesafe.sbt.pgp.PgpKeys
 
 lazy val `argonaut-shapeless` = project.in(file("."))
   .aggregate(core, refined, doc)
+  .settings(commonSettings)
   .settings(compileSettings)
   .settings(noPublishSettings)
 
 lazy val core = project
+  .settings(commonSettings)
   .settings(coreSettings)
   .settings(projectSettings)
-  .settings(publishSettings)
 
 lazy val refined = project
   .dependsOn(core % "test")
+  .settings(commonSettings)
   .settings(refinedSettings)
   .settings(projectSettings)
-  .settings(publishSettings)
 
 lazy val doc = project
   .dependsOn(core, refined)
+  .settings(commonSettings)
   .settings(compileSettings)
   .settings(noPublishSettings)
   .settings(tutSettings)
@@ -84,7 +86,7 @@ lazy val testSettings = Seq(
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
-lazy val publishSettings = Seq(
+lazy val commonSettings = Seq(
   homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
   licenses := Seq(
     "BSD-3-Clause" -> url("http://www.opensource.org/licenses/BSD-3-Clause")
