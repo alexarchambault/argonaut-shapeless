@@ -1,7 +1,8 @@
 package argonaut
 
-import argonaut.derive.{ LowPriority, Ignoring }
-import shapeless.{Strict, Witness}
+import shapeless.Witness
+import shapeless.compat._
+
 import utest._
 
 object LowPriorityTests extends TestSuite {

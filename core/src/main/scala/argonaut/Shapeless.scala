@@ -1,6 +1,7 @@
 package argonaut
 
-import shapeless.{ Cached, Strict, Widen, Witness }
+import shapeless.Witness
+import shapeless.compat.{ Cached, Widen, Lazy, Strict, LowPriority }
 import argonaut.derive._
 
 trait SingletonInstances {
