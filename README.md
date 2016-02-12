@@ -20,7 +20,7 @@ which made type class derivation with implicits much more robust.
 
 ## Usage
 
-Add to your `build.sbt`
+### Scala Build Tool: add to your `build.sbt`
 ```scala
 resolvers += Resolver.sonatypeRepo("releases")
 
@@ -32,6 +32,26 @@ If you are using scala 2.10.x, also add the macro paradise plugin to your build,
 ```scala
 libraryDependencies +=
   compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
+```
+
+### Maven: add to your `pom.xml`
+For Scala 2.10:
+
+```xml
+<dependency>
+    <groupId>com.github.alexarchambault</groupId>
+    <artifactId>argonaut-shapeless_6.1_2.10</artifactId>
+    <version>1.0.0-M1</version>
+</dependency>
+```
+
+For Scala 2.11:
+```xml
+<dependency>
+    <groupId>com.github.alexarchambault</groupId>
+    <artifactId>argonaut-shapeless_6.1_2.11</artifactId>
+    <version>1.0.0-M1</version>
+</dependency>
 ```
 
 ## Features
