@@ -1,10 +1,8 @@
 package argonaut
 package derive
 
-import shapeless.{ Lazy => _, _ }
+import shapeless._
 import shapeless.labelled.FieldType
-
-import shapeless.compat.{ Strict, Lazy, Default }
 
 trait MkEncodeJson[T] {
   def encodeJson: EncodeJson[T]

@@ -1,7 +1,6 @@
 package argonaut
 
-import shapeless.Witness
-import shapeless.compat._
+import shapeless._
 
 import utest._
 
@@ -27,7 +26,7 @@ object LowPriorityTests extends TestSuite {
     case class CC2(s: String)
 
     object Extra {
-      implicit def extraTC[T](implicit notFound: Strict[LowPriority[TC[T]]]): TC[T] =
+      implicit def extraTC[T](implicit notFound: LowPriority): TC[T] =
         new TC[T] { def prop = false }
     }
   }
@@ -56,7 +55,7 @@ object LowPriorityTests extends TestSuite {
     case class CC2(s: String)
 
     object Extra {
-      implicit def extraTC[T](implicit notFound: Strict[LowPriority[Ignoring[Witness.`"anyTC"`.T, TC[T]]]]): TC[T] =
+      implicit def extraTC[T](implicit notFound: LowPriority.Ignoring[Witness.`"anyTC"`.T]): TC[T] =
         new TC[T] { def prop = Some(false) }
     }
   }
