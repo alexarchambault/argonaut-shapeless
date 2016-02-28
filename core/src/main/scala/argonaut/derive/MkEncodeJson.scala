@@ -154,19 +154,19 @@ object MkEncodeJson {
 
   implicit def productEncodeJson[P]
    (implicit
-     underlying: ProductEncodeJson[P],
+     underlying: Strict[ProductEncodeJson[P]],
      codecFor: JsonProductCodecFor[P]
    ): MkEncodeJson[P] =
     new MkEncodeJson[P] {
-      def encodeJson = underlying(codecFor.codec)
+      def encodeJson = underlying.value(codecFor.codec)
     }
 
   implicit def sumEncodeJson[S]
    (implicit
-     underlying: SumEncodeJson[S],
+     underlying: Strict[SumEncodeJson[S]],
      codecFor: JsonSumCodecFor[S]
    ): MkEncodeJson[S] =
     new MkEncodeJson[S] {
-      def encodeJson = underlying(codecFor.codec)
+      def encodeJson = underlying.value(codecFor.codec)
     }
 }
