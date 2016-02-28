@@ -66,8 +66,7 @@ lazy val compileSettings = Seq(
   crossScalaVersions := Seq("2.10.6", "2.11.7"),
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
-    Resolver.sonatypeRepo("releases"),
-    Resolver.sonatypeRepo("snapshots")
+    Resolver.sonatypeRepo("releases")
   ),
   libraryDependencies ++= {
     if (scalaVersion.value startsWith "2.10.")
@@ -80,7 +79,7 @@ lazy val compileSettings = Seq(
 
 lazy val testSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-SNAPSHOT" % "test",
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC1" % "test",
     "com.lihaoyi" %% "utest" % "0.3.0" % "test"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
