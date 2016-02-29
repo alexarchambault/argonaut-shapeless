@@ -7,8 +7,8 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.1_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.1_2.11)
 
 This README documents the current *development* version of argonaut-shapeless,
-which should be released after shapeless 2.3.0. For the stable version, see
-the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.3.x). It is available for scala 2.10 and 2.11, and depends on argonaut 6.1 and shapeless 2.3.0-SNAPSHOT.
+which should be released any time soon. For the stable version, see
+the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.3.x). It is available for scala 2.10 and 2.11, and depends on argonaut 6.1. The master branch depends on shapeless 2.2.5, and the 1.1.x on shapeless 2.3.0.
 
 argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses its
@@ -21,10 +21,10 @@ which made type class derivation with implicits much more robust.
 
 Add to your `build.sbt`
 ```scala
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.0.0-SNAPSHOT"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.0.0-RC1"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -32,6 +32,8 @@ If you are using scala 2.10.x, also add the macro paradise plugin to your build,
 libraryDependencies +=
   compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
 ```
+
+If you are using shapeless 2.3, replace `1.0.0-RC` above by `1.1.0-RC1`.
 
 ## Features
 
