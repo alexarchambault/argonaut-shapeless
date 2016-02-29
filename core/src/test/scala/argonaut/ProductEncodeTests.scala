@@ -5,8 +5,7 @@ import Util._
 
 import org.scalacheck.{ Arbitrary, Prop }
 
-import shapeless.{ Lazy => _, _ }
-import shapeless.compat._
+import shapeless._
 
 import derive._
 

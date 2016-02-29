@@ -28,6 +28,8 @@ lazy val doc = project
     tutTargetDirectory := baseDirectory.value / ".."
   )
 
+val shapelessVersion = "2.3.0"
+
 lazy val coreName = "argonaut-shapeless_6.1"
 
 lazy val coreSettings = Seq(
@@ -36,8 +38,7 @@ lazy val coreSettings = Seq(
   moduleName := coreName,
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.2.5",
-    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1"
+    "com.chuusai" %% "shapeless" % shapelessVersion
   )
 )
 
@@ -49,8 +50,7 @@ lazy val refinedSettings = Seq(
   moduleName := refinedName,
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
-    "com.chuusai" %% "shapeless" % "2.2.5",
-    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1",
+    "com.chuusai" %% "shapeless" % shapelessVersion,
     "eu.timepit" %% "refined" % "0.3.3"
   )
 )
@@ -79,7 +79,7 @@ lazy val compileSettings = Seq(
 
 lazy val testSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC1" % "test",
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.0-RC1" % "test",
     "com.lihaoyi" %% "utest" % "0.3.0" % "test"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
