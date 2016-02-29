@@ -33,7 +33,7 @@ libraryDependencies +=
   compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
 ```
 
-If you are using shapeless 2.3, replace `1.0.0-RC` above by `1.1.0-RC1`.
+If you are using shapeless 2.3, replace `1.0.0-RC1` above by `1.1.0-RC1`.
 
 ## Features
 
