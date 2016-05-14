@@ -11,6 +11,9 @@ trait JsonProductCodec {
 
 object JsonProductCodec {
   val obj: JsonProductCodec = new JsonProductObjCodec
+  def adapt(f: String => String): JsonProductCodec = new JsonProductObjCodec {
+    override def toJsonName(name: String) = f(name)
+  }
 }
 
 trait JsonProductCodecFor[P] {
