@@ -30,6 +30,8 @@ lazy val doc = project
 
 lazy val coreName = "argonaut-shapeless_6.1"
 
+val shapelessCompatVersion = "1.0.0-M4"
+
 lazy val coreSettings = Seq(
   organization := "com.github.alexarchambault",
   name := coreName,
@@ -37,7 +39,7 @@ lazy val coreSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % "2.2.5",
-    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1"
+    "com.github.alexarchambault" %% "shapeless-compat" % shapelessCompatVersion
   )
 )
 
@@ -50,8 +52,8 @@ lazy val refinedSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % "2.2.5",
-    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1",
-    "eu.timepit" %% "refined" % "0.3.3"
+    "com.github.alexarchambault" %% "shapeless-compat" % shapelessCompatVersion,
+    "eu.timepit" %% "refined" % "0.4.0"
   )
 )
 
@@ -62,8 +64,7 @@ lazy val projectSettings =
   extraReleaseSettings
 
 lazy val compileSettings = Seq(
-  scalaVersion := "2.11.7",
-  crossScalaVersions := Seq("2.10.6", "2.11.7"),
+  scalaVersion := "2.11.8",
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases")
@@ -79,7 +80,7 @@ lazy val compileSettings = Seq(
 
 lazy val testSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC1" % "test",
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC3" % "test",
     "com.lihaoyi" %% "utest" % "0.3.0" % "test"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
@@ -110,12 +111,12 @@ lazy val commonSettings = Seq(
     else
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
   },
-  credentials += {
+  credentials ++= {
     Seq("SONATYPE_USER", "SONATYPE_PASS").map(sys.env.get) match {
       case Seq(Some(user), Some(pass)) =>
-        Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass)
+        Seq(Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass))
       case _ =>
-        Credentials(Path.userHome / ".ivy2" / ".credentials")
+        Seq.empty
     }
   }
 )
