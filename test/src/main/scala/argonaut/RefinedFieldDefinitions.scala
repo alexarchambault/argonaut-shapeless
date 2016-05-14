@@ -1,6 +1,6 @@
 package argonaut
 
-import eu.timepit.refined.api.Refined
+import eu.timepit.refined.api.{ Refined => RefinedType }
 import eu.timepit.refined.collection._
 import eu.timepit.refined.numeric._
 
@@ -15,8 +15,8 @@ object RefinedFieldDefinitions {
   )
 
   case class SimpleV(
-    i: Refined[Int, Positive],
-    s: Refined[String, NonEmpty],
-    l: Refined[List[Int], Size[Greater[_3]]]
+    i: RefinedType[Int, Positive],
+    s: RefinedType[String, NonEmpty],
+    l: RefinedType[List[Int], Size[Greater[_3]]]
   )
 }
