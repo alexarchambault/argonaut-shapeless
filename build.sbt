@@ -81,7 +81,7 @@ lazy val compileSettings = Seq(
 
 lazy val testSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC1" % "test",
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC3" % "test",
     "com.lihaoyi" %% "utest" % "0.3.0" % "test"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
