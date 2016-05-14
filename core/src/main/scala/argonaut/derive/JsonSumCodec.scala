@@ -1,7 +1,7 @@
 package argonaut
 package derive
 
-import scalaz.{\/-, -\/}
+import scalaz.{ -\/, \/- }
 
 trait JsonSumCodec {
   def encodeEmpty: Nothing
@@ -26,13 +26,13 @@ object JsonSumCodecFor {
 }
 
 object JsonSumCodec {
-  val obj = JsonSumObjCodec()
-  val typeField = JsonSumTypeFieldCodec()
+  val obj: JsonSumCodec = new JsonSumObjCodec
+  val typeField: JsonSumCodec = new JsonSumTypeFieldCodec
 }
 
-case class JsonSumObjCodec(
-  toJsonName: String => String = identity
-) extends JsonSumCodec {
+class JsonSumObjCodec extends JsonSumCodec {
+
+  def toJsonName(name: String): String = name
 
   def encodeEmpty: Nothing =
     throw new IllegalArgumentException("empty")
@@ -54,12 +54,11 @@ case class JsonSumObjCodec(
     }
 }
 
-case class JsonSumTypeFieldCodec(
-  typeField: String = "type",
-  toTypeValue: Option[String => String] = None
-) extends JsonSumCodec {
-  private def toTypeValue0(name: String) =
-    toTypeValue.fold(name)(_(name))
+class JsonSumTypeFieldCodec extends JsonSumCodec {
+
+  def typeField: String = "type"
+
+  def toTypeValue(name: String) = name
 
   def encodeEmpty: Nothing =
     throw new IllegalArgumentException("empty")
@@ -67,7 +66,7 @@ case class JsonSumTypeFieldCodec(
     fieldOrObj match {
       case Left(other) => other
       case Right((name, content)) =>
-        (typeField -> Json.jString(toTypeValue0(name))) ->: content
+        (typeField -> Json.jString(toTypeValue(name))) ->: content
     }
 
   def decodeEmpty(cursor: HCursor): DecodeResult[Nothing] =
@@ -80,7 +79,7 @@ case class JsonSumTypeFieldCodec(
     )
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[Either[ACursor, A]] =
     cursor.--\(typeField).as[String].toDisjunction match {
-      case \/-(name0) if toTypeValue0(name) == name0 =>
+      case \/-(name0) if toTypeValue(name) == name0 =>
         decode.decode(cursor).map(Right(_))
       case _ =>
         DecodeResult.ok(Left(ACursor.ok(cursor)))
