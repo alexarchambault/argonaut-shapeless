@@ -53,7 +53,7 @@ lazy val refinedSettings = Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % "2.2.5",
     "com.github.alexarchambault" %% "shapeless-compat" % shapelessCompatVersion,
-    "eu.timepit" %% "refined" % "0.3.3"
+    "eu.timepit" %% "refined" % "0.4.0"
   )
 )
 
