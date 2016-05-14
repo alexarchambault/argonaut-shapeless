@@ -8,7 +8,7 @@ before_install:
 - pip install --user codecov
 after_success:
 - codecov
-script: mv version.sbt version.sbt0 && sed "s/-SNAPSHOT/-travis-SNAPSHOT/" < version.sbt0 > version.sbt && sbt ++${TRAVIS_SCALA_VERSION} coverage $(if [[ "${TRAVIS_SCALA_VERSION}" == "2.10.6" ]]; then echo test; else echo validate; fi) coverageReport $(if [[ "$TRAVIS_PULL_REQUEST" == "false"
+script: mv version.sbt version.sbt0 && sed "s/-SNAPSHOT/-travis-SNAPSHOT/" < version.sbt0 > version.sbt && sbt -batch ++${TRAVIS_SCALA_VERSION} coverage $(if [[ "${TRAVIS_SCALA_VERSION}" == "2.10.6" ]]; then echo test; else echo validate; fi) coverageReport $(if [[ "$TRAVIS_PULL_REQUEST" == "false"
   && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "master"
   ]]; then echo "publish"; fi)
 sudo: false
