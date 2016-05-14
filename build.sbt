@@ -30,6 +30,8 @@ lazy val doc = project
 
 lazy val coreName = "argonaut-shapeless_6.1"
 
+val shapelessCompatVersion = "1.0.0-M4"
+
 lazy val coreSettings = Seq(
   organization := "com.github.alexarchambault",
   name := coreName,
@@ -37,7 +39,7 @@ lazy val coreSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % "2.2.5",
-    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1"
+    "com.github.alexarchambault" %% "shapeless-compat" % shapelessCompatVersion
   )
 )
 
@@ -50,7 +52,7 @@ lazy val refinedSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % "2.2.5",
-    "com.github.alexarchambault" %% "shapeless-compat" % "1.0.0-M1",
+    "com.github.alexarchambault" %% "shapeless-compat" % shapelessCompatVersion,
     "eu.timepit" %% "refined" % "0.3.3"
   )
 )
