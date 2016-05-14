@@ -24,9 +24,7 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[Empty.type],
         Default.AsOptions[Empty.type],
-        Lazy(
-          HListProductEncodeJson.hnil
-        )
+        HListProductEncodeJson.hnil
       ),
       JsonProductCodecFor.default
     ).encodeJson
@@ -36,9 +34,7 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[EmptyCC],
         Default.AsOptions[EmptyCC],
-        Lazy(
-          HListProductEncodeJson.hnil
-        )
+        HListProductEncodeJson.hnil
       ),
       JsonProductCodecFor.default
     ).encodeJson
@@ -48,18 +44,16 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[Simple],
         Default.AsOptions[Simple],
-        Lazy(
+        HListProductEncodeJson.hcons(
+          Witness('i),
+          IntEncodeJson,
           HListProductEncodeJson.hcons(
-            Witness('i),
-            Strict(IntEncodeJson),
+            Witness('s),
+            StringEncodeJson,
             HListProductEncodeJson.hcons(
-              Witness('s),
-              Strict(StringEncodeJson),
-              HListProductEncodeJson.hcons(
-                Witness('blah),
-                Strict(BooleanEncodeJson),
-                HListProductEncodeJson.hnil
-              )
+              Witness('blah),
+              BooleanEncodeJson,
+              HListProductEncodeJson.hnil
             )
           )
         )
@@ -72,15 +66,13 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[Composed],
         Default.AsOptions[Composed],
-        Lazy(
+        HListProductEncodeJson.hcons(
+          Witness('foo),
+          expectedSimpleEncodeJson,
           HListProductEncodeJson.hcons(
-            Witness('foo),
-            Strict(expectedSimpleEncodeJson),
-            HListProductEncodeJson.hcons(
-              Witness('other),
-              Strict(StringEncodeJson),
-              HListProductEncodeJson.hnil
-            )
+            Witness('other),
+            StringEncodeJson,
+            HListProductEncodeJson.hnil
           )
         )
       ),
@@ -92,18 +84,16 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[SimpleWithJs],
         Default.AsOptions[SimpleWithJs],
-        Lazy(
+        HListProductEncodeJson.hcons(
+          Witness('i),
+          IntEncodeJson,
           HListProductEncodeJson.hcons(
-            Witness('i),
-            Strict(IntEncodeJson),
+            Witness('s),
+            StringEncodeJson,
             HListProductEncodeJson.hcons(
-              Witness('s),
-              Strict(StringEncodeJson),
-              HListProductEncodeJson.hcons(
-                Witness('v),
-                Strict(JsonEncodeJson),
-                HListProductEncodeJson.hnil
-              )
+              Witness('v),
+              Strict(JsonEncodeJson),
+              HListProductEncodeJson.hnil
             )
           )
         )
@@ -116,12 +106,10 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[WrappedMap],
         Default.AsOptions[WrappedMap],
-        Lazy(
-          HListProductEncodeJson.hcons(
-            Witness('m),
-            Strict(MapLikeEncodeJson[Map, Json](JsonEncodeJson)),
-            HListProductEncodeJson.hnil
-          )
+        HListProductEncodeJson.hcons(
+          Witness('m),
+          MapLikeEncodeJson[Map, Json](JsonEncodeJson),
+          HListProductEncodeJson.hnil
         )
       ),
       JsonProductCodecFor.default
@@ -132,12 +120,10 @@ object ProductEncodeTests extends TestSuite {
       ProductEncodeJson.generic(
         LabelledGeneric[OI],
         Default.AsOptions[OI],
-        Lazy(
-          HListProductEncodeJson.hcons(
-            Witness('oi),
-            Strict(OptionEncodeJson[Int](IntEncodeJson)),
-            HListProductEncodeJson.hnil
-          )
+        HListProductEncodeJson.hcons(
+          Witness('oi),
+          OptionEncodeJson[Int](IntEncodeJson),
+          HListProductEncodeJson.hnil
         )
       ),
       JsonProductCodecFor.default
