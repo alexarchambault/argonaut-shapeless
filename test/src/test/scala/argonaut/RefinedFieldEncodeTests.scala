@@ -1,26 +1,12 @@
 package argonaut
 
-import eu.timepit.refined._, api._, numeric._, collection._, boolean._
-import shapeless.tag.@@
+import eu.timepit.refined._, numeric._, collection._, boolean._
+
 import shapeless.nat._3
+
 import Argonaut._, Shapeless._, Refined._
+
 import utest._
-
-object RefinedFieldDefinitions {
-
-  case class Simple0(
-    i: Int,
-    s: String,
-    l: List[Int]
-  )
-
-  case class SimpleV(
-    i: Refined[Int, Positive],
-    s: Refined[String, NonEmpty],
-    l: Refined[List[Int], Size[Greater[_3]]]
-  )
-
-}
 
 object RefinedFieldEncodeTests extends TestSuite {
   import RefinedFieldDefinitions._
@@ -36,7 +22,5 @@ object RefinedFieldEncodeTests extends TestSuite {
 
       assert(expectedJson == jsonV)
     }
-
   }
-
 }

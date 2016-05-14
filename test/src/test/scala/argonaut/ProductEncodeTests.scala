@@ -15,11 +15,10 @@ import org.scalacheck.Shapeless._
 import Argonaut._, Shapeless._
 
 
-case class WrappedMap(m: Map[String, Json])
-
-
 object ProductEncodeTests extends TestSuite {
-  
+
+  case class WrappedMap(m: Map[String, Json])
+
   lazy val expectedEmptyEncodeJson =
     MkEncodeJson.product(
       ProductEncodeJson.generic(
