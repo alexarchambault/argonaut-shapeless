@@ -64,8 +64,7 @@ lazy val projectSettings =
   extraReleaseSettings
 
 lazy val compileSettings = Seq(
-  scalaVersion := "2.11.7",
-  crossScalaVersions := Seq("2.10.6", "2.11.7"),
+  scalaVersion := "2.11.8",
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases")
