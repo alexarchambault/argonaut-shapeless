@@ -1,7 +1,7 @@
 import com.typesafe.sbt.pgp.PgpKeys
 
 lazy val `argonaut-shapeless` = project.in(file("."))
-  .aggregate(core, refined, doc)
+  .aggregate(core, refined, test, doc)
   .settings(commonSettings)
   .settings(compileSettings)
   .settings(noPublishSettings)
@@ -16,6 +16,20 @@ lazy val refined = project
   .settings(commonSettings)
   .settings(refinedSettings)
   .settings(projectSettings)
+
+lazy val test = project
+  .dependsOn(core, refined)
+  .settings(commonSettings)
+  .settings(coreSettings)
+  .settings(projectSettings)
+  .settings(noPublishSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC3" % "test",
+      "com.lihaoyi" %% "utest" % "0.3.0" % "test"
+    ),
+    testFrameworks += new TestFramework("utest.runner.Framework")
+  )
 
 lazy val doc = project
   .dependsOn(core, refined)
@@ -53,13 +67,12 @@ lazy val refinedSettings = Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % "2.2.5",
     "com.github.alexarchambault" %% "shapeless-compat" % shapelessCompatVersion,
-    "eu.timepit" %% "refined" % "0.4.0"
+    "eu.timepit" %% "refined" % "0.3.5" // last version built against shapeless 2.2
   )
 )
 
 lazy val projectSettings =
   compileSettings ++
-  testSettings ++
   releaseSettings ++
   extraReleaseSettings
 
@@ -75,15 +88,6 @@ lazy val compileSettings = Seq(
     else
       Seq()
   }
-)
-
-
-lazy val testSettings = Seq(
-  libraryDependencies ++= Seq(
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.0.0-RC3" % "test",
-    "com.lihaoyi" %% "utest" % "0.3.0" % "test"
-  ),
-  testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
 lazy val commonSettings = Seq(

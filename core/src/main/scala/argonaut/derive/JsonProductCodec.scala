@@ -9,6 +9,13 @@ trait JsonProductCodec {
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A], default: Option[A]): DecodeResult[(A, ACursor)]
 }
 
+object JsonProductCodec {
+  val obj: JsonProductCodec = new JsonProductObjCodec
+  def adapt(f: String => String): JsonProductCodec = new JsonProductObjCodec {
+    override def toJsonName(name: String) = f(name)
+  }
+}
+
 trait JsonProductCodecFor[P] {
   def codec: JsonProductCodec
 }
@@ -23,13 +30,9 @@ object JsonProductCodecFor {
     JsonProductCodecFor(JsonProductCodec.obj)
 }
 
-object JsonProductCodec {
-  val obj = JsonProductObjCodec()
-}
+class JsonProductObjCodec extends JsonProductCodec {
 
-case class JsonProductObjCodec(
-  toJsonName: String => String = identity
-) extends JsonProductCodec {
+  def toJsonName(name: String): String = name
 
   val encodeEmpty: Json = Json.obj()
   def encodeField(field: (String, Json), obj: Json, default: => Option[Json]): Json = {

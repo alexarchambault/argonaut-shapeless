@@ -15,52 +15,45 @@ import org.scalacheck.Shapeless._
 import Argonaut._, Shapeless._
 
 
-case class WrappedMap(m: Map[String, Json])
-
-
 object ProductEncodeTests extends TestSuite {
-  
+
+  case class WrappedMap(m: Map[String, Json])
+
   lazy val expectedEmptyEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[Empty.type],
         Default.AsOptions[Empty.type],
-        Lazy(
-          HListProductEncodeJson.hnilEncodeJson
-        )
+        HListProductEncodeJson.hnil
       ),
       JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedEmptyCCEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[EmptyCC],
         Default.AsOptions[EmptyCC],
-        Lazy(
-          HListProductEncodeJson.hnilEncodeJson
-        )
+        HListProductEncodeJson.hnil
       ),
       JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedSimpleEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[Simple],
         Default.AsOptions[Simple],
-        Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
-            Witness('i),
-            Strict(IntEncodeJson),
-            HListProductEncodeJson.hconsEncodeJson(
-              Witness('s),
-              Strict(StringEncodeJson),
-              HListProductEncodeJson.hconsEncodeJson(
-                Witness('blah),
-                Strict(BooleanEncodeJson),
-                HListProductEncodeJson.hnilEncodeJson
-              )
+        HListProductEncodeJson.hcons(
+          Witness('i),
+          IntEncodeJson,
+          HListProductEncodeJson.hcons(
+            Witness('s),
+            StringEncodeJson,
+            HListProductEncodeJson.hcons(
+              Witness('blah),
+              BooleanEncodeJson,
+              HListProductEncodeJson.hnil
             )
           )
         )
@@ -69,19 +62,17 @@ object ProductEncodeTests extends TestSuite {
     ).encodeJson
 
   lazy val expectedComposedEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[Composed],
         Default.AsOptions[Composed],
-        Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
-            Witness('foo),
-            Strict(expectedSimpleEncodeJson),
-            HListProductEncodeJson.hconsEncodeJson(
-              Witness('other),
-              Strict(StringEncodeJson),
-              HListProductEncodeJson.hnilEncodeJson
-            )
+        HListProductEncodeJson.hcons(
+          Witness('foo),
+          expectedSimpleEncodeJson,
+          HListProductEncodeJson.hcons(
+            Witness('other),
+            StringEncodeJson,
+            HListProductEncodeJson.hnil
           )
         )
       ),
@@ -89,22 +80,20 @@ object ProductEncodeTests extends TestSuite {
     ).encodeJson
 
   lazy val expectedSimpleWithJsEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[SimpleWithJs],
         Default.AsOptions[SimpleWithJs],
-        Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
-            Witness('i),
-            Strict(IntEncodeJson),
-            HListProductEncodeJson.hconsEncodeJson(
-              Witness('s),
-              Strict(StringEncodeJson),
-              HListProductEncodeJson.hconsEncodeJson(
-                Witness('v),
-                Strict(JsonEncodeJson),
-                HListProductEncodeJson.hnilEncodeJson
-              )
+        HListProductEncodeJson.hcons(
+          Witness('i),
+          IntEncodeJson,
+          HListProductEncodeJson.hcons(
+            Witness('s),
+            StringEncodeJson,
+            HListProductEncodeJson.hcons(
+              Witness('v),
+              Strict(JsonEncodeJson),
+              HListProductEncodeJson.hnil
             )
           )
         )
@@ -113,32 +102,28 @@ object ProductEncodeTests extends TestSuite {
     ).encodeJson
 
   lazy val expectedWrappedMapEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[WrappedMap],
         Default.AsOptions[WrappedMap],
-        Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
-            Witness('m),
-            Strict(MapLikeEncodeJson[Map, Json](JsonEncodeJson)),
-            HListProductEncodeJson.hnilEncodeJson
-          )
+        HListProductEncodeJson.hcons(
+          Witness('m),
+          MapLikeEncodeJson[Map, Json](JsonEncodeJson),
+          HListProductEncodeJson.hnil
         )
       ),
       JsonProductCodecFor.default
     ).encodeJson
 
   lazy val expectedOIEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[OI],
         Default.AsOptions[OI],
-        Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
-            Witness('oi),
-            Strict(OptionEncodeJson[Int](IntEncodeJson)),
-            HListProductEncodeJson.hnilEncodeJson
-          )
+        HListProductEncodeJson.hcons(
+          Witness('oi),
+          OptionEncodeJson[Int](IntEncodeJson),
+          HListProductEncodeJson.hnil
         )
       ),
       JsonProductCodecFor.default
