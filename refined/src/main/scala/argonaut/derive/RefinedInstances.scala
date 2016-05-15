@@ -1,7 +1,10 @@
-package argonaut
+package argonaut.derive
+
+import argonaut.{ DecodeJson, DecodeResult, EncodeJson }
 
 import eu.timepit.refined.api.RefType
 import eu.timepit.refined.api.Validate
+
 import language.higherKinds
 
 trait RefinedInstances {
@@ -27,7 +30,4 @@ trait RefinedInstances {
      refType: RefType[F]
    ): EncodeJson[F[T, P]] =
     underlying.contramap(refType.unwrap)
-
 }
-
-object Refined extends RefinedInstances

@@ -128,7 +128,7 @@ This default can be changed, e.g. to convert field names to `serpent_case`,
 import argonaut.derive._
 
 implicit def serpentCaseCodecFor[T]: JsonProductCodecFor[T] =
-  JsonProductCodecFor(JsonProductObjCodec(_.toSerpentCase))
+  JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
 
 case class Identity(firstName: String, lastName: String)
 
@@ -145,7 +145,7 @@ This can be changed for all types at once like just above, or only for specific
 types, like
 ```scala
 implicit def serpentCaseCodecForIdentity: JsonProductCodecFor[Identity] =
-  JsonProductCodecFor(JsonProductObjCodec(_.toSerpentCase))
+  JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
 ```
 
 

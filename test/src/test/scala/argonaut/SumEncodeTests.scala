@@ -14,18 +14,18 @@ object SumEncodeTests extends TestSuite {
   import ProductEncodeTests.{ compareEncodeJsons, jsonIs }
 
   lazy val expectedBaseISEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[BaseIS],
         Default.AsOptions[BaseIS],
         Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
+          HListProductEncodeJson.hcons(
             Witness('i),
             Strict(IntEncodeJson),
-            HListProductEncodeJson.hconsEncodeJson(
+            HListProductEncodeJson.hcons(
               Witness('s),
               Strict(StringEncodeJson),
-              HListProductEncodeJson.hnilEncodeJson
+              HListProductEncodeJson.hnil
             )
           )
         )
@@ -34,18 +34,18 @@ object SumEncodeTests extends TestSuite {
     ).encodeJson
 
   lazy val expectedBaseDBEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[BaseDB],
         Default.AsOptions[BaseDB],
         Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
+          HListProductEncodeJson.hcons(
             Witness('d),
             Strict(DoubleEncodeJson),
-            HListProductEncodeJson.hconsEncodeJson(
+            HListProductEncodeJson.hcons(
               Witness('b),
               Strict(BooleanEncodeJson),
-              HListProductEncodeJson.hnilEncodeJson
+              HListProductEncodeJson.hnil
             )
           )
         )
@@ -54,15 +54,15 @@ object SumEncodeTests extends TestSuite {
     ).encodeJson
 
   lazy val expectedBaseLastEncodeJson =
-    MkEncodeJson.productEncodeJson(
-      ProductEncodeJson.genericEncodeJson(
+    MkEncodeJson.product(
+      ProductEncodeJson.generic(
         LabelledGeneric[BaseLast],
         Default.AsOptions[BaseLast],
         Lazy(
-          HListProductEncodeJson.hconsEncodeJson(
+          HListProductEncodeJson.hcons(
             Witness('c),
             Strict(ProductEncodeTests.expectedSimpleEncodeJson),
-            HListProductEncodeJson.hnilEncodeJson
+            HListProductEncodeJson.hnil
           )
         )
       ),
@@ -72,19 +72,19 @@ object SumEncodeTests extends TestSuite {
   lazy val expectedBaseEncodeJson = expectedBaseEncodeJsonFor(JsonSumCodecFor.default)
   lazy val expectedBaseEncodeJsonTypeField = expectedBaseEncodeJsonFor(JsonSumCodecFor(JsonSumCodec.typeField))
   def expectedBaseEncodeJsonFor(codecFor: JsonSumCodecFor[Base]) =
-    MkEncodeJson.sumEncodeJson(
-      SumEncodeJson.genericEncodeJson(
+    MkEncodeJson.sum(
+      SumEncodeJson.generic(
         LabelledGeneric[Base],
-        CoproductSumEncodeJson.cconsEncodeJson(
+        CoproductSumEncodeJson.ccons(
           Witness('BaseDB),
           expectedBaseDBEncodeJson,
-          CoproductSumEncodeJson.cconsEncodeJson(
+          CoproductSumEncodeJson.ccons(
             Witness('BaseIS),
             expectedBaseISEncodeJson,
-            CoproductSumEncodeJson.cconsEncodeJson(
+            CoproductSumEncodeJson.ccons(
               Witness('BaseLast),
               expectedBaseLastEncodeJson,
-              CoproductSumEncodeJson.cnilEncodeJson
+              CoproductSumEncodeJson.cnil
             )
           )
         )
