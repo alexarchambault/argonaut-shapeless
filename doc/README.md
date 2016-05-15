@@ -156,7 +156,7 @@ implicit class readmeStringOps(val s: String) {
 import argonaut.derive._
 
 implicit def serpentCaseCodecFor[T]: JsonProductCodecFor[T] =
-  JsonProductCodecFor(JsonProductObjCodec(_.toSerpentCase))
+  JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
 
 case class Identity(firstName: String, lastName: String)
 
@@ -182,7 +182,7 @@ This can be changed for all types at once like just above, or only for specific
 types, like
 ```tut:silent
 implicit def serpentCaseCodecForIdentity: JsonProductCodecFor[Identity] =
-  JsonProductCodecFor(JsonProductObjCodec(_.toSerpentCase))
+  JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
 ```
 
 ```tut:invisible
