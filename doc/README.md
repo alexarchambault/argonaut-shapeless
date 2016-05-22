@@ -44,9 +44,9 @@ If you are using shapeless 2.3, replace `1.0.0-RC1` above by `1.1.0-RC1`.
 ## Features
 
 The examples below assume you imported the content of
-`argonaut`, `argonaut.Argonaut`, and `argonaut.Shapeless`, like
+`argonaut`, `argonaut.Argonaut`, and `argonaut.ArgonautShapeless`, like
 ```tut:silent
-import argonaut._, Argonaut._, Shapeless._
+import argonaut._, Argonaut._, ArgonautShapeless._
 ```
 
 ### Automatic codecs for case classes
@@ -247,7 +247,7 @@ companion object, or manually imported), these will be given the priority
 over the ones derived by argonaut-shapeless, like
 
 ```scala
-import argonaut._, Argonaut._, Shapeless._
+import argonaut._, Argonaut._, ArgonautShapeless._
 
 case class Custom(s: String)
 
@@ -298,7 +298,7 @@ libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.1" % 
 
 Use like
 ```tut:silent
-import argonaut._, Argonaut._, Shapeless._, Refined._
+import argonaut._, Argonaut._, ArgonautShapeless._, ArgonautRefined._
 import eu.timepit.refined._
 import eu.timepit.refined.api.Refined
 
