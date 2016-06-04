@@ -2,7 +2,8 @@ package argonaut
 
 import eu.timepit.refined._, api._, numeric._, collection._, boolean._
 import shapeless.nat.{ _0, _3 }
-import Argonaut._, Refined._
+import argonaut.Argonaut._
+import argonaut.ArgonautRefined._
 import shapeless.tag.@@
 import utest._
 

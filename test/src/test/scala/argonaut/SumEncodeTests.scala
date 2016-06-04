@@ -2,7 +2,8 @@ package argonaut
 
 import utest._
 
-import Argonaut._, Shapeless._
+import argonaut.Argonaut._
+import argonaut.ArgonautShapeless._
 import org.scalacheck.Shapeless._
 
 import shapeless._

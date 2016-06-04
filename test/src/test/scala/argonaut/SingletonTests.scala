@@ -2,8 +2,8 @@ package argonaut
 
 import shapeless.Witness
 import utest._
-import Shapeless._
-import Argonaut._
+import argonaut.Argonaut._
+import argonaut.ArgonautShapeless._
 
 object SingletonTests extends TestSuite {
 
