@@ -6,9 +6,7 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.1_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.1_2.11)
 
-This README documents the current *development* version of argonaut-shapeless,
-which should be released any time soon. For the stable version, see
-the [0.3.x branch](https://github.com/alexarchambault/argonaut-shapeless/tree/0.3.x). It is available for scala 2.10 and 2.11, and depends on argonaut 6.1. The master branch depends on shapeless 2.2.5, and the 1.1.x on shapeless 2.3.0.
+It is available for scala 2.10 and 2.11, and depends on argonaut 6.1. The master branch depends on shapeless 2.2.5, and the 1.1.x on shapeless 2.3.0.
 
 argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses its
@@ -17,6 +15,14 @@ argonaut-shapeless is part of the shapeless ecosystem of
 It is one of the very first projects to have used `Lazy` from shapeless 2.1,
 which made type class derivation with implicits much more robust.
 
+## Compatibility table
+
+| argonaut-shapeless | argonaut | shapeless | refined |
+|--------------------|----------|-----------|---------|
+| 1.1.x              | 6.1      | 2.3.x     | 0.4.x   |
+| 1.0.x              | 6.1      | 2.2.x     | 0.3.5   |
+| 0.3.x              | 6.1      | 2.2.x     | n/a     |
+
 ## Usage
 
 Add to your `build.sbt`
@@ -24,7 +30,7 @@ Add to your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.0.0-RC1"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.0.0-RC2"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -38,9 +44,9 @@ If you are using shapeless 2.3, replace `1.0.0-RC1` above by `1.1.0-RC1`.
 ## Features
 
 The examples below assume you imported the content of
-`argonaut`, `argonaut.Argonaut`, and `argonaut.Shapeless`, like
+`argonaut`, `argonaut.Argonaut`, and `argonaut.ArgonautShapeless`, like
 ```scala
-import argonaut._, Argonaut._, Shapeless._
+import argonaut._, Argonaut._, ArgonautShapeless._
 ```
 
 ### Automatic codecs for case classes
@@ -191,7 +197,7 @@ companion object, or manually imported), these will be given the priority
 over the ones derived by argonaut-shapeless, like
 
 ```scala
-import argonaut._, Argonaut._, Shapeless._
+import argonaut._, Argonaut._, ArgonautShapeless._
 
 case class Custom(s: String)
 
@@ -222,12 +228,12 @@ kind of validation at the type level.
 
 Add it to your dependencies with
 ```scala
-libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.1" % "1.0.0-SNAPSHOT"
+libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.1" % "1.0.0-RC2"
 ```
 
 Use like
 ```scala
-import argonaut._, Argonaut._, Shapeless._, Refined._
+import argonaut._, Argonaut._, ArgonautShapeless._, ArgonautRefined._
 import eu.timepit.refined._
 import eu.timepit.refined.api.Refined
 

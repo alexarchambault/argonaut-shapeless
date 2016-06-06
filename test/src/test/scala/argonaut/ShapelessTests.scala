@@ -19,7 +19,7 @@ object ShapelessTests extends TestSuite {
     }.validate
 
   import org.scalacheck.Shapeless._
-  import Shapeless._
+  import argonaut.ArgonautShapeless._
 
   val tests = TestSuite {
     'serializeDeserialize {

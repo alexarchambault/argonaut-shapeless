@@ -11,7 +11,8 @@ import derive._
 
 import org.scalacheck.Shapeless._
 
-import Argonaut._, Shapeless._
+import argonaut.Argonaut._
+import argonaut.ArgonautShapeless._
 
 
 object ProductEncodeTests extends TestSuite {

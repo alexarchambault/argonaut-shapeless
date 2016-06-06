@@ -1,0 +1,10 @@
+### Changes
+
+* Major refactoring of the internals ([#67])
+* Switch to shapeless 2.3.1 ([#66])
+* Switch to shapeless-compat 1.0.0-M4 ([#65])
+* Switch to scala 2.11.8 ([#65])
+
+[#65]: https://github.com/alexarchambault/argonaut-shapeless/pull/65
+[#66]: https://github.com/alexarchambault/argonaut-shapeless/pull/66
+[#67]: https://github.com/alexarchambault/argonaut-shapeless/pull/67

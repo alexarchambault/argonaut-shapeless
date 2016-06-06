@@ -4,7 +4,9 @@ import eu.timepit.refined._, numeric._, collection._, boolean._
 
 import shapeless.nat._3
 
-import Argonaut._, Shapeless._, Refined._
+import argonaut.Argonaut._
+import argonaut.ArgonautRefined._
+import argonaut.ArgonautShapeless._
 
 import utest._
 
