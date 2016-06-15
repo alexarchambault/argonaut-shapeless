@@ -108,7 +108,7 @@ object ProductEncodeTests extends TestSuite {
         Default.AsOptions[WrappedMap],
         HListProductEncodeJson.hcons(
           Witness('m),
-          MapLikeEncodeJson[Map, Json](JsonEncodeJson),
+          MapEncodeJson[String, Json](EncodeJsonKey.StringEncodeJsonKey, JsonEncodeJson),
           HListProductEncodeJson.hnil
         )
       ),

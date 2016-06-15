@@ -44,19 +44,19 @@ lazy val doc = project
 
 val shapelessVersion = "2.3.1"
 
-lazy val coreName = "argonaut-shapeless_6.1"
+lazy val coreName = "argonaut-shapeless_6.2"
 
 lazy val coreSettings = Seq(
   organization := "com.github.alexarchambault",
   name := coreName,
   moduleName := coreName,
   libraryDependencies ++= Seq(
-    "io.argonaut" %% "argonaut" % "6.1a",
+    "io.argonaut" %% "argonaut" % "6.2-M3",
     "com.chuusai" %% "shapeless" % shapelessVersion
   )
 )
 
-lazy val refinedName = "argonaut-refined_6.1"
+lazy val refinedName = "argonaut-refined_6.2"
 
 lazy val refinedSettings = Seq(
   organization := "com.github.alexarchambault",

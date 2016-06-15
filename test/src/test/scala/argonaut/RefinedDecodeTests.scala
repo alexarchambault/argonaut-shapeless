@@ -16,8 +16,8 @@ object RefinedDecodeTests extends TestSuite {
 
       val json = n0.asJson
 
-      val n = json.as[Int].toDisjunction.getOrElse(???)
-      val nV = json.as[Refined[Int, Positive]].toDisjunction.getOrElse(???)
+      val n = json.as[Int].getOr(???)
+      val nV = json.as[Refined[Int, Positive]].getOr(???)
 
       assert(n == n0)
       assert(nV == nV0)
@@ -29,8 +29,8 @@ object RefinedDecodeTests extends TestSuite {
 
       val json = s0.asJson
 
-      val s = json.as[String].toDisjunction.getOrElse(???)
-      val sV = json.as[Refined[String, NonEmpty]].toDisjunction.getOrElse(???)
+      val s = json.as[String].getOr(???)
+      val sV = json.as[Refined[String, NonEmpty]].getOr(???)
 
       assert(s == s0)
       assert(sV == sV0)
@@ -42,8 +42,8 @@ object RefinedDecodeTests extends TestSuite {
 
       val json = n0.asJson
 
-      val n = json.as[Int].toDisjunction.getOrElse(???)
-      val nV = json.as[Refined[Int, Not[Less[_0]] And Not[Greater[_3]]]].toDisjunction.getOrElse(???)
+      val n = json.as[Int].getOr(???)
+      val nV = json.as[Refined[Int, Not[Less[_0]] And Not[Greater[_3]]]].getOr(???)
 
       assert(n == n0)
       assert(nV == nV0)
@@ -55,8 +55,8 @@ object RefinedDecodeTests extends TestSuite {
 
       val json = n0.asJson
 
-      val n = json.as[List[Int]].toDisjunction.getOrElse(???)
-      val nV = json.as[Refined[List[Int], Size[Greater[_3]]]].toDisjunction.getOrElse(???)
+      val n = json.as[List[Int]].getOr(???)
+      val nV = json.as[Refined[List[Int], Size[Greater[_3]]]].getOr(???)
 
       assert(n == n0)
       assert(nV == nV0)
