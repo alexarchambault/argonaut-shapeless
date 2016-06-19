@@ -65,7 +65,7 @@ lazy val refinedSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % "6.1",
     "com.chuusai" %% "shapeless" % shapelessVersion,
-    "eu.timepit" %% "refined" % "0.4.0"
+    "eu.timepit" %% "refined" % "0.5.0"
   )
 )
 
