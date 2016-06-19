@@ -51,7 +51,7 @@ lazy val coreSettings = Seq(
   name := coreName,
   moduleName := coreName,
   libraryDependencies ++= Seq(
-    "io.argonaut" %% "argonaut" % "6.1",
+    "io.argonaut" %% "argonaut" % "6.1a",
     "com.chuusai" %% "shapeless" % shapelessVersion
   )
 )
