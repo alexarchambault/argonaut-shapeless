@@ -31,7 +31,7 @@ Add to your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.0"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -40,7 +40,7 @@ libraryDependencies +=
   compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
 ```
 
-If you are using shapeless 2.2, replace `1.1.0` above by `1.0.0`.
+If you are using shapeless 2.2, replace `1.1.1` above by `1.0.0`.
 
 ## Features
 
@@ -229,7 +229,7 @@ kind of validation at the type level.
 
 Add it to your dependencies with
 ```scala
-libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.1" % "1.1.0"
+libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.1" % "1.1.1"
 ```
 
 Use like
