@@ -9,7 +9,7 @@ before_install:
 after_success:
 - codecov
 script: mv version.sbt version.sbt0 && sed "s/-SNAPSHOT/-travis-SNAPSHOT/" < version.sbt0 > version.sbt && sbt -batch ++${TRAVIS_SCALA_VERSION} coverage $(if [[ "${TRAVIS_SCALA_VERSION}" == "2.10.6" ]]; then echo test; else echo validate; fi) coverageReport $(if [[ "$TRAVIS_PULL_REQUEST" == "false"
-  && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "master"
+  && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "1.0.x"
   ]]; then echo "publish"; fi)
 sudo: false
 env:
@@ -18,4 +18,4 @@ env:
   - secure: dXYe5w6njRYINrPOe3e+TwzS3svbLRGsaZtcbL4cgc/fZtpfX+Q60grzUoUWV0KS3HHzWyq8hOIoDKgsU2IRES9tF6z/gmObUHPXBHpn70+owm18BQniR48MksPWQvT7JTqZoE+VlS19LLVr3hw6sGeEsRGfAo8nfkIGqI7zwmQ=
 branches:
   only:
-  - master
+  - 1.0.x
