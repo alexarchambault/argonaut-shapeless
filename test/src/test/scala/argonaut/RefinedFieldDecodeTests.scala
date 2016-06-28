@@ -18,8 +18,8 @@ object RefinedFieldDecodeTests extends TestSuite {
 
       val json = simple0.asJson
 
-      val simple = json.as[Simple0].toDisjunction.getOrElse(???)
-      val simpleV = json.as[SimpleV].toDisjunction.getOrElse(???)
+      val simple = json.as[Simple0].getOr(???)
+      val simpleV = json.as[SimpleV].getOr(???)
 
       assert(simple == simple0)
       assert(simpleV == simpleV0)
@@ -30,7 +30,7 @@ object RefinedFieldDecodeTests extends TestSuite {
 
       val json = simple0.asJson
 
-      val simple = json.as[Simple0].toDisjunction.getOrElse(???)
+      val simple = json.as[Simple0].getOr(???)
       val resultV = json.as[SimpleV]
 
       assert(simple == simple0)

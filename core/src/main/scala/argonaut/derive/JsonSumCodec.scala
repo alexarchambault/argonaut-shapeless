@@ -1,8 +1,6 @@
 package argonaut
 package derive
 
-import scalaz.{ -\/, \/- }
-
 trait JsonSumCodec {
   def encodeEmpty: Nothing
   def encodeField(fieldOrObj: Either[Json, (String, Json)]): Json
@@ -47,9 +45,9 @@ class JsonSumObjCodec extends JsonSumCodec {
     DecodeResult.fail(s"unrecognized type(s): ${cursor.fields.getOrElse(Nil).mkString(", ")}", cursor.history)
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[Either[ACursor, A]] =
     cursor.--\(toJsonName(name)).either match {
-      case -\/(_) =>
+      case Left(_) =>
         DecodeResult.ok(Left(ACursor.ok(cursor)))
-      case \/-(content) =>
+      case Right(content) =>
         decode.decode(content).map(Right(_))
     }
 }
@@ -78,8 +76,8 @@ class JsonSumTypeFieldCodec extends JsonSumCodec {
       cursor.history
     )
   def decodeField[A](name: String, cursor: HCursor, decode: DecodeJson[A]): DecodeResult[Either[ACursor, A]] =
-    cursor.--\(typeField).as[String].toDisjunction match {
-      case \/-(name0) if toTypeValue(name) == name0 =>
+    cursor.--\(typeField).as[String].result match {
+      case Right(name0) if toTypeValue(name) == name0 =>
         decode.decode(cursor).map(Right(_))
       case _ =>
         DecodeResult.ok(Left(ACursor.ok(cursor)))

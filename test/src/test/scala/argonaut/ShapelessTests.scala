@@ -1,7 +1,6 @@
 package argonaut
 
 import argonaut.Argonaut.ToJsonIdentity
-import scalaz.Scalaz.ToEitherOps
 
 import org.scalacheck.{ Arbitrary, Prop }
 import shapeless.test.illTyped
@@ -15,7 +14,7 @@ object ShapelessTests extends TestSuite {
   private def sameAfterBeforeSerialization[T: Arbitrary : EncodeJson : DecodeJson]: Unit =
     Prop.forAll {
       t: T =>
-        toFromJson(t).result == t.right
+        toFromJson(t).result == Right(t)
     }.validate
 
   import org.scalacheck.Shapeless._
@@ -59,7 +58,7 @@ object ShapelessTests extends TestSuite {
         val json = Parse.parseOption("{}").get
         // assert macro crashes if result is substituted by its value below
         val result = json.as[OI].result
-        assert(result == OI(None).right)
+        assert(result == Right(OI(None)))
       }
 
       'base - {
