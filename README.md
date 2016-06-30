@@ -19,8 +19,9 @@ which made type class derivation with implicits much more robust.
 
 | argonaut-shapeless | argonaut | shapeless | refined |
 |--------------------|----------|-----------|---------|
-| 1.2.x (to come)    | 6.2      | 2.3.x     | 0.5.x   |
-| 1.1.x              | 6.1      | 2.3.x     | 0.4.x   |
+| 1.2.0-M1           | 6.2-M3   | 2.3.x     | 0.5.x   |
+| 1.1.1              | 6.1a     | 2.3.x     | 0.4.x   |
+| 1.1.0              | 6.1      | 2.3.x     | 0.4.x   |
 | 1.0.x              | 6.1      | 2.2.x     | 0.3.5   |
 | 0.3.x              | 6.1      | 2.2.x     | n/a     |
 
