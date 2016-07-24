@@ -219,6 +219,9 @@ Custom("a").asJson.nospaces == """"a""""
 """"b"""".decodeOption[Custom] == Some(Custom("b"))
 ```
 
+
+
+
 ### JsonCodec for local ArgonautShapeless._ import
 
 If you want the codec derivation to happen at a controlled spot in your code,
@@ -231,11 +234,12 @@ import argonaut._, Argonaut._
 
 object instances {
   import ArgonautShapeless._
+  import argonaut.derive.JsonCodec
 
-  @CodecJson sealed trait Base
-  case class First(i: Int) extends Base
-  case class Second(s: String) extends Base
-  object Base // this one's required
+  @JsonCodec sealed trait ADT
+  case class First(i: Int) extends ADT
+  case class Second(s: String) extends ADT
+  object ADT // this one's required
 }
 
 import instances._
@@ -243,7 +247,7 @@ import instances._
 // works
 val encode = EncodeJson.of[Base]
 // fails
-val encodeFirst = EncodeJson.of[First]
+// val encodeFirst = EncodeJson.of[First]
 
 ```
 
