@@ -42,6 +42,7 @@ lazy val doc = project
     tutTargetDirectory := baseDirectory.value / ".."
   )
 
+val argonautVersion = "6.2-M3"
 val shapelessVersion = "2.3.1"
 
 lazy val coreName = "argonaut-shapeless_6.2"
@@ -63,7 +64,7 @@ lazy val refinedSettings = Seq(
   name := refinedName,
   moduleName := refinedName,
   libraryDependencies ++= Seq(
-    "io.argonaut" %% "argonaut" % "6.1",
+    "io.argonaut" %% "argonaut" % argonautVersion,
     "com.chuusai" %% "shapeless" % shapelessVersion,
     "eu.timepit" %% "refined" % "0.5.0"
   )
