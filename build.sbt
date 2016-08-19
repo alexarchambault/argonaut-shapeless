@@ -25,7 +25,7 @@ lazy val test = project
   .settings(noPublishSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.0-RC3" % "test",
+      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.1" % "test",
       "com.lihaoyi" %% "utest" % "0.3.0" % "test"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework")
@@ -43,7 +43,7 @@ lazy val doc = project
   )
 
 val argonautVersion = "6.2-M3"
-val shapelessVersion = "2.3.1"
+val shapelessVersion = "2.3.2"
 
 lazy val coreName = "argonaut-shapeless_6.2"
 
