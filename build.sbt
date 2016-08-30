@@ -81,12 +81,8 @@ lazy val compileSettings = Seq(
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases")
   ),
-  libraryDependencies ++= {
-    if (scalaVersion.value startsWith "2.10.")
-      Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full))
-    else
-      Seq()
-  }
+  libraryDependencies +=
+    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 lazy val commonSettings = Seq(

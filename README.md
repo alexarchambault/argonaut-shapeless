@@ -222,6 +222,46 @@ Custom("a").asJson.nospaces == """"a""""
 
 
 
+### JsonCodec for local ArgonautShapeless._ import
+
+If you want the codec derivation to happen at a controlled spot in your code,
+you can use the `JsonCodec` annotation. A situation would be that you have
+custom codecs and want to make sure they're considered or you don't want to
+overgenerate Codecs for ADTs instances.
+
+```scala
+import argonaut._, Argonaut._
+
+object instances {
+  import ArgonautShapeless._
+  import argonaut.derive.JsonCodec
+
+  @JsonCodec sealed trait ADT
+  case class First(i: Int) extends ADT
+  case class Second(s: String) extends ADT
+  object ADT // this one's required
+}
+
+import instances._
+
+// works
+val encode = EncodeJson.of[Base]
+// fails
+// val encodeFirst = EncodeJson.of[First]
+
+```
+
+You'll have to add the additional object after all the instances of a sealed trait, [see #5](https://github.com/travisbrown/circe#warnings-and-known-issues).
+
+To use the `@JsonCodec` annotation, add [MacroParadise](http://docs.scala-lang.org/overviews/macros/paradise.html) to your build.
+
+```
+addCompilerPlugin(
+  "org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full
+)
+```
+
+
 ### refined module
 
 argonaut-shapeless also has a module to encode/decode types from
@@ -278,4 +318,3 @@ by [Maxwell Swadling](https://github.com/maxpow4h),
 ## License
 
 Released under the BSD license. See LICENSE file for more details.
-
