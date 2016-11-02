@@ -4,9 +4,9 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 
 [![Build Status](https://travis-ci.org/alexarchambault/argonaut-shapeless.svg)](https://travis-ci.org/alexarchambault/argonaut-shapeless)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.1_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.1_2.11)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.2_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.2_2.11)
 
-It is available for scala 2.10 and 2.11, and depends on argonaut 6.1. The master branch depends on shapeless 2.2.5, and the 1.1.x on shapeless 2.3.0.
+It is available for scala 2.10 and 2.11, and depends on argonaut 6.2.
 
 argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses its
@@ -19,7 +19,7 @@ which made type class derivation with implicits much more robust.
 
 | argonaut-shapeless | argonaut | shapeless | refined |
 |--------------------|----------|-----------|---------|
-| 1.2.0-M1           | 6.2-M3   | 2.3.x     | 0.5.x   |
+| 1.2.0-M{1,3}       | 6.2-M3   | 2.3.x     | 0.5.x   |
 | 1.1.1              | 6.1a     | 2.3.x     | 0.4.x   |
 | 1.1.0              | 6.1      | 2.3.x     | 0.4.x   |
 | 1.0.x              | 6.1      | 2.2.x     | 0.3.5   |
@@ -32,7 +32,7 @@ Add to your `build.sbt`
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1"
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.2" % "1.2.0-M3"
 ```
 
 If you are using scala 2.10.x, also add the macro paradise plugin to your build,
@@ -40,8 +40,6 @@ If you are using scala 2.10.x, also add the macro paradise plugin to your build,
 libraryDependencies +=
   compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
 ```
-
-If you are using shapeless 2.2, replace `1.1.1` above by `1.0.0`.
 
 ## Features
 
@@ -335,7 +333,7 @@ kind of validation at the type level.
 
 Add it to your dependencies with
 ```scala
-libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.1" % "1.1.1"
+libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.2" % "1.2.0-M3"
 ```
 
 Use like
@@ -375,6 +373,7 @@ assert("""{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None // fails as the prov
 + Denis Mikhaylov ([@notxcain](https://github.com/notxcain))
 + Frank S. Thomas ([@fthomas](https://github.com/fthomas))
 + Ismael Juma ([@ijuma](https://github.com/ijuma))
++ reactormonk ([@reactormonk](https://github.com/reactormonk))
 + Your name here :-)
 
 Initially based on an early (non `Lazy`-based) automatic codec derivation in argonaut
