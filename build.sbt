@@ -3,30 +3,26 @@ import com.typesafe.sbt.pgp.PgpKeys
 lazy val `argonaut-shapeless` = project.in(file("."))
   .aggregate(core, refined, test, doc)
   .settings(commonSettings)
-  .settings(compileSettings)
   .settings(noPublishSettings)
 
 lazy val core = project
   .settings(commonSettings)
   .settings(coreSettings)
-  .settings(projectSettings)
 
 lazy val refined = project
   .dependsOn(core % "test")
   .settings(commonSettings)
   .settings(refinedSettings)
-  .settings(projectSettings)
 
 lazy val test = project
   .dependsOn(core, refined)
   .settings(commonSettings)
   .settings(coreSettings)
-  .settings(projectSettings)
   .settings(noPublishSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.1" % "test",
-      "com.lihaoyi" %% "utest" % "0.3.0" % "test"
+      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.3" % "test",
+      "com.lihaoyi" %% "utest" % "0.4.4" % "test"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
@@ -34,7 +30,6 @@ lazy val test = project
 lazy val doc = project
   .dependsOn(core, refined)
   .settings(commonSettings)
-  .settings(compileSettings)
   .settings(noPublishSettings)
   .settings(tutSettings)
   .settings(
@@ -66,23 +61,8 @@ lazy val refinedSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % argonautVersion,
     "com.chuusai" %% "shapeless" % shapelessVersion,
-    "eu.timepit" %% "refined" % "0.5.0"
+    "eu.timepit" %% "refined" % "0.6.0"
   )
-)
-
-lazy val projectSettings =
-  compileSettings ++
-  releaseSettings ++
-  extraReleaseSettings
-
-lazy val compileSettings = Seq(
-  scalaVersion := "2.11.8",
-  scalacOptions += "-target:jvm-1.7",
-  resolvers ++= Seq(
-    Resolver.sonatypeRepo("releases")
-  ),
-  libraryDependencies +=
-    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 lazy val commonSettings = Seq(
@@ -117,18 +97,20 @@ lazy val commonSettings = Seq(
       case _ =>
         Seq.empty
     }
-  }
+  },
+  scalaVersion := "2.11.8",
+  scalacOptions += "-target:jvm-1.7",
+  resolvers ++= Seq(
+    Resolver.sonatypeRepo("releases")
+  ),
+  libraryDependencies +=
+    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 lazy val noPublishSettings = Seq(
   publish := (),
   publishLocal := (),
   publishArtifact := false
-)
-
-lazy val extraReleaseSettings = Seq(
-  ReleaseKeys.versionBump := sbtrelease.Version.Bump.Bugfix,
-  sbtrelease.ReleasePlugin.ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 )
 
 // build.sbt shamelessly inspired by https://github.com/fthomas/refined/blob/master/build.sbt
