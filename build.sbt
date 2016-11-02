@@ -21,8 +21,8 @@ lazy val test = project
   .settings(noPublishSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.1" % "test",
-      "com.lihaoyi" %% "utest" % "0.3.0" % "test"
+      "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.3" % "test",
+      "com.lihaoyi" %% "utest" % "0.4.4" % "test"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
@@ -61,7 +61,7 @@ lazy val refinedSettings = Seq(
   libraryDependencies ++= Seq(
     "io.argonaut" %% "argonaut" % argonautVersion,
     "com.chuusai" %% "shapeless" % shapelessVersion,
-    "eu.timepit" %% "refined" % "0.5.0"
+    "eu.timepit" %% "refined" % "0.6.0"
   )
 )
 
