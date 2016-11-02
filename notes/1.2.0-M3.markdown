@@ -1,0 +1,10 @@
+### Changes
+
+- Add `JsonCodec` annotation (thanks to [@reactormonk], [#77], similar to `circe.generic.JsonCodec`)
+- Switch to shapeless `2.3.2` ([#78])
+- Remove the deprecated `argonaut.Shapeless` object ([#80], `argonaut.ArgonautShapeless` should be used instead)
+
+[@reactormonk]: https://github.com/reactormonk
+[#77]: https://github.com/alexarchambault/argonaut-shapeless/pull/77
+[#78]: https://github.com/alexarchambault/argonaut-shapeless/pull/78
+[#80]: https://github.com/alexarchambault/argonaut-shapeless/pull/80

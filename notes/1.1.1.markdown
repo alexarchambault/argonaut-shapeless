@@ -1,0 +1,5 @@
+### Changes
+
+- Switch from argonaut `6.1` to `6.1a` ([#72] - possibly wrongfully, `6.1a` depends on scalaz `7.2`, whereas `6.1` depends on `7.1`, this release would have been better named `1.1.0a`)
+
+[#72]: https://github.com/alexarchambault/argonaut-shapeless/pull/72
