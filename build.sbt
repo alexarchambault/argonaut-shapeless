@@ -3,25 +3,21 @@ import com.typesafe.sbt.pgp.PgpKeys
 lazy val `argonaut-shapeless` = project.in(file("."))
   .aggregate(core, refined, test, doc)
   .settings(commonSettings)
-  .settings(compileSettings)
   .settings(noPublishSettings)
 
 lazy val core = project
   .settings(commonSettings)
   .settings(coreSettings)
-  .settings(projectSettings)
 
 lazy val refined = project
   .dependsOn(core % "test")
   .settings(commonSettings)
   .settings(refinedSettings)
-  .settings(projectSettings)
 
 lazy val test = project
   .dependsOn(core, refined)
   .settings(commonSettings)
   .settings(coreSettings)
-  .settings(projectSettings)
   .settings(noPublishSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -34,7 +30,6 @@ lazy val test = project
 lazy val doc = project
   .dependsOn(core, refined)
   .settings(commonSettings)
-  .settings(compileSettings)
   .settings(noPublishSettings)
   .settings(tutSettings)
   .settings(
@@ -70,21 +65,6 @@ lazy val refinedSettings = Seq(
   )
 )
 
-lazy val projectSettings =
-  compileSettings ++
-  releaseSettings ++
-  extraReleaseSettings
-
-lazy val compileSettings = Seq(
-  scalaVersion := "2.11.8",
-  scalacOptions += "-target:jvm-1.7",
-  resolvers ++= Seq(
-    Resolver.sonatypeRepo("releases")
-  ),
-  libraryDependencies +=
-    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
-)
-
 lazy val commonSettings = Seq(
   homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
   licenses := Seq(
@@ -117,18 +97,20 @@ lazy val commonSettings = Seq(
       case _ =>
         Seq.empty
     }
-  }
+  },
+  scalaVersion := "2.11.8",
+  scalacOptions += "-target:jvm-1.7",
+  resolvers ++= Seq(
+    Resolver.sonatypeRepo("releases")
+  ),
+  libraryDependencies +=
+    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 lazy val noPublishSettings = Seq(
   publish := (),
   publishLocal := (),
   publishArtifact := false
-)
-
-lazy val extraReleaseSettings = Seq(
-  ReleaseKeys.versionBump := sbtrelease.Version.Bump.Bugfix,
-  sbtrelease.ReleasePlugin.ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 )
 
 // build.sbt shamelessly inspired by https://github.com/fthomas/refined/blob/master/build.sbt
