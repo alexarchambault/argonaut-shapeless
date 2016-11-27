@@ -8,6 +8,16 @@ lazy val `argonaut-shapeless` = project.in(file("."))
 lazy val core = project
   .settings(commonSettings)
   .settings(coreSettings)
+  .settings(
+    unmanagedSourceDirectories in Compile ++= {
+      scalaBinaryVersion.value match {
+        case "2.11" | "2.12" =>
+          Seq(baseDirectory.value / "src" / "main" / "scala-2.11_2.12")
+        case _ =>
+          Seq()
+      }
+    }
+  )
 
 lazy val refined = project
   .dependsOn(core % "test")
@@ -24,7 +34,15 @@ lazy val test = project
       "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.3" % "test",
       "com.lihaoyi" %% "utest" % "0.4.4" % "test"
     ),
-    testFrameworks += new TestFramework("utest.runner.Framework")
+    testFrameworks += new TestFramework("utest.runner.Framework"),
+    unmanagedSourceDirectories in Test ++= {
+      scalaBinaryVersion.value match {
+        case "2.11" | "2.12" =>
+          Seq(baseDirectory.value / "src" / "test" / "scala-2.11_2.12")
+        case _ =>
+          Seq()
+      }
+    }
   )
 
 lazy val doc = project
@@ -37,7 +55,7 @@ lazy val doc = project
     tutTargetDirectory := baseDirectory.value / ".."
   )
 
-val argonautVersion = "6.2-RC1"
+val argonautVersion = "6.2-RC2"
 val shapelessVersion = "2.3.2"
 
 lazy val coreName = "argonaut-shapeless_6.2"
@@ -98,7 +116,7 @@ lazy val commonSettings = Seq(
         Seq.empty
     }
   },
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.12.0",
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases")
