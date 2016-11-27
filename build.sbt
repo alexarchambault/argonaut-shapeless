@@ -37,7 +37,7 @@ lazy val doc = project
     tutTargetDirectory := baseDirectory.value / ".."
   )
 
-val argonautVersion = "6.2-RC1"
+val argonautVersion = "6.2-RC2"
 val shapelessVersion = "2.3.2"
 
 lazy val coreName = "argonaut-shapeless_6.2"
