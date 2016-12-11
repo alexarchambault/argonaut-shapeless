@@ -13,6 +13,11 @@ script: mv version.sbt version.sbt0 && sed "s/-SNAPSHOT/-travis-SNAPSHOT/" < ver
   && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "master"
   ]]; then echo "publish"; fi)
 sudo: false
+cache:
+  directories:
+  - $HOME/.coursier
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt
 env:
   global:
   - secure: bf+aaECTxUQdZQhCWBKRHXONWO865gYax82mzQbPN/J+TA5l3+SxmVXuaWERPBjdDjFMrSzvqQwlk7i9yU6SMj1DqXJZDsbHbiL8PODf5Vc8OWW4RQv7Um/PDAhewk/Wk4qlKiMsWutU/VXSQpBlztp8WRsmS/5uif/qvV/YGHk=
