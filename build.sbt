@@ -1,6 +1,6 @@
-import com.typesafe.sbt.pgp.PgpKeys
 
-lazy val `argonaut-shapeless` = project.in(file("."))
+lazy val `argonaut-shapeless` = project
+  .in(file("."))
   .aggregate(core, refined, test, doc)
   .settings(commonSettings)
   .settings(noPublishSettings)
@@ -116,7 +116,6 @@ lazy val commonSettings = Seq(
         Seq.empty
     }
   },
-  scalaVersion := "2.12.0",
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases")
