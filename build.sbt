@@ -116,7 +116,6 @@ lazy val commonSettings = Seq(
         Seq.empty
     }
   },
-  scalaVersion := "2.12.0",
   scalacOptions += "-target:jvm-1.7",
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases")
