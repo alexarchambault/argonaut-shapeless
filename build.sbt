@@ -1,6 +1,6 @@
-import com.typesafe.sbt.pgp.PgpKeys
 
-lazy val `argonaut-shapeless` = project.in(file("."))
+lazy val `argonaut-shapeless` = project
+  .in(file("."))
   .aggregate(core, refined, test, doc)
   .settings(commonSettings)
   .settings(noPublishSettings)
