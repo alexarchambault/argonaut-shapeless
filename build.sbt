@@ -121,7 +121,7 @@ lazy val commonSettings = Seq(
     Resolver.sonatypeRepo("releases")
   ),
   libraryDependencies +=
-    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.patch)
 )
 
 lazy val noPublishSettings = Seq(
