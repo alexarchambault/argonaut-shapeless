@@ -2,7 +2,9 @@ package argonaut
 
 import argonaut.derive._
 
-object ArgonautShapeless
+object ArgonautShapeless extends ArgonautShapeless
+
+trait ArgonautShapeless
   extends SingletonInstances
   with DerivedInstances {
 
