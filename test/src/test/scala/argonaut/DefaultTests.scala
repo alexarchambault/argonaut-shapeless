@@ -1,9 +1,9 @@
 package argonaut
 
 import utest._
-
 import argonaut.Argonaut._
 import argonaut.ArgonautShapeless._
+import argonaut.derive.{JsonProductCodec, JsonProductCodecFor}
 
 object DefaultTests extends TestSuite {
 
@@ -41,6 +41,22 @@ object DefaultTests extends TestSuite {
       val result1 = decoder.decodeJson(expectedJson1)
       val expectedResult1 = DecodeResult.ok(value1)
       assert(result1 == expectedResult1)
+    }
+
+    'alwaysIncludeDefaultValue - {
+      implicit def alwaysIncludeCodecFor[T]: JsonProductCodecFor[T] =
+        JsonProductCodecFor.alwaysIncludeDefaultValue
+
+      val encoder = EncodeJson.of[WithDefaults]
+
+      val value = WithDefaults(2)
+      val json = encoder.encode(value)
+      val expectedJson = Json.obj(
+        "i" -> Json.jNumber(2),
+        "s" -> Json.jString("b")
+      )
+
+      assert(json == expectedJson)
     }
   }
 

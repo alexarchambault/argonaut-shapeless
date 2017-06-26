@@ -14,6 +14,12 @@ object JsonProductCodec {
   def adapt(f: String => String): JsonProductCodec = new JsonProductObjCodec {
     override def toJsonName(name: String) = f(name)
   }
+
+  val alwaysIncludeDefaultValue: JsonProductCodec = new JsonProductObjCodec {
+    override def encodeField(field: (String, Json), obj: Json, default: => Option[Json]): Json = {
+      super.encodeField(field, obj, Option.empty[Json])
+    }
+  }
 }
 
 trait JsonProductCodecFor[P] {
@@ -28,6 +34,9 @@ object JsonProductCodecFor {
 
   implicit def default[T]: JsonProductCodecFor[T] =
     JsonProductCodecFor(JsonProductCodec.obj)
+
+  def alwaysIncludeDefaultValue[T]: JsonProductCodecFor[T] =
+    JsonProductCodecFor(JsonProductCodec.alwaysIncludeDefaultValue)
 }
 
 class JsonProductObjCodec extends JsonProductCodec {
