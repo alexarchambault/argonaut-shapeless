@@ -38,11 +38,13 @@ lazy val test = project
   )
 
 lazy val doc = project
+  .enablePlugins(TutPlugin)
   .dependsOn(core, refined)
   .settings(
     shared,
     dontPublish,
-    simpleTut
+    tutSourceDirectory := baseDirectory.value,
+    tutTargetDirectory := baseDirectory.value / ".."
   )
 
 
