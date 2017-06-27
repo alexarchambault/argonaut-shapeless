@@ -85,9 +85,4 @@ object Settings {
     moduleName := name.value
   }
 
-  lazy val simpleTut = tut.Plugin.tutSettings ++ Seq(
-    tut.Plugin.tutSourceDirectory := baseDirectory.value,
-    tut.Plugin.tutTargetDirectory := baseDirectory.value / ".."
-  )
-
 }
