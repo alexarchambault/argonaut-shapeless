@@ -113,6 +113,9 @@ CC(i = 4, s = "baz").asJson.nospaces == """{"s":"baz"}"""
 """{"s":"a"}""".decodeOption[CC] == Some(CC(s = "a"))
 ```
 
+
+
+
 This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`. 
 
 ```scala
@@ -121,7 +124,6 @@ implicit def alwaysIncludeCodecFor[T]: derive.JsonProductCodecFor[T] =
 
 CC().asJson.nospaces == """{"i":4,"s":"foo"}"""
 ```
-
 
 ### Custom encoding of case classes
 
