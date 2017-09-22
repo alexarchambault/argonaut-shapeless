@@ -16,7 +16,7 @@ trait JsonSumCodecFor[S] {
 object JsonSumCodecFor {
   def apply[S](codec0: JsonSumCodec): JsonSumCodecFor[S] =
     new JsonSumCodecFor[S] {
-      def codec = codec0
+      def codec: JsonSumCodec = codec0
     }
 
   implicit def default[T]: JsonSumCodecFor[T] =
@@ -56,7 +56,7 @@ class JsonSumTypeFieldCodec extends JsonSumCodec {
 
   def typeField: String = "type"
 
-  def toTypeValue(name: String) = name
+  def toTypeValue(name: String): String = name
 
   def encodeEmpty: Nothing =
     throw new IllegalArgumentException("empty")

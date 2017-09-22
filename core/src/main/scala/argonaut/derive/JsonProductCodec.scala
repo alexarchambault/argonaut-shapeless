@@ -29,7 +29,7 @@ trait JsonProductCodecFor[P] {
 object JsonProductCodecFor {
   def apply[S](codec0: JsonProductCodec): JsonProductCodecFor[S] =
     new JsonProductCodecFor[S] {
-      def codec = codec0
+      def codec: JsonProductCodec = codec0
     }
 
   implicit def default[T]: JsonProductCodecFor[T] =
