@@ -15,7 +15,6 @@ lazy val core = project
   )
 
 lazy val refined = project
-  .dependsOn(core % "test")
   .settings(
     shared, 
     name := "argonaut-refined_6.2",
@@ -27,8 +26,18 @@ lazy val refined = project
     keepNameAsModuleName
   )
 
-lazy val test = project
-  .dependsOn(core, refined)
+lazy val `core-test` = project
+  .dependsOn(core)
+  .settings(
+    shared,
+    dontPublish,
+    utest,
+    libs += Deps.scalacheckShapeless % "test",
+    scala211_12TestSources
+  )
+
+lazy val `refined-test` = project
+  .dependsOn(`core-test`, refined)
   .settings(
     shared,
     dontPublish,
@@ -52,8 +61,9 @@ lazy val `argonaut-shapeless` = project
   .in(root)
   .aggregate(
     core,
+    `core-test`,
     refined,
-    test,
+    `refined-test`,
     doc
   )
   .settings(
