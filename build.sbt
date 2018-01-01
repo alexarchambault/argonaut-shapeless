@@ -2,32 +2,38 @@
 import Aliases._
 import Settings._
 
-lazy val core = project
+import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
+
+lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
     name := "argonaut-shapeless_6.2",
     libs ++= Seq(
-      Deps.argonaut,
-      Deps.shapeless
+      Deps.argonaut.value,
+      Deps.shapeless.value
     ),
     keepNameAsModuleName,
     scala211_12Sources
   )
+
+lazy val coreJVM = core.jvm
+lazy val coreJS = core.js
+lazy val coreNative = core.native
 
 lazy val refined = project
   .settings(
     shared, 
     name := "argonaut-refined_6.2",
     libs ++= Seq(
-      Deps.argonaut,
+      Deps.argonaut.value,
       Deps.refined,
-      Deps.shapeless
+      Deps.shapeless.value
     ),
     keepNameAsModuleName
   )
 
 lazy val `core-test` = project
-  .dependsOn(core)
+  .dependsOn(coreJVM)
   .settings(
     shared,
     dontPublish,
@@ -48,7 +54,7 @@ lazy val `refined-test` = project
 
 lazy val doc = project
   .enablePlugins(TutPlugin)
-  .dependsOn(core, refined)
+  .dependsOn(coreJVM, refined)
   .settings(
     shared,
     dontPublish,
@@ -60,7 +66,8 @@ lazy val doc = project
 lazy val `argonaut-shapeless` = project
   .in(root)
   .aggregate(
-    core,
+    coreJVM,
+    coreJS,
     `core-test`,
     refined,
     `refined-test`,

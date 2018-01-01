@@ -6,6 +6,7 @@ import Aliases._
 object Settings {
 
   lazy val shared = Seq(
+    scalaVersion := "2.11.12",
     organization := "com.github.alexarchambault",
     homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
     licenses := Seq(
@@ -57,7 +58,11 @@ object Settings {
     unmanagedSourceDirectories.in(Compile) ++= {
       scalaBinaryVersion.value match {
         case "2.11" | "2.12" =>
-          Seq(baseDirectory.value / "src" / "main" / "scala-2.11_2.12")
+          unmanagedSourceDirectories
+            .in(Compile)
+            .value
+            .filter(_.getName == "scala")
+            .map(_.getParentFile / "scala-2.11_2.12")
         case _ =>
           Seq()
       }
