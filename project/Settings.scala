@@ -73,7 +73,11 @@ object Settings {
     unmanagedSourceDirectories.in(Test) ++= {
       scalaBinaryVersion.value match {
         case "2.11" | "2.12" =>
-          Seq(baseDirectory.value / "src" / "test" / "scala-2.11_2.12")
+          unmanagedSourceDirectories
+            .in(Test)
+            .value
+            .filter(_.getName == "scala")
+            .map(_.getParentFile / "scala-2.11_2.12")
         case _ =>
           Seq()
       }
@@ -81,7 +85,7 @@ object Settings {
   }
 
   lazy val utest = Seq(
-    libs += Deps.utest % "test",
+    libs += Deps.utest.value % "test",
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
 

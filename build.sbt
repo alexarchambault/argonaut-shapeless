@@ -32,23 +32,27 @@ lazy val refined = project
     keepNameAsModuleName
   )
 
-lazy val `core-test` = project
-  .dependsOn(coreJVM)
+lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
+  .in(file("core-test"))
+  .dependsOn(core)
   .settings(
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless % "test",
+    libs += Deps.scalacheckShapeless.value % "test",
     scala211_12TestSources
   )
 
+lazy val coreTestJVM = coreTest.jvm
+lazy val coreTestJS = coreTest.js
+
 lazy val `refined-test` = project
-  .dependsOn(`core-test`, refined)
+  .dependsOn(coreTestJVM, refined)
   .settings(
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless % "test",
+    libs += Deps.scalacheckShapeless.value % "test",
     scala211_12TestSources
   )
 
@@ -78,7 +82,8 @@ lazy val `argonaut-shapeless` = project
   .aggregate(
     coreJVM,
     coreJS,
-    `core-test`,
+    coreTestJVM,
+    coreTestJS,
     refined,
     `refined-test`,
     doc
