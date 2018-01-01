@@ -63,6 +63,16 @@ lazy val doc = project
   )
 
 
+lazy val native = project
+  .in(file("target/native"))
+  .aggregate(
+    coreNative
+  )
+  .settings(
+    shared,
+    dontPublish
+  )
+
 lazy val `argonaut-shapeless` = project
   .in(root)
   .aggregate(
