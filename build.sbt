@@ -2,44 +2,63 @@
 import Aliases._
 import Settings._
 
-lazy val core = project
+import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
+
+lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
     name := "argonaut-shapeless_6.2",
     libs ++= Seq(
-      Deps.argonaut,
-      Deps.shapeless
+      Deps.argonaut.value,
+      Deps.shapeless.value
     ),
     keepNameAsModuleName,
     scala211_12Sources
   )
 
+lazy val coreJVM = core.jvm
+lazy val coreJS = core.js
+lazy val coreNative = core.native
+
 lazy val refined = project
-  .dependsOn(core % "test")
   .settings(
     shared, 
     name := "argonaut-refined_6.2",
     libs ++= Seq(
-      Deps.argonaut,
+      Deps.argonaut.value,
       Deps.refined,
-      Deps.shapeless
+      Deps.shapeless.value
     ),
     keepNameAsModuleName
   )
 
-lazy val test = project
-  .dependsOn(core, refined)
+lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
+  .in(file("core-test"))
+  .dependsOn(core)
   .settings(
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless % "test",
+    libs += Deps.scalacheckShapeless.value % "test",
+    scala211_12TestSources
+  )
+
+lazy val coreTestJVM = coreTest.jvm
+lazy val coreTestJS = coreTest.js
+
+lazy val `refined-test` = project
+  .dependsOn(coreTestJVM, refined)
+  .settings(
+    shared,
+    dontPublish,
+    utest,
+    libs += Deps.scalacheckShapeless.value % "test",
     scala211_12TestSources
   )
 
 lazy val doc = project
   .enablePlugins(TutPlugin)
-  .dependsOn(core, refined)
+  .dependsOn(coreJVM, refined)
   .settings(
     shared,
     dontPublish,
@@ -48,12 +67,25 @@ lazy val doc = project
   )
 
 
+lazy val native = project
+  .in(file("target/native"))
+  .aggregate(
+    coreNative
+  )
+  .settings(
+    shared,
+    dontPublish
+  )
+
 lazy val `argonaut-shapeless` = project
   .in(root)
   .aggregate(
-    core,
+    coreJVM,
+    coreJS,
+    coreTestJVM,
+    coreTestJS,
     refined,
-    test,
+    `refined-test`,
     doc
   )
   .settings(
