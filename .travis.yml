@@ -2,7 +2,6 @@ language: scala
 scala:
 - 2.10.7
 - 2.11.12
-- 2.12.4
 jdk:
 - oraclejdk8
 script: scripts/travis.sh
@@ -22,6 +21,8 @@ branches:
 
 matrix:
   include:
+  - scala: 2.12.4
+    jdk: oraclejdk9
   - scala: 2.11.12
     dist: trusty
     sudo: required
