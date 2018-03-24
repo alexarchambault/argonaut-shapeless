@@ -5,8 +5,13 @@ import Aliases._
 
 object Settings {
 
+  private val scala210 = "2.10.7"
+  private val scala211 = "2.11.12"
+  private val scala212 = "2.12.4"
+
   lazy val shared = Seq(
-    scalaVersion := "2.11.12",
+    scalaVersion := scala211,
+    crossScalaVersions := Seq(scala212, scala211, scala210),
     organization := "com.github.alexarchambault",
     homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
     licenses := Seq(
