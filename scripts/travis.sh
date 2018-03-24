@@ -5,6 +5,8 @@ SBT_COMMANDS=("++${TRAVIS_SCALA_VERSION}")
 
 if [[ "$NATIVE" = 1 ]]; then
   SBT_COMMANDS+=("native/test")
+elif [[ "$TRAVIS_SCALA_VERSION" == 2.10.* ]]; then
+  SBT_COMMANDS+=("test")
 else
   SBT_COMMANDS+=("validate")
 fi
