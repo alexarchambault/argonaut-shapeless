@@ -2,7 +2,6 @@ import sbt._
 import sbt.Def.setting
 
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
-import scala.scalanative.sbtplugin.NativePlatform
 
 object Deps {
   def argonaut = setting("io.argonaut" %%% "argonaut" % "6.2.1")
