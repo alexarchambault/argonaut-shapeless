@@ -12,43 +12,8 @@ object Settings {
   lazy val shared = Seq(
     scalaVersion := scala211,
     crossScalaVersions := Seq(scala212, scala211, scala210),
-    organization := "com.github.alexarchambault",
-    homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
-    licenses := Seq(
-      "BSD-3-Clause" -> url("http://www.opensource.org/licenses/BSD-3-Clause")
-    ),
-    scmInfo := Some(ScmInfo(
-      url("https://github.com/alexarchambault/argonaut-shapeless.git"),
-      "scm:git:github.com/alexarchambault/argonaut-shapeless.git",
-      Some("scm:git:git@github.com:alexarchambault/argonaut-shapeless.git")
-    )),
-    developers := List(Developer(
-      "alexarchambault",
-      "Alexandre Archambault",
-      "",
-      url("https://github.com/alexarchambault")
-    )),
-    publishMavenStyle := true,
-    pomIncludeRepository := { _ => false },
-    publishTo := {
-      val nexus = "https://oss.sonatype.org/"
-      if (isSnapshot.value)
-        Some("snapshots" at nexus + "content/repositories/snapshots")
-      else
-        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-    },
-    credentials ++= {
-      Seq("SONATYPE_USER", "SONATYPE_PASS").map(sys.env.get) match {
-        case Seq(Some(user), Some(pass)) =>
-          Seq(Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass))
-        case _ =>
-          Seq.empty
-      }
-    },
     scalacOptions += "-target:jvm-1.7",
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases")
-    ),
+    resolvers += Resolver.sonatypeRepo("releases"),
     libraryDependencies +=
       compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.patch)
   )
