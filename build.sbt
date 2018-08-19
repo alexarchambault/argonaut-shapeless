@@ -4,6 +4,20 @@ import Settings._
 
 import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
+inThisBuild(List(
+  organization := "com.github.alexarchambault",
+  homepage := Some(url("https://github.com/alexarchambault/argonaut-shapeless")),
+  licenses := Seq("BSD-3-Clause" -> url("http://www.opensource.org/licenses/BSD-3-Clause")),
+  developers := List(
+    Developer(
+      "alexarchambault",
+      "Alexandre Archambault",
+      "",
+      url("https://github.com/alexarchambault")
+    )
+  )
+))
+
 lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,

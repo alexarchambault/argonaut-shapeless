@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -xe
 
-SBT_COMMANDS=("++${TRAVIS_SCALA_VERSION}")
+SBT_COMMANDS=("++${TRAVIS_SCALA_VERSION}!")
 
 if [[ "$NATIVE" = 1 ]]; then
   SBT_COMMANDS+=("native/test")
