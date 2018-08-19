@@ -3,7 +3,6 @@ package argonaut.derive
 // Balantly copied from circe and adapted for argonaut.
 
 import argonaut.{ EncodeJson, DecodeJson }
-import macrocompat.bundle
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 
@@ -11,7 +10,6 @@ class JsonCodec extends scala.annotation.StaticAnnotation {
   def macroTransform(annottees: Any*): Any = macro JsonCodecMacros.jsonCodecAnnotationMacro
 }
 
-@bundle
 private[derive] class JsonCodecMacros(val c: blackbox.Context) {
   import c.universe._
 
