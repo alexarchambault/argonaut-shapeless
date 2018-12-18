@@ -15,7 +15,7 @@ object Settings {
     scalacOptions += "-target:jvm-1.7",
     resolvers += Resolver.sonatypeRepo("releases"),
     libraryDependencies +=
-      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.patch)
+      compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.patch)
   )
 
   lazy val dontPublish = Seq(
