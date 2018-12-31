@@ -18,7 +18,7 @@ stages:
 
 jobs:
   include:
-  - scala: 2.12.4
+  - scala: 2.12.8
     jdk: oraclejdk9
   - scala: 2.11.12
   - scala: 2.10.7

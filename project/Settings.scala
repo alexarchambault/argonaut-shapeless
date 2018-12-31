@@ -7,7 +7,7 @@ object Settings {
 
   private val scala210 = "2.10.7"
   private val scala211 = "2.11.12"
-  private val scala212 = "2.12.4"
+  private val scala212 = "2.12.8"
 
   lazy val shared = Seq(
     scalaVersion := scala211,
