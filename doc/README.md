@@ -237,8 +237,8 @@ case class Second(s: String) extends Base
 val f: Base = First(2)
 
 f.asJson.nospaces
-f.asJson.nospaces == """{"type":"First","i":2}"""
 // instead of the default """{"First":{"i":2}}"""
+f.asJson.nospaces == """{"type":"First","i":2}"""
 ```
 
 ```tut:invisible
@@ -317,11 +317,10 @@ object instances {
 
 import instances._
 
-// works
-val encode = EncodeJson.of[Base]
 // fails
 // val encodeFirst = EncodeJson.of[First]
-
+// works
+val encode = EncodeJson.of[Base]
 ```
 
 You'll have to add the additional object after all the instances of a sealed trait, [see #5](https://github.com/travisbrown/circe#warnings-and-known-issues).
@@ -368,7 +367,8 @@ CC(
 
 ```tut:invisible
 assert("""{"i": 7, "s": "Abcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refineMV("Abcd"))))
-assert("""{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``)
+// fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``)
+assert("""{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None)
 ```
 
 ## See also
