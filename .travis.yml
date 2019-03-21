@@ -18,6 +18,8 @@ stages:
 
 jobs:
   include:
+  - scala: 2.13.0-M5
+    script: sbt ++$TRAVIS_SCALA_VERSION test # can't get tut to work in 2.13
   - scala: 2.12.8
     jdk: oraclejdk9
   - scala: 2.11.12
