@@ -9,7 +9,7 @@ object Settings {
   private val scala212 = "2.12.8"
 
   lazy val shared = Seq(
-    scalaVersion := scala211,
+    scalaVersion := scala212,
     crossScalaVersions := Seq(scala212, scala211),
     scalacOptions += "-target:jvm-1.7",
     resolvers += Resolver.sonatypeRepo("releases"),
