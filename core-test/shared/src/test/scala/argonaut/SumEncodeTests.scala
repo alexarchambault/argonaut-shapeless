@@ -4,7 +4,7 @@ import utest._
 
 import argonaut.Argonaut._
 import argonaut.ArgonautShapeless._
-import org.scalacheck.Shapeless._
+import org.scalacheck.ScalacheckShapeless._
 
 import shapeless._
 

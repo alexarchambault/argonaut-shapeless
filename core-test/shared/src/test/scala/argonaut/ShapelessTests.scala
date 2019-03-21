@@ -17,7 +17,7 @@ object ShapelessTests extends TestSuite {
         toFromJson(t).result == Right(t)
     }.validate
 
-  import org.scalacheck.Shapeless._
+  import org.scalacheck.ScalacheckShapeless._
   import argonaut.ArgonautShapeless._
 
   val tests = TestSuite {
