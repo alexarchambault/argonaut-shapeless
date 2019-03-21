@@ -24,7 +24,6 @@ object Settings {
       "-source", "1.8",
       "-target", "1.8"
     ),
-    resolvers += Resolver.sonatypeRepo("releases"),
     libraryDependencies ++= {
       if (scalaVersion.value.startsWith("2.13."))
         Nil
