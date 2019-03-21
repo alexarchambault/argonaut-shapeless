@@ -11,7 +11,11 @@ object Settings {
   lazy val shared = Seq(
     scalaVersion := scala212,
     crossScalaVersions := Seq(scala212, scala211),
-    scalacOptions += "-target:jvm-1.7",
+    scalacOptions += "-target:jvm-1.8",
+    javacOptions ++= Seq(
+      "-source", "1.8",
+      "-target", "1.8"
+    ),
     resolvers += Resolver.sonatypeRepo("releases"),
     libraryDependencies +=
       compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.patch)
