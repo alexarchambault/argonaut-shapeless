@@ -21,7 +21,6 @@ jobs:
   - scala: 2.12.8
     jdk: oraclejdk9
   - scala: 2.11.12
-  - scala: 2.10.7
   - scala: 2.11.12
     dist: trusty
     sudo: required
