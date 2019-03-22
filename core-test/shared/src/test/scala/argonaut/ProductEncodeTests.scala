@@ -9,7 +9,7 @@ import shapeless._
 
 import derive._
 
-import org.scalacheck.Shapeless._
+import org.scalacheck.ScalacheckShapeless._
 
 import argonaut.Argonaut._
 import argonaut.ArgonautShapeless._

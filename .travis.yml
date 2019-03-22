@@ -1,14 +1,16 @@
 language: scala
-jdk:
-- oraclejdk8
-before_install:
-- git fetch --tags
+jdk: openjdk8
+git:
+  depth: false
 script: scripts/travis.sh
 sudo: false
+branches:
+  only:
+  - master
+  - /^v\d+\.\d+.*$/ # tagged versions
 cache:
   directories:
   - $HOME/.cache
-  - $HOME/.coursier
   - $HOME/.ivy2/cache
   - $HOME/.sbt
 stages:
@@ -18,10 +20,12 @@ stages:
 
 jobs:
   include:
+  - scala: 2.13.0-M5
+    jdk: openjdk9
+    script: sbt ++$TRAVIS_SCALA_VERSION test # can't get tut to work in 2.13
   - scala: 2.12.8
-    jdk: oraclejdk9
+    jdk: openjdk9
   - scala: 2.11.12
-  - scala: 2.10.7
   - scala: 2.11.12
     dist: trusty
     sudo: required

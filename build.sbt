@@ -26,8 +26,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
       Deps.argonaut.value,
       Deps.shapeless.value
     ),
-    keepNameAsModuleName,
-    scala211_12Sources
+    keepNameAsModuleName
   )
 
 lazy val coreJVM = core.jvm
@@ -53,8 +52,7 @@ lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless.value % "test",
-    scala211_12TestSources
+    libs += Deps.scalacheckShapeless.value % Test
   )
 
 lazy val coreTestJVM = coreTest.jvm
@@ -66,8 +64,7 @@ lazy val `refined-test` = project
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless.value % "test",
-    scala211_12TestSources
+    libs += Deps.scalacheckShapeless.value % Test
   )
 
 lazy val doc = project
