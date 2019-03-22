@@ -52,7 +52,7 @@ lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless.value % "test"
+    libs += Deps.scalacheckShapeless.value % Test
   )
 
 lazy val coreTestJVM = coreTest.jvm
@@ -64,7 +64,7 @@ lazy val `refined-test` = project
     shared,
     dontPublish,
     utest,
-    libs += Deps.scalacheckShapeless.value % "test"
+    libs += Deps.scalacheckShapeless.value % Test
   )
 
 lazy val doc = project
