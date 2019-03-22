@@ -11,7 +11,7 @@ else
   SBT_COMMANDS+=("validate")
 fi
 
-if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$JAVA_HOME" == "$(jdk_switcher home oraclejdk8)" && "$TRAVIS_BRANCH" == "master" ]]; then
+if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$JAVA_HOME" == "$(jdk_switcher home openjdk8)" && "$TRAVIS_BRANCH" == "master" ]]; then
   if [[ "$NATIVE" = 1 ]]; then
     SBT_COMMANDS+=("native/publish")
   else
