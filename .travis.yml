@@ -3,6 +3,7 @@ jdk: openjdk8
 git:
   depth: false
 script: scripts/travis.sh
+dist: xenial
 sudo: false
 branches:
   only:
