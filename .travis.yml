@@ -3,8 +3,8 @@ jdk: openjdk8
 git:
   depth: false
 script: scripts/travis.sh
-dist: xenial
-sudo: false
+dist: xenial # temporary
+sudo: required # revert back to false once the install-jdk.sh issues are fixed
 branches:
   only:
   - master
