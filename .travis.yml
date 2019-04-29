@@ -1,10 +1,9 @@
 language: scala
-jdk: openjdk8
+jdk: oraclejdk8
 git:
   depth: false
 script: scripts/travis.sh
-before_install:
-- sed -i.bak 's/download.java.net/download.oracle.com/g' ~/bin/install-jdk.sh
+sudo: false
 branches:
   only:
   - master
@@ -22,10 +21,10 @@ stages:
 jobs:
   include:
   - scala: 2.13.0-RC1
-    jdk: openjdk9
+    jdk: oraclejdk9
     script: sbt ++$TRAVIS_SCALA_VERSION test # can't get tut to work in 2.13
   - scala: 2.12.8
-    jdk: openjdk9
+    jdk: oraclejdk9
   - scala: 2.11.12
   - scala: 2.11.12
     dist: trusty
