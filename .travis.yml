@@ -23,7 +23,7 @@ jobs:
   - scala: 2.13.0
     jdk: oraclejdk9
     script: sbt ++$TRAVIS_SCALA_VERSION test # can't get tut to work in 2.13
-  - scala: 2.12.8
+  - scala: 2.12.10
     jdk: oraclejdk9
   - scala: 2.11.12
   - scala: 2.11.12
