@@ -2,7 +2,7 @@
 import Aliases._
 import Settings._
 
-import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
+import sbtcrossproject.crossProject
 
 inThisBuild(List(
   organization := "com.github.alexarchambault",
@@ -78,31 +78,8 @@ lazy val doc = project
   )
 
 
-lazy val native = project
-  .in(file("target/native"))
-  .aggregate(
-    coreNative
-  )
-  .settings(
-    shared,
-    dontPublish
-  )
-
-lazy val `argonaut-shapeless` = project
-  .in(root)
-  .aggregate(
-    coreJVM,
-    coreJS,
-    coreTestJVM,
-    coreTestJS,
-    refined,
-    `refined-test`,
-    doc
-  )
-  .settings(
-    shared,
-    dontPublish
-  )
+skip.in(publish) := true
+crossScalaVersions := Nil
 
 aliases(
   "validate" -> chain("test", "tut")
