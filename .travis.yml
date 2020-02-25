@@ -2,7 +2,7 @@ language: scala
 jdk: openjdk8
 git:
   depth: false
-script: sbt "++$TRAVIS_SCALA_VERSION test" tut
+script: sbt "++$TRAVIS_SCALA_VERSION -v test" "++$TRAVIS_SCALA_VERSION -v mdoc"
 sudo: false
 branches:
   only:
@@ -22,7 +22,6 @@ jobs:
   include:
   - scala: 2.13.1
     jdk: openjdk11
-    script: sbt ++$TRAVIS_SCALA_VERSION test # can't get tut to work in 2.13
   - scala: 2.12.10
     jdk: openjdk11
   - scala: 2.11.12

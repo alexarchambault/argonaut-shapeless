@@ -68,13 +68,23 @@ lazy val `refined-test` = project
   )
 
 lazy val doc = project
-  .enablePlugins(TutPlugin)
+  .in(file("target/doc"))
+  .enablePlugins(MdocPlugin)
   .dependsOn(coreJVM, refined)
   .settings(
     shared,
     dontPublish,
-    tutSourceDirectory := baseDirectory.value,
-    tutTargetDirectory := baseDirectory.value / ".."
+    // Ideally, I'd like
+    // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
+    // but one can't run '++2.11.12 mdoc' anymore then
+    mdocIn := {
+      val dir = baseDirectory.in(ThisBuild).value / "doc"
+      if (scalaVersion.value.startsWith("2.11."))
+        dir / "dummy"
+      else
+        dir
+    },
+    mdocOut := baseDirectory.in(ThisBuild).value
   )
 
 
