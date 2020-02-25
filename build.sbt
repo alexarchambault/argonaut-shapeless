@@ -80,7 +80,3 @@ lazy val doc = project
 
 skip.in(publish) := true
 crossScalaVersions := Nil
-
-aliases(
-  "validate" -> chain("test", "tut")
-)
