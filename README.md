@@ -10,7 +10,7 @@ It is available for scala 2.10, 2.11, and 2.12, and depends on argonaut 6.2.
 
 argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses the
-[Scala Code of Conduct](https://typelevel.org/code-of-conduct.html).
+[Scala Code of Conduct](https://www.scala-lang.org/conduct/).
 
 It is one of the very first projects to have used `Lazy` from shapeless 2.1,
 which made type class derivation with implicits much more robust.
