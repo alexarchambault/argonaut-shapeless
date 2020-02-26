@@ -10,7 +10,7 @@ It is available for scala 2.10, 2.11, and 2.12, and depends on argonaut 6.2.
 
 argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses the
-[Scala Code of Conduct](https://typelevel.org/code-of-conduct.html).
+[Scala Code of Conduct](https://www.scala-lang.org/conduct/).
 
 It is one of the very first projects to have used `Lazy` from shapeless 2.1,
 which made type class derivation with implicits much more robust.
@@ -69,11 +69,13 @@ result == DecodeResult.ok(CC(2, "a"))
 ```
 
 
-
-
 The way case classes are encoded can be customized, see below.
 
 ### Automatic codecs for sealed traits
+
+```scala
+import argonaut._, Argonaut._, ArgonautShapeless._
+```
 
 ```scala
 sealed trait Base
@@ -94,8 +96,6 @@ result == DecodeResult.ok(First(2))
 ```
 
 
-
-
 ### Default values
 
 Like [upickle](https://github.com/lihaoyi/upickle-pprint/),
@@ -112,8 +112,6 @@ CC(i = 4, s = "baz").asJson.nospaces == """{"s":"baz"}"""
 """{"i":2}""".decodeOption[CC] == Some(CC(i = 2))
 """{"s":"a"}""".decodeOption[CC] == Some(CC(s = "a"))
 ```
-
-
 
 
 This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`. 
@@ -138,8 +136,6 @@ The default `JsonProductCodecFor[T]` for all types provides
 This default can be changed, e.g. to convert field names to `serpent_case`,
 
 
-
-
 ```scala
 import argonaut.derive._
 
@@ -152,19 +148,12 @@ Identity("Jacques", "Chirac").asJson.nospaces == """{"first_name":"Jacques","las
 ```
 
 
-
-
-
-
-
 This can be changed for all types at once like just above, or only for specific
 types, like
 ```scala
 implicit def serpentCaseCodecForIdentity: JsonProductCodecFor[Identity] =
   JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
 ```
-
-
 
 
 ### Custom encoding for sealed traits
@@ -183,6 +172,11 @@ which discriminates the various cases of a sealed trait by looking
 at a field, `type`, like
 
 ```scala
+import argonaut._, Argonaut._, ArgonautShapeless._
+import argonaut.derive._
+```
+
+```scala
 implicit def typeFieldJsonSumCodecFor[S]: JsonSumCodecFor[S] =
   JsonSumCodecFor(JsonSumCodec.typeField)
 
@@ -196,8 +190,6 @@ f.asJson.nospaces
 // instead of the default """{"First":{"i":2}}"""
 f.asJson.nospaces == """{"type":"First","i":2}"""
 ```
-
-
 
 
 ### Proper handling of custom codecs
@@ -220,14 +212,10 @@ object Custom {
 ```
 
 
-
-
 ```scala
 Custom("a").asJson.nospaces == """"a""""
 """"b"""".decodeOption[Custom] == Some(Custom("b"))
 ```
-
-
 
 
 ### JsonCodec for local ArgonautShapeless._ import
@@ -299,8 +287,6 @@ CC(
 """{"i": 7, "s": "Abcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refineMV("Abcd")))
 """{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``
 ```
-
-
 
 
 ## See also

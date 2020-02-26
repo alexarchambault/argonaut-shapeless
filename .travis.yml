@@ -2,7 +2,7 @@ language: scala
 jdk: openjdk8
 git:
   depth: false
-script: scripts/travis.sh
+script: sbt "++$TRAVIS_SCALA_VERSION -v test" "++$TRAVIS_SCALA_VERSION -v mdoc"
 sudo: false
 branches:
   only:
@@ -21,15 +21,12 @@ stages:
 jobs:
   include:
   - scala: 2.13.1
-    jdk: oraclejdk9
-    script: sbt ++$TRAVIS_SCALA_VERSION test # can't get tut to work in 2.13
+    jdk: openjdk11
   - scala: 2.12.10
-    jdk: oraclejdk9
-  - scala: 2.11.12
+    jdk: openjdk11
   - scala: 2.11.12
     dist: trusty
     sudo: required
-    env: NATIVE=1
     before_install:
     - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
   - stage: release
