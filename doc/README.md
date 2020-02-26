@@ -46,13 +46,13 @@ libraryDependencies +=
 
 The examples below assume you imported the content of
 `argonaut`, `argonaut.Argonaut`, and `argonaut.ArgonautShapeless`, like
-```tut:silent
+```scala mdoc:reset-object
 import argonaut._, Argonaut._, ArgonautShapeless._
 ```
 
 ### Automatic codecs for case classes
 
-```tut:silent
+```scala mdoc:silent
 case class CC(i: Int, s: String)
 
 // encoding
@@ -68,7 +68,7 @@ val result = decode.decodeJson(json)
 result == DecodeResult.ok(CC(2, "a"))
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 assert(result == DecodeResult.ok(CC(2, "a")))
 ```
 
@@ -76,7 +76,11 @@ The way case classes are encoded can be customized, see below.
 
 ### Automatic codecs for sealed traits
 
-```tut:silent
+```scala mdoc:reset-object
+import argonaut._, Argonaut._, ArgonautShapeless._
+```
+
+```scala mdoc:silent
 sealed trait Base
 case class First(i: Int) extends Base
 case class Second(s: String) extends Base
@@ -94,7 +98,7 @@ val result = decode.decodeJson(json)
 result == DecodeResult.ok(First(2))
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 assert(result == DecodeResult.ok(First(2)))
 ```
 
@@ -103,7 +107,7 @@ assert(result == DecodeResult.ok(First(2)))
 Like [upickle](https://github.com/lihaoyi/upickle-pprint/),
 fields equal to their default value are not put in the result JSON object.
 
-```tut:silent
+```scala mdoc:silent
 case class CC(i: Int = 4, s: String = "foo")
 
 CC().asJson.nospaces == "{}"
@@ -115,7 +119,7 @@ CC(i = 4, s = "baz").asJson.nospaces == """{"s":"baz"}"""
 """{"s":"a"}""".decodeOption[CC] == Some(CC(s = "a"))
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 assert(CC().asJson.nospaces == "{}")
 assert(CC(i = 3).asJson.nospaces == """{"i":3}""")
 assert(CC(i = 4, s = "baz").asJson.nospaces == """{"s":"baz"}""")
@@ -146,7 +150,7 @@ The default `JsonProductCodecFor[T]` for all types provides
 
 This default can be changed, e.g. to convert field names to `serpent_case`,
 
-```tut:invisible
+```scala mdoc:invisible
 implicit class readmeStringOps(val s: String) {
   def toSerpentCase: String = {
     // very naive
@@ -168,7 +172,7 @@ implicit class readmeStringOps(val s: String) {
 }
 ```
 
-```tut:silent
+```scala mdoc:silent
 import argonaut.derive._
 
 implicit def serpentCaseCodecFor[T]: JsonProductCodecFor[T] =
@@ -179,7 +183,7 @@ case class Identity(firstName: String, lastName: String)
 Identity("Jacques", "Chirac").asJson.nospaces == """{"first_name":"Jacques","last_name":"Chirac"}"""
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 // assertion just above can be wrong because of the field order not preserved
 // by default...
 assert(
@@ -190,25 +194,28 @@ assert(
 )
 ```
 
-```tut:invisible
-implicit val serpentCaseCodecFor = 2 // mask implicit above
-```
-
 This can be changed for all types at once like just above, or only for specific
 types, like
-```tut:silent
+```scala
 implicit def serpentCaseCodecForIdentity: JsonProductCodecFor[Identity] =
   JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
 ```
 
-```tut:invisible
-// same comment as above
-assert(
-  PrettyParams.nospace
-    .copy(preserveOrder = true)
-    .pretty(Identity("Jacques", "Chirac").asJson) ==
-  """{"first_name":"Jacques","last_name":"Chirac"}"""
-)
+```scala mdoc:invisible
+def foo = {
+
+  // same lines as previous section
+  implicit def serpentCaseCodecForIdentity: JsonProductCodecFor[Identity] =
+    JsonProductCodecFor(JsonProductCodec.adapt(_.toSerpentCase))
+
+  // same comment as above
+  assert(
+    PrettyParams.nospace
+      .copy(preserveOrder = true)
+      .pretty(Identity("Jacques", "Chirac").asJson) ==
+    """{"first_name":"Jacques","last_name":"Chirac"}"""
+  )
+}
 ```
 
 ### Custom encoding for sealed traits
@@ -226,7 +233,12 @@ as illustrated above.
 which discriminates the various cases of a sealed trait by looking
 at a field, `type`, like
 
-```tut:silent
+```scala mdoc:reset-object
+import argonaut._, Argonaut._, ArgonautShapeless._
+import argonaut.derive._
+```
+
+```scala mdoc:silent
 implicit def typeFieldJsonSumCodecFor[S]: JsonSumCodecFor[S] =
   JsonSumCodecFor(JsonSumCodec.typeField)
 
@@ -241,7 +253,7 @@ f.asJson.nospaces
 f.asJson.nospaces == """{"type":"First","i":2}"""
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 assert(
   PrettyParams.nospace
     .copy(preserveOrder = true)
@@ -269,7 +281,7 @@ object Custom {
 }
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 // can't define a case class and its companion from the REPL it seems
 object Defn {
   case class Custom(s: String)
@@ -285,12 +297,12 @@ object Defn {
 import Defn._
 ```
 
-```tut:silent
+```scala mdoc:silent
 Custom("a").asJson.nospaces == """"a""""
 """"b"""".decodeOption[Custom] == Some(Custom("b"))
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 assert(Custom("a").asJson.nospaces == """"a"""")
 assert(""""b"""".decodeOption[Custom] == Some(Custom("b")))
 ```
@@ -302,7 +314,7 @@ you can use the `JsonCodec` annotation. A situation would be that you have
 custom codecs and want to make sure they're considered or you don't want to
 overgenerate Codecs for ADTs instances.
 
-```tut:silent
+```scala mdoc:silent
 import argonaut._, Argonaut._
 
 object instances {
@@ -346,7 +358,7 @@ libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.2" % 
 ```
 
 Use like
-```tut:silent
+```scala mdoc:silent
 import argonaut._, Argonaut._, ArgonautShapeless._, ArgonautRefined._
 import eu.timepit.refined._
 import eu.timepit.refined.api.Refined
@@ -365,7 +377,7 @@ CC(
 """{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``
 ```
 
-```tut:invisible
+```scala mdoc:invisible
 assert("""{"i": 7, "s": "Abcd"}""".decodeOption[CC] == Some(CC(refineMV(7), refineMV("Abcd"))))
 // fails as the provided `i` doesn't meet the predicate ``GreaterThan[W.`5`.T]``)
 assert("""{"i": 4, "s": "Abcd"}""".decodeOption[CC] == None)

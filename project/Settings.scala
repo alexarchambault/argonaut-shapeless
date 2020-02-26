@@ -12,6 +12,13 @@ object Settings {
   lazy val shared = Seq(
     scalaVersion := scala212,
     crossScalaVersions := Seq(scala213, scala212, scala211),
+    crossScalaVersions := {
+      val former = crossScalaVersions.value
+      if (isScalaNative.value)
+        former.filter(_.startsWith("2.11."))
+      else
+        former
+    },
     scalacOptions += "-target:jvm-1.8",
     scalacOptions ++= {
       val sbv = scalaBinaryVersion.value
@@ -48,6 +55,10 @@ object Settings {
   // '.' in name get replaced by '-' else
   lazy val keepNameAsModuleName = {
     moduleName := name.value
+  }
+
+  lazy val isScalaNative = Def.setting {
+    sbtcrossproject.CrossPlugin.autoImport.crossProjectPlatform.?.value.contains(scalanativecrossproject.NativePlatform)
   }
 
 }

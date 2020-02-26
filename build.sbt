@@ -2,7 +2,7 @@
 import Aliases._
 import Settings._
 
-import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
+import sbtcrossproject.crossProject
 
 inThisBuild(List(
   organization := "com.github.alexarchambault",
@@ -68,42 +68,25 @@ lazy val `refined-test` = project
   )
 
 lazy val doc = project
-  .enablePlugins(TutPlugin)
+  .in(file("target/doc"))
+  .enablePlugins(MdocPlugin)
   .dependsOn(coreJVM, refined)
   .settings(
     shared,
     dontPublish,
-    tutSourceDirectory := baseDirectory.value,
-    tutTargetDirectory := baseDirectory.value / ".."
+    // Ideally, I'd like
+    // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
+    // but one can't run '++2.11.12 mdoc' anymore then
+    mdocIn := {
+      val dir = baseDirectory.in(ThisBuild).value / "doc"
+      if (scalaVersion.value.startsWith("2.11."))
+        dir / "dummy"
+      else
+        dir
+    },
+    mdocOut := baseDirectory.in(ThisBuild).value
   )
 
 
-lazy val native = project
-  .in(file("target/native"))
-  .aggregate(
-    coreNative
-  )
-  .settings(
-    shared,
-    dontPublish
-  )
-
-lazy val `argonaut-shapeless` = project
-  .in(root)
-  .aggregate(
-    coreJVM,
-    coreJS,
-    coreTestJVM,
-    coreTestJS,
-    refined,
-    `refined-test`,
-    doc
-  )
-  .settings(
-    shared,
-    dontPublish
-  )
-
-aliases(
-  "validate" -> chain("test", "tut")
-)
+skip.in(publish) := true
+crossScalaVersions := Nil
