@@ -14,7 +14,9 @@ object Settings {
     crossScalaVersions := Seq(scala213, scala212, scala211),
     crossScalaVersions := {
       val former = crossScalaVersions.value
-      if (isScalaNative.value)
+      if (isScalaJs1.value)
+        former.filter(!_.startsWith("2.11."))
+      else if (isScalaNative.value)
         former.filter(_.startsWith("2.11."))
       else
         former
@@ -55,6 +57,12 @@ object Settings {
   // '.' in name get replaced by '-' else
   lazy val keepNameAsModuleName = {
     moduleName := name.value
+  }
+
+  lazy val isScalaJs1 = Def.setting {
+    def scalaJsVersion = Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.0.0")
+    sbtcrossproject.CrossPlugin.autoImport.crossProjectPlatform.?.value.contains(scalajscrossproject.JSPlatform) &&
+      scalaJsVersion.startsWith("1.")
   }
 
   lazy val isScalaNative = Def.setting {
