@@ -43,12 +43,6 @@ object Settings {
     }
   )
 
-  lazy val dontPublish = Seq(
-    publish := (),
-    publishLocal := (),
-    publishArtifact := false
-  )
-
   lazy val utest = Seq(
     libs += Deps.utest.value % "test",
     testFrameworks += new TestFramework("utest.runner.Framework")
