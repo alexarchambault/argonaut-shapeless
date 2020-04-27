@@ -50,7 +50,7 @@ lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
   .dependsOn(core)
   .settings(
     shared,
-    dontPublish,
+    skip.in(publish) := true,
     utest,
     libs += Deps.scalacheckShapeless.value % Test
   )
@@ -62,7 +62,7 @@ lazy val `refined-test` = project
   .dependsOn(coreTestJVM, refined)
   .settings(
     shared,
-    dontPublish,
+    skip.in(publish) := true,
     utest,
     libs += Deps.scalacheckShapeless.value % Test
   )
@@ -73,7 +73,7 @@ lazy val doc = project
   .dependsOn(coreJVM, refined)
   .settings(
     shared,
-    dontPublish,
+    skip.in(publish) := true,
     // Ideally, I'd like
     // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
     // but one can't run '++2.11.12 mdoc' anymore then
