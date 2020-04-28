@@ -27,11 +27,4 @@ object Mima {
     }
   )
 
-  lazy val renderFilters = Def.settings(
-    MimaPlugin.autoImport.mimaBinaryIssueFilters ++= Seq(
-      // users shouln't ever reference those
-      ProblemFilters.exclude[Problem]("plotly.internals.shaded.*"),
-    )
-  )
-
 }
