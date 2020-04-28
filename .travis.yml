@@ -3,7 +3,6 @@ jdk: openjdk8
 git:
   depth: false
 script: sbt "++$TRAVIS_SCALA_VERSION -v test" "++$TRAVIS_SCALA_VERSION -v mdoc" "++$TRAVIS_SCALA_VERSION -v mimaReportBinaryIssues"
-sudo: false
 branches:
   only:
   - master
