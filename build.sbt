@@ -22,6 +22,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
     name := "argonaut-shapeless_6.2",
+    Mima.settings,
     libs ++= Seq(
       Deps.argonaut.value,
       Deps.shapeless.value
@@ -37,6 +38,7 @@ lazy val refined = project
   .settings(
     shared, 
     name := "argonaut-refined_6.2",
+    Mima.settings,
     libs ++= Seq(
       Deps.argonaut.value,
       Deps.refined,
@@ -47,6 +49,7 @@ lazy val refined = project
 
 lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
   .in(file("core-test"))
+  .disablePlugins(MimaPlugin)
   .dependsOn(core)
   .settings(
     shared,
@@ -59,6 +62,7 @@ lazy val coreTestJVM = coreTest.jvm
 lazy val coreTestJS = coreTest.js
 
 lazy val `refined-test` = project
+  .disablePlugins(MimaPlugin)
   .dependsOn(coreTestJVM, refined)
   .settings(
     shared,
@@ -70,6 +74,7 @@ lazy val `refined-test` = project
 lazy val doc = project
   .in(file("target/doc"))
   .enablePlugins(MdocPlugin)
+  .disablePlugins(MimaPlugin)
   .dependsOn(coreJVM, refined)
   .settings(
     shared,
@@ -88,5 +93,6 @@ lazy val doc = project
   )
 
 
+disablePlugins(MimaPlugin)
 skip.in(publish) := true
 crossScalaVersions := Nil

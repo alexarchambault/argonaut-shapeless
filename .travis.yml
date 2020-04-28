@@ -2,8 +2,7 @@ language: scala
 jdk: openjdk8
 git:
   depth: false
-script: sbt "++$TRAVIS_SCALA_VERSION -v test" "++$TRAVIS_SCALA_VERSION -v mdoc"
-sudo: false
+script: sbt "++$TRAVIS_SCALA_VERSION -v test" "++$TRAVIS_SCALA_VERSION -v mdoc" "++$TRAVIS_SCALA_VERSION -v mimaReportBinaryIssues"
 branches:
   only:
   - master
@@ -20,9 +19,9 @@ stages:
 
 jobs:
   include:
-  - scala: 2.13.1
+  - scala: 2.13.2
     jdk: openjdk11
-  - scala: 2.12.10
+  - scala: 2.12.11
     jdk: openjdk11
   - scala: 2.11.12
     dist: trusty
