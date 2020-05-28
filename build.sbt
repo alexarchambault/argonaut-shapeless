@@ -22,7 +22,6 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
     name := "argonaut-shapeless_6.2",
-    Mima.settings,
     libs ++= Seq(
       Deps.argonaut.value,
       Deps.shapeless.value
@@ -38,7 +37,6 @@ lazy val refined = project
   .settings(
     shared, 
     name := "argonaut-refined_6.2",
-    Mima.settings,
     libs ++= Seq(
       Deps.argonaut.value,
       Deps.refined,
