@@ -1,5 +1,5 @@
 addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.3")
-addSbtPlugin(("io.github.alexarchambault.sbt" % "sbt-compatibility" % "0.0.4").exclude("com.typesafe", "sbt-mima-plugin"))
+addSbtPlugin(("io.github.alexarchambault.sbt" % "sbt-compatibility" % "0.0.5").exclude("com.typesafe", "sbt-mima-plugin"))
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.1")
 addSbtPlugin("com.github.alexarchambault.tmp" % "sbt-mima-plugin" % "0.7.1-SNAPSHOT")
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.0.0")
