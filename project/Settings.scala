@@ -1,5 +1,6 @@
 import sbt._
 import sbt.Keys._
+import sbtevictionrules.EvictionRulesPlugin.autoImport._
 
 import Aliases._
 
@@ -40,7 +41,11 @@ object Settings {
         Seq(
           compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.patch)
         )
-    }
+    },
+    evictionRules ++= Seq(
+      "org.scala-lang.modules" %% "scala-xml" % "semver",
+      "org.scala-js" %% "scalajs-library" % "semver"
+    )
   )
 
   lazy val utest = Seq(

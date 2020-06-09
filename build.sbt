@@ -77,6 +77,12 @@ lazy val doc = project
   .settings(
     shared,
     skip.in(publish) := true,
+    evictionRules ++= Seq(
+      "org.jboss.logging" % "jboss-logging" % "semver",
+      "org.jboss.threads" % "jboss-threads" % "always",
+      "org.wildfly.common" % "wildfly-common" % "semver",
+      "com.lihaoyi" %% "sourcecode" % "always"
+    ),
     // Ideally, I'd like
     // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
     // but one can't run '++2.11.12 mdoc' anymore then
