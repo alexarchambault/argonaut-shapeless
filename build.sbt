@@ -81,7 +81,7 @@ lazy val doc = project
       "org.jboss.logging" % "jboss-logging" % "semver",
       "org.jboss.threads" % "jboss-threads" % "always",
       "org.wildfly.common" % "wildfly-common" % "semver",
-      "com.lihaoyi" %% "sourcecode" % "always"
+      "com.lihaoyi" %% "*" % "always"
     ),
     // Ideally, I'd like
     // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
