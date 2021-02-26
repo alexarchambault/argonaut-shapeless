@@ -7,7 +7,7 @@ import Aliases._
 
 object Settings {
 
-  private val scala211 = "2.11.12"
+  private val scala211 = "2.13.5"
   private val scala212 = "2.12.11"
   private val scala213 = "2.13.2"
 
