@@ -19,7 +19,7 @@ stages:
 
 jobs:
   include:
-  - scala: 2.13.2
+  - scala: 2.13.6
     jdk: openjdk11
   - scala: 2.12.11
     jdk: openjdk11
