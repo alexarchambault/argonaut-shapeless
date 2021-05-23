@@ -28,13 +28,5 @@ jobs:
     sudo: required
     before_install:
     - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
-  - name: Scala.JS 0.6
-    env: SCALAJS_VERSION=0.6.32
   - stage: release
-    script: sbt ci-release
-  - name: Scala.JS 0.6
-    env:
-    - SCALAJS_VERSION=0.6.32
-    - CI_RELEASE=+coreJS/publishSigned
-    stage: release
     script: sbt ci-release
