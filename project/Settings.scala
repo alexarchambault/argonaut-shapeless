@@ -32,7 +32,7 @@ object Settings {
   )
 
   lazy val utest = Seq(
-    libraryDependencies += Deps.utest.value % "test",
+    libraryDependencies += Deps.utest.value % Test,
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
 
