@@ -1,5 +1,4 @@
 
-import Aliases._
 import Settings._
 
 import sbtcrossproject.crossProject
@@ -21,78 +20,49 @@ inThisBuild(List(
 lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
-    name := "argonaut-shapeless_6.2",
-    libs ++= Seq(
+    name := "argonaut-shapeless_6.3",
+    keepNameAsModuleName,
+    libraryDependencies ++= Seq(
       Deps.argonaut.value,
-      Deps.shapeless.value
+      Deps.shapeless.value,
+      Deps.scalacheckShapeless.value % Test
     ),
-    keepNameAsModuleName
+    utest,
+    mimaPreviousArtifacts := Set.empty
   )
 
 lazy val coreJVM = core.jvm
 lazy val coreJS = core.js
 lazy val coreNative = core.native
 
-lazy val refined = project
+lazy val refined = crossProject(JVMPlatform, JSPlatform)
+  .dependsOn(core % "test->test")
   .settings(
-    shared, 
-    name := "argonaut-refined_6.2",
-    libs ++= Seq(
+    shared,
+    name := "argonaut-refined_6.3",
+    libraryDependencies ++= Seq(
       Deps.argonaut.value,
-      Deps.refined,
-      Deps.shapeless.value
+      Deps.refined.value,
+      Deps.shapeless.value,
+      Deps.scalacheckShapeless.value % Test
     ),
-    keepNameAsModuleName
-  )
-
-lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
-  .in(file("core-test"))
-  .disablePlugins(MimaPlugin)
-  .dependsOn(core)
-  .settings(
-    shared,
-    skip.in(publish) := true,
     utest,
-    libs += Deps.scalacheckShapeless.value % Test
+    keepNameAsModuleName,
+    mimaPreviousArtifacts := Set.empty
   )
 
-lazy val coreTestJVM = coreTest.jvm
-lazy val coreTestJS = coreTest.js
-
-lazy val `refined-test` = project
-  .disablePlugins(MimaPlugin)
-  .dependsOn(coreTestJVM, refined)
-  .settings(
-    shared,
-    skip.in(publish) := true,
-    utest,
-    libs += Deps.scalacheckShapeless.value % Test
-  )
+lazy val refinedJVM = refined.jvm
+lazy val refinedJS = refined.js
 
 lazy val doc = project
   .in(file("target/doc"))
   .enablePlugins(MdocPlugin)
   .disablePlugins(MimaPlugin)
-  .dependsOn(coreJVM, refined)
+  .dependsOn(coreJVM, refinedJVM)
   .settings(
     shared,
     skip.in(publish) := true,
-    evictionRules ++= Seq(
-      "org.jboss.logging" % "jboss-logging" % "semver",
-      "org.jboss.threads" % "jboss-threads" % "always",
-      "org.wildfly.common" % "wildfly-common" % "semver",
-      "com.lihaoyi" %% "*" % "always"
-    ),
-    // Ideally, I'd like
-    // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
-    // but one can't run '++2.11.12 mdoc' anymore then
-    mdocIn := {
-      val dir = baseDirectory.in(ThisBuild).value / "doc"
-      if (scalaVersion.value.startsWith("2.11."))
-        dir / "dummy"
-      else
-        dir
-    },
+    mdocIn := baseDirectory.in(ThisBuild).value / "doc",
     mdocOut := baseDirectory.in(ThisBuild).value
   )
 

@@ -1,1 +1,0 @@
-[argonaut-shapeless](https://github.com/alexarchambault/argonaut-shapeless), Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation with [shapeless](https://github.com/milessabin/shapeless)

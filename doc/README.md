@@ -6,7 +6,7 @@ Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation w
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.2_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.2_2.11)
 
-It is available for scala 2.10, 2.11, and 2.12, and depends on argonaut 6.2.
+It is available for scala 2.12, and 2.13, and depends on argonaut 6.3.
 
 argonaut-shapeless is part of the shapeless ecosystem of
 [Typelevel](http://typelevel.org/), and as such endorses the
@@ -129,7 +129,7 @@ assert("""{"i":2}""".decodeOption[CC] == Some(CC(i = 2)))
 assert("""{"s":"a"}""".decodeOption[CC] == Some(CC(s = "a")))
 ```
 
-This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`. 
+This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`.
 
 ```scala
 implicit def alwaysIncludeCodecFor[T]: derive.JsonProductCodecFor[T] =
