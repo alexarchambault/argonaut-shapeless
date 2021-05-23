@@ -2,9 +2,9 @@
 
 Automatic [argonaut](https://github.com/argonaut-io/argonaut) codec derivation with [shapeless](https://github.com/milessabin/shapeless)
 
-[![Build Status](https://travis-ci.org/alexarchambault/argonaut-shapeless.svg)](https://travis-ci.org/alexarchambault/argonaut-shapeless)
+[![Build status](https://github.com/alexarchambault/argonaut-shapeless/workflows/CI/badge.svg)](https://github.com/alexarchambault/argonaut-shapeless/actions?query=workflow%3ACI)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.3_2.13.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.3_2.13)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/alexarchambault/argonaut-shapeless?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.alexarchambault/argonaut-shapeless_6.2_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.alexarchambault/argonaut-shapeless_6.2_2.11)
 
 It is available for scala 2.12, and 2.13, and depends on argonaut 6.3.
 
@@ -19,6 +19,7 @@ which made type class derivation with implicits much more robust.
 
 | argonaut-shapeless | argonaut | shapeless | refined |
 |--------------------|----------|-----------|---------|
+| 1.3.0              | 6.3.3    | 2.3.x     | 0.9.x   |
 | 1.2.0-M4           | 6.2-RC2  | 2.3.x     | 0.6.x   |
 | 1.2.0-M{1,3}       | 6.2-M3   | 2.3.x     | 0.5.x   |
 | 1.1.1              | 6.1a     | 2.3.x     | 0.4.x   |
@@ -30,16 +31,8 @@ which made type class derivation with implicits much more robust.
 
 Add to your `build.sbt`
 ```scala
-resolvers += Resolver.sonatypeRepo("releases")
-
 libraryDependencies +=
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.2" % "1.2.0-M4"
-```
-
-If you are using scala 2.10.x, also add the macro paradise plugin to your build,
-```scala
-libraryDependencies +=
-  compilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
+  "com.github.alexarchambault" %% "argonaut-shapeless_6.3" % "1.3.0"
 ```
 
 ## Features
@@ -265,7 +258,7 @@ kind of validation at the type level.
 
 Add it to your dependencies with
 ```scala
-libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.2" % "1.2.0-M4"
+libraryDependencies += "com.github.alexarchambault" %% "argonaut-refined_6.3" % "1.3.0"
 ```
 
 Use like
