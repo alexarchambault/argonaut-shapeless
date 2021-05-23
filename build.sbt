@@ -78,16 +78,7 @@ lazy val doc = project
   .settings(
     shared,
     skip.in(publish) := true,
-    // Ideally, I'd like
-    // crossScalaVersions := crossScalaVersions.value.filter(!_.startsWith("2.11."))
-    // but one can't run '++2.11.12 mdoc' anymore then
-    mdocIn := {
-      val dir = baseDirectory.in(ThisBuild).value / "doc"
-      if (scalaVersion.value.startsWith("2.11."))
-        dir / "dummy"
-      else
-        dir
-    },
+    mdocIn := baseDirectory.in(ThisBuild).value / "doc",
     mdocOut := baseDirectory.in(ThisBuild).value
   )
 

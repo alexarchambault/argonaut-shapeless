@@ -3,21 +3,16 @@ import sbt.Keys._
 
 object Settings {
 
-  private val scala211 = "2.11.12"
   private val scala212 = "2.12.11"
   private val scala213 = "2.13.2"
 
   lazy val shared = Seq(
     scalaVersion := scala212,
-    crossScalaVersions := Seq(scala213, scala212, scala211),
-    crossScalaVersions := {
-      val former = crossScalaVersions.value
-      former.filter(!_.startsWith("2.11."))
-    },
+    crossScalaVersions := Seq(scala213, scala212),
     scalacOptions += "-target:jvm-1.8",
     scalacOptions ++= {
       val sbv = scalaBinaryVersion.value
-      if (sbv.startsWith("2.11") || sbv.startsWith("2.12"))
+      if (sbv.startsWith("2.12"))
         Nil
       else
         Seq("-Ymacro-annotations")

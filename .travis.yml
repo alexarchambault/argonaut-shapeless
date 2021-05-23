@@ -23,10 +23,5 @@ jobs:
     jdk: openjdk11
   - scala: 2.12.11
     jdk: openjdk11
-  - scala: 2.11.12
-    dist: trusty
-    sudo: required
-    before_install:
-    - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
   - stage: release
     script: sbt ci-release

@@ -10,11 +10,5 @@ object Deps {
   def shapeless = setting("com.chuusai" %%% "shapeless" % "2.3.3")
 
   def scalacheckShapeless = setting("com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % "1.2.5")
-  def utest = setting {
-    val sv = scalaVersion.value
-    val ver =
-      if (sv.startsWith("2.11")) "0.6.7"
-      else "0.7.4"
-    "com.lihaoyi" %%% "utest" % ver
-  }
+  def utest = setting("com.lihaoyi" %%% "utest" % "0.7.4")
 }
