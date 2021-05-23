@@ -35,14 +35,14 @@ lazy val coreJVM = core.jvm
 lazy val coreJS = core.js
 lazy val coreNative = core.native
 
-lazy val refined = project
-  .dependsOn(coreJVM % "test->test")
+lazy val refined = crossProject(JVMPlatform, JSPlatform)
+  .dependsOn(core % "test->test")
   .settings(
     shared,
     name := "argonaut-refined_6.3",
     libraryDependencies ++= Seq(
       Deps.argonaut.value,
-      Deps.refined,
+      Deps.refined.value,
       Deps.shapeless.value,
       Deps.scalacheckShapeless.value % Test
     ),
@@ -51,11 +51,14 @@ lazy val refined = project
     mimaPreviousArtifacts := Set.empty
   )
 
+lazy val refinedJVM = refined.jvm
+lazy val refinedJS = refined.js
+
 lazy val doc = project
   .in(file("target/doc"))
   .enablePlugins(MdocPlugin)
   .disablePlugins(MimaPlugin)
-  .dependsOn(coreJVM, refined)
+  .dependsOn(coreJVM, refinedJVM)
   .settings(
     shared,
     skip.in(publish) := true,
