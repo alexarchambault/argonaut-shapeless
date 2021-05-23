@@ -1,5 +1,4 @@
 
-import Aliases._
 import Settings._
 
 import sbtcrossproject.crossProject
@@ -22,7 +21,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
     name := "argonaut-shapeless_6.2",
-    libs ++= Seq(
+    libraryDependencies ++= Seq(
       Deps.argonaut.value,
       Deps.shapeless.value
     ),
@@ -37,7 +36,7 @@ lazy val refined = project
   .settings(
     shared, 
     name := "argonaut-refined_6.2",
-    libs ++= Seq(
+    libraryDependencies ++= Seq(
       Deps.argonaut.value,
       Deps.refined,
       Deps.shapeless.value
@@ -53,7 +52,7 @@ lazy val coreTest = crossProject(JVMPlatform, JSPlatform)
     shared,
     skip.in(publish) := true,
     utest,
-    libs += Deps.scalacheckShapeless.value % Test
+    libraryDependencies += Deps.scalacheckShapeless.value % Test
   )
 
 lazy val coreTestJVM = coreTest.jvm
@@ -66,7 +65,7 @@ lazy val `refined-test` = project
     shared,
     skip.in(publish) := true,
     utest,
-    libs += Deps.scalacheckShapeless.value % Test
+    libraryDependencies += Deps.scalacheckShapeless.value % Test
   )
 
 lazy val doc = project

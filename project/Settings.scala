@@ -3,8 +3,6 @@ import sbt.Keys._
 import sbtcompatibility.SbtCompatibilityPlugin.autoImport.compatibilityRules
 import sbtevictionrules.EvictionRulesPlugin.autoImport._
 
-import Aliases._
-
 object Settings {
 
   private val scala211 = "2.11.12"
@@ -54,7 +52,7 @@ object Settings {
   )
 
   lazy val utest = Seq(
-    libs += Deps.utest.value % "test",
+    libraryDependencies += Deps.utest.value % "test",
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
 
