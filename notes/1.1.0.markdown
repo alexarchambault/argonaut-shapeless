@@ -1,6 +1,0 @@
-### Changes
-
-- Rename `argonaut.Shapeless` to `argonaut.ArgonautShapeless`, keep `argonaut.Shapeless` with a deprecation annotation ([#70])
-- Rename `argonaut.Refined` to `argonaut.ArgonautRefined`, keep `argonaut.Refined` with a deprecation annotation ([#70])
-
-[#70]: https://github.com/alexarchambault/argonaut-shapeless/pull/70
