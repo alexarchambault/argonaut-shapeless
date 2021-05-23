@@ -10,5 +10,5 @@ object Deps {
   def shapeless = setting("com.chuusai" %%% "shapeless" % "2.3.7")
 
   def scalacheckShapeless = setting("com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % "1.2.5")
-  def utest = setting("com.lihaoyi" %%% "utest" % "0.7.4")
+  def utest = setting("com.lihaoyi" %%% "utest" % "0.7.10")
 }
