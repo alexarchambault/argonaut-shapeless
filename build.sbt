@@ -20,7 +20,7 @@ inThisBuild(List(
 lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     shared,
-    name := "argonaut-shapeless_6.2",
+    name := "argonaut-shapeless_6.3",
     libraryDependencies ++= Seq(
       Deps.argonaut.value,
       Deps.shapeless.value
@@ -36,7 +36,7 @@ lazy val coreNative = core.native
 lazy val refined = project
   .settings(
     shared, 
-    name := "argonaut-refined_6.2",
+    name := "argonaut-refined_6.3",
     libraryDependencies ++= Seq(
       Deps.argonaut.value,
       Deps.refined,
