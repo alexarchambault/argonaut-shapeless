@@ -7,7 +7,7 @@ object Settings {
   private val scala213 = "2.13.6"
 
   lazy val shared = Seq(
-    scalaVersion := scala212,
+    scalaVersion := scala213,
     crossScalaVersions := Seq(scala213, scala212),
     scalacOptions += "-target:jvm-1.8",
     scalacOptions ++= {
