@@ -129,7 +129,7 @@ assert("""{"i":2}""".decodeOption[CC] == Some(CC(i = 2)))
 assert("""{"s":"a"}""".decodeOption[CC] == Some(CC(s = "a")))
 ```
 
-This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`. 
+This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`.
 
 ```scala
 implicit def alwaysIncludeCodecFor[T]: derive.JsonProductCodecFor[T] =

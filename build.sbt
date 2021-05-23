@@ -35,7 +35,7 @@ lazy val coreNative = core.native
 
 lazy val refined = project
   .settings(
-    shared, 
+    shared,
     name := "argonaut-refined_6.3",
     libraryDependencies ++= Seq(
       Deps.argonaut.value,

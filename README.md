@@ -114,7 +114,7 @@ CC(i = 4, s = "baz").asJson.nospaces == """{"s":"baz"}"""
 ```
 
 
-This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`. 
+This can be turned off by providing the alwaysIncludeDefaultValue `JsonProductCodecFor`.
 
 ```scala
 implicit def alwaysIncludeCodecFor[T]: derive.JsonProductCodecFor[T] =
