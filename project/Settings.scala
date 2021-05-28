@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object Settings {
 
-  private val scala212 = "2.12.13"
+  private val scala212 = "2.12.14"
   private val scala213 = "2.13.6"
 
   lazy val shared = Seq(
