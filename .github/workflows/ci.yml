@@ -13,13 +13,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        SCALA_VERSION: ["2.12.13", "2.13.6"]
+        SCALA_VERSION: ["2.12.15", "2.13.6"]
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
         submodules: true
-    - uses: coursier/cache-action@v6.1
+    - uses: coursier/cache-action@v6.3
     - uses: laughedelic/coursier-setup@v1
       with:
         jvm: 8
@@ -36,7 +36,7 @@ jobs:
       with:
         fetch-depth: 0
         submodules: true
-    - uses: coursier/cache-action@v6.1
+    - uses: coursier/cache-action@v6.3
     - uses: laughedelic/coursier-setup@v1
       with:
         jvm: 8
