@@ -4,7 +4,7 @@ import sbt.Keys._
 object Settings {
 
   private val scala212 = "2.12.15"
-  private val scala213 = "2.13.6"
+  private val scala213 = "2.13.8"
 
   lazy val shared = Seq(
     scalaVersion := scala213,
