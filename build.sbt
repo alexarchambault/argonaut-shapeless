@@ -61,12 +61,12 @@ lazy val doc = project
   .dependsOn(coreJVM, refinedJVM)
   .settings(
     shared,
-    skip.in(publish) := true,
-    mdocIn := baseDirectory.in(ThisBuild).value / "doc",
-    mdocOut := baseDirectory.in(ThisBuild).value
+    (publish / skip) := true,
+    mdocIn := (ThisBuild / baseDirectory).value / "doc",
+    mdocOut := (ThisBuild / baseDirectory).value
   )
 
 
 disablePlugins(MimaPlugin)
-skip.in(publish) := true
+(publish / skip) := true
 crossScalaVersions := Nil
