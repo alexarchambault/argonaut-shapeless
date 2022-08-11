@@ -20,12 +20,14 @@ jobs:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v6.3
-    - uses: laughedelic/coursier-setup@v1
+    - uses: coursier/setup-action@v1.2.0
       with:
         jvm: 8
-        apps: sbt-launcher:1.2.22
     - name: Test
-      run: sbt ++${{ matrix.SCALA_VERSION }} test mdoc mimaReportBinaryIssues
+      run: |
+        sbtn ++${{ matrix.SCALA_VERSION }} test
+        sbtn ++${{ matrix.SCALA_VERSION }} mdoc
+        sbtn ++${{ matrix.SCALA_VERSION }} mimaReportBinaryIssues
 
   publish:
     needs: test
@@ -37,15 +39,14 @@ jobs:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v6.3
-    - uses: laughedelic/coursier-setup@v1
+    - uses: coursier/setup-action@v1.2.0
       with:
         jvm: 8
-        apps: sbt-launcher:1.2.22
     - run: .github/scripts/gpg-setup.sh
       env:
         PGP_SECRET: ${{ secrets.PGP_SECRET }}
     - name: Release
-      run: sbt ci-release
+      run: sbtn ci-release
       env:
         PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
         PGP_SECRET: ${{ secrets.PGP_SECRET }}
