@@ -13,39 +13,40 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        SCALA_VERSION: ["2.12.15", "2.13.8"]
+        SCALA_VERSION: ["2.12.16", "2.13.8"]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v6.3
-    - uses: laughedelic/coursier-setup@v1
+    - uses: coursier/setup-action@v1.2.0
       with:
         jvm: 8
-        apps: sbt-launcher:1.2.22
     - name: Test
-      run: sbt ++${{ matrix.SCALA_VERSION }} test mdoc mimaReportBinaryIssues
+      run: |
+        sbtn ++${{ matrix.SCALA_VERSION }} test
+        sbtn ++${{ matrix.SCALA_VERSION }} mdoc
+        sbtn ++${{ matrix.SCALA_VERSION }} mimaReportBinaryIssues
 
   publish:
     needs: test
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v6.3
-    - uses: laughedelic/coursier-setup@v1
+    - uses: coursier/setup-action@v1.2.0
       with:
         jvm: 8
-        apps: sbt-launcher:1.2.22
     - run: .github/scripts/gpg-setup.sh
       env:
         PGP_SECRET: ${{ secrets.PGP_SECRET }}
     - name: Release
-      run: sbt ci-release
+      run: sbtn ci-release
       env:
         PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
         PGP_SECRET: ${{ secrets.PGP_SECRET }}
