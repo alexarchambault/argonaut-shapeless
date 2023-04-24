@@ -20,7 +20,7 @@ jobs:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v6.4
-    - uses: coursier/setup-action@v1.3.0
+    - uses: coursier/setup-action@v1.3.2
       with:
         jvm: 8
     - name: Test
@@ -39,7 +39,7 @@ jobs:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v6.4
-    - uses: coursier/setup-action@v1.3.0
+    - uses: coursier/setup-action@v1.3.2
       with:
         jvm: 8
     - run: .github/scripts/gpg-setup.sh
