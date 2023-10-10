@@ -5,7 +5,7 @@ import sbt.Keys.scalaVersion
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 
 object Deps {
-  def argonaut = setting("io.argonaut" %%% "argonaut" % "6.3.8")
+  def argonaut = setting("io.argonaut" %%% "argonaut" % "6.3.9")
   def refined = setting("eu.timepit" %%% "refined" % "0.10.1")
   def shapeless = setting("com.chuusai" %%% "shapeless" % "2.3.10")
 
